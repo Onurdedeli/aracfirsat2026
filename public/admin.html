@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AraçFırsat - Admin Paneli</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --primary: #1a73e8;
+      --primary-dark: #1557b0;
+      --dark: #1a1a2e;
+      --success: #27ae60;
+      --warning: #f39c12;
+      --danger: #e74c3c;
+      --gray: #f4f6f8;
+      --radius: 10px;
+    }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--gray); color: #333; }
+
+    /* LOGIN */
+    .login-overlay {
+      position: fixed; inset: 0; background: var(--dark);
+      display: flex; align-items: center; justify-content: center; z-index: 1000;
+    }
+    .login-box {
+      background: #fff; padding: 2.5rem; border-radius: var(--radius);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3); text-align: center; width: 360px;
+    }
+    .login-box h2 { margin-bottom: 1.5rem; color: var(--dark); }
+    .login-box input {
+      width: 100%; padding: 0.8rem 1rem; border: 2px solid #e0e0e0;
+      border-radius: 8px; font-size: 1rem; margin-bottom: 1rem;
+    }
+    .login-box button {
+      width: 100%; padding: 0.8rem; background: var(--primary); color: #fff;
+      border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer;
+    }
+    .login-error { color: var(--danger); font-size: 0.9rem; margin-top: 0.5rem; display: none; }
+
+    /* LAYOUT */
+    .admin-nav {
+      background: var(--dark); color: #fff; padding: 1rem 2rem;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .admin-nav h1 { font-size: 1.3rem; }
+    .admin-nav h1 span { color: var(--primary); }
+    .admin-nav-links { display: flex; gap: 1rem; align-items: center; }
+    .admin-nav-links a, .admin-nav-links button {
+      color: #ccc; text-decoration: none; font-size: 0.9rem; cursor: pointer;
+      background: none; border: none; font-family: inherit;
+    }
+    .admin-nav-links a:hover, .admin-nav-links button:hover { color: #fff; }
+    .admin-nav-links .active { color: var(--primary); font-weight: 600; }
+
+    .admin-content { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+
+    /* ALERTS */
+    .alert-bar { display: flex; gap: 0.75rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+    .alert {
+      padding: 0.75rem 1.25rem; border-radius: var(--radius); font-size: 0.9rem;
+      font-weight: 600; display: flex; align-items: center; gap: 0.5rem;
+    }
+    .alert-danger { background: #fee2e2; color: #991b1b; }
+    .alert-warning { background: #fef3c7; color: #92400e; }
+    .alert-icon { font-size: 1.1rem; }
+
+    /* STATS */
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .stat-card {
+      background: #fff; padding: 1.25rem; border-radius: var(--radius);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06); text-align: center;
+    }
+    .stat-number { font-size: 2.2rem; font-weight: 800; color: var(--primary); }
+    .stat-label { color: #666; font-size: 0.85rem; margin-top: 0.2rem; }
+    .stat-card.sicak .stat-number { color: #e74c3c; }
+    .stat-card.yeni .stat-number { color: var(--primary); }
+    .stat-card.arandi .stat-number { color: var(--warning); }
+    .stat-card.randevu .stat-number { color: #8e44ad; }
+    .stat-card.tamamlandi .stat-number { color: var(--success); }
+    .stat-card.ort-puan .stat-number { color: #e67e22; }
+
+    /* TABLES */
+    .panel-section { background: #fff; border-radius: var(--radius); box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 2rem; overflow: hidden; }
+    .panel-header {
+      padding: 1.25rem 1.5rem; border-bottom: 1px solid #eee;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;
+    }
+    .panel-header h2 { font-size: 1.2rem; }
+    .panel-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .panel-actions select, .panel-actions button {
+      padding: 0.5rem 0.75rem; border-radius: 6px; border: 2px solid #e0e0e0;
+      font-size: 0.85rem; cursor: pointer; background: #fff;
+    }
+    .panel-actions button { background: var(--primary); color: #fff; border-color: var(--primary); font-weight: 600; }
+
+    table { width: 100%; border-collapse: collapse; }
+    th { background: var(--gray); padding: 0.75rem 1rem; text-align: left; font-size: 0.8rem; color: #666; text-transform: uppercase; }
+    td { padding: 0.65rem 0.75rem; border-bottom: 1px solid #f0f0f0; font-size: 0.85rem; }
+    tr:hover { background: #f8f9ff; }
+
+    .badge {
+      display: inline-block; padding: 0.2rem 0.5rem; border-radius: 20px;
+      font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+    }
+    .badge-yeni { background: #dbeafe; color: var(--primary); }
+    .badge-arandi { background: #fef3c7; color: #92400e; }
+    .badge-randevu { background: #ede9fe; color: #6b21a8; }
+    .badge-tamamlandi { background: #d1fae5; color: #065f46; }
+    .badge-iptal { background: #fee2e2; color: #991b1b; }
+
+    /* LEAD SCORE BAR */
+    .score-bar { width: 60px; height: 8px; background: #e0e0e0; border-radius: 4px; display: inline-block; vertical-align: middle; margin-right: 6px; }
+    .score-fill { height: 100%; border-radius: 4px; }
+    .score-hot .score-fill { background: #e74c3c; }
+    .score-warm .score-fill { background: #f39c12; }
+    .score-cold .score-fill { background: #95a5a6; }
+    .score-text { font-size: 0.75rem; font-weight: 700; }
+    .score-text.hot { color: #e74c3c; }
+    .score-text.warm { color: #f39c12; }
+    .score-text.cold { color: #95a5a6; }
+
+    /* STALE WARNING */
+    .row-stale { background: #fff5f5 !important; }
+    .stale-icon { color: var(--danger); font-weight: 700; }
+
+    .action-btn {
+      padding: 0.25rem 0.5rem; border: none; border-radius: 4px;
+      font-size: 0.75rem; cursor: pointer; margin-right: 0.2rem;
+    }
+    .action-btn.edit { background: #dbeafe; color: var(--primary); }
+    .action-btn.delete { background: #fee2e2; color: var(--danger); }
+
+    /* POPULAR LISTS */
+    .popular-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+    .popular-card { background: #fff; border-radius: var(--radius); box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 1.25rem; }
+    .popular-card h3 { font-size: 0.95rem; margin-bottom: 0.75rem; color: var(--dark); }
+    .popular-item { display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px solid #f0f0f0; font-size: 0.85rem; }
+    .popular-count { font-weight: 700; color: var(--primary); }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+      display: none; align-items: center; justify-content: center; z-index: 500;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: #fff; border-radius: var(--radius); padding: 2rem;
+      width: 500px; max-width: 95vw; max-height: 90vh; overflow-y: auto;
+    }
+    .modal h3 { margin-bottom: 1.5rem; }
+    .modal-form label { display: block; font-weight: 600; font-size: 0.85rem; margin: 0.75rem 0 0.3rem; }
+    .modal-form input, .modal-form select {
+      width: 100%; padding: 0.6rem 0.8rem; border: 2px solid #e0e0e0;
+      border-radius: 6px; font-size: 0.9rem;
+    }
+    .modal-form input:focus, .modal-form select:focus { border-color: var(--primary); outline: none; }
+    .modal-btns { display: flex; gap: 0.5rem; margin-top: 1.5rem; justify-content: flex-end; }
+    .modal-btns button {
+      padding: 0.6rem 1.25rem; border: none; border-radius: 6px;
+      font-size: 0.9rem; font-weight: 600; cursor: pointer;
+    }
+    .btn-cancel { background: #e0e0e0; color: #333; }
+    .btn-save { background: var(--primary); color: #fff; }
+
+    .pagination { display: flex; justify-content: center; gap: 0.5rem; padding: 1rem; }
+    .pagination button {
+      padding: 0.5rem 0.75rem; border: 2px solid #e0e0e0; border-radius: 6px;
+      background: #fff; cursor: pointer; font-size: 0.85rem;
+    }
+    .pagination button.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+    .tab-hidden { display: none; }
+
+    @media (max-width: 768px) {
+      .popular-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      table { font-size: 0.75rem; }
+      td, th { padding: 0.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN -->
+  <div class="login-overlay" id="loginOverlay">
+    <div class="login-box">
+      <div style="display:flex;align-items:center;justify-content:center;gap:0.6rem;margin-bottom:1.5rem;">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:40px;height:40px;">
+          <rect width="32" height="32" rx="8" fill="#1a73e8"/>
+          <path d="M6 20.5C6 20.5 8 17 11 17C13 17 13.5 18.5 16 18.5C18.5 18.5 19 17 21 17C24 17 26 20.5 26 20.5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="11" cy="21" r="2.5" fill="#1a1a2e" stroke="white" stroke-width="1.5"/>
+          <circle cx="21" cy="21" r="2.5" fill="#1a1a2e" stroke="white" stroke-width="1.5"/>
+          <path d="M10 17L12 12H20L22 17" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M12 12L13.5 8H18.5L20 12" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h2 style="margin:0;">araç<span style="color:#1a73e8">fırsat</span> admin</h2>
+      </div>
+      <input type="password" id="loginSifre" placeholder="Admin şifresi" onkeydown="if(event.key==='Enter')girisYap()">
+      <button onclick="girisYap()">Giriş Yap</button>
+      <p class="login-error" id="loginError">Yanlış şifre!</p>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <nav class="admin-nav">
+    <h1 style="display:flex;align-items:center;gap:0.5rem;">
+      <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:28px;height:28px;">
+        <rect width="32" height="32" rx="8" fill="#1a73e8"/>
+        <path d="M6 20.5C6 20.5 8 17 11 17C13 17 13.5 18.5 16 18.5C18.5 18.5 19 17 21 17C24 17 26 20.5 26 20.5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="11" cy="21" r="2.5" fill="#1a1a2e" stroke="white" stroke-width="1.5"/>
+        <circle cx="21" cy="21" r="2.5" fill="#1a1a2e" stroke="white" stroke-width="1.5"/>
+        <path d="M10 17L12 12H20L22 17" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M12 12L13.5 8H18.5L20 12" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      araç<span>fırsat</span> admin
+    </h1>
+    <div class="admin-nav-links">
+      <a href="#" class="active" onclick="tabDegistir('dashboard')">Dashboard</a>
+      <a href="#" onclick="tabDegistir('leadler')">Leadler</a>
+      <a href="#" onclick="tabDegistir('araclar')">Araçlar</a>
+      <a href="#" onclick="tabDegistir('fiyat')">Fiyat Güncelle</a>
+      <a href="/" target="_blank">Siteyi Gör</a>
+      <button onclick="cikisYap()">Çıkış</button>
+    </div>
+  </nav>
+
+  <div class="admin-content">
+
+    <!-- UYARILAR -->
+    <div class="alert-bar" id="alertBar"></div>
+
+    <!-- DASHBOARD -->
+    <div id="tab-dashboard">
+      <div class="stats-grid" id="statsGrid"></div>
+      <div class="popular-grid" id="popularGrid"></div>
+      <div class="panel-section">
+        <div class="panel-header">
+          <h2>Son Talepler</h2>
+        </div>
+        <table>
+          <thead><tr><th>Puan</th><th>Ad Soyad</th><th>Telefon</th><th>Araç</th><th>Şehir</th><th>Kaynak</th><th>Durum</th><th>Tarih</th></tr></thead>
+          <tbody id="sonTalepler"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- LEADLER -->
+    <div id="tab-leadler" class="tab-hidden">
+      <div class="panel-section">
+        <div class="panel-header">
+          <h2>Test Sürüşü Talepleri</h2>
+          <div class="panel-actions">
+            <select id="leadFiltre" onchange="leadleriYukle()">
+              <option value="">Tüm Durumlar</option>
+              <option value="yeni">Yeni</option>
+              <option value="arandi">Arandı</option>
+              <option value="randevu">Randevu</option>
+              <option value="tamamlandi">Tamamlandı</option>
+              <option value="iptal">İptal</option>
+            </select>
+            <select id="leadSirala" onchange="leadleriYukle()">
+              <option value="">Tarihe Göre</option>
+              <option value="puan">Puana Göre (Sıcak Önce)</option>
+            </select>
+            <button onclick="csvExport()">CSV İndir</button>
+          </div>
+        </div>
+        <table>
+          <thead><tr><th>Puan</th><th>Ad Soyad</th><th>Telefon</th><th>E-posta</th><th>Araç</th><th>Şehir</th><th>Tercih</th><th>Kaynak</th><th>Durum</th><th>Tarih</th><th>İşlem</th></tr></thead>
+          <tbody id="leadTablosu"></tbody>
+        </table>
+        <div class="pagination" id="leadPagination"></div>
+      </div>
+    </div>
+
+    <!-- ARAÇLAR -->
+    <div id="tab-araclar" class="tab-hidden">
+      <div class="panel-section">
+        <div class="panel-header">
+          <h2>Araç Yönetimi</h2>
+          <div class="panel-actions">
+            <button onclick="yeniAracModal()">+ Yeni Araç Ekle</button>
+          </div>
+        </div>
+        <table>
+          <thead><tr><th>ID</th><th>Görsel</th><th>Marka</th><th>Model</th><th>Segment</th><th>Motor</th><th>HP</th><th>Fiyat</th><th>Durum</th><th>İşlem</th></tr></thead>
+          <tbody id="aracTablosu"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- FİYAT GÜNCELLE -->
+    <div id="tab-fiyat" class="tab-hidden">
+      <!-- Toplu güncelleme -->
+      <div class="panel-section">
+        <div class="panel-header">
+          <h2>Toplu Fiyat Güncelleme</h2>
+        </div>
+        <div style="padding:1.5rem;">
+          <p style="color:#666;margin-bottom:1.25rem;">Tüm araçların veya belirli bir markanın fiyatlarını yüzde bazlı toplu güncelleyin.</p>
+          <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-end;">
+            <div>
+              <label style="display:block;font-weight:600;font-size:0.85rem;margin-bottom:0.3rem;">Marka (opsiyonel)</label>
+              <select id="topluMarka" style="padding:0.6rem 0.8rem;border:2px solid #e0e0e0;border-radius:6px;font-size:0.9rem;min-width:180px;">
+                <option value="">Tüm Markalar</option>
+              </select>
+            </div>
+            <div>
+              <label style="display:block;font-weight:600;font-size:0.85rem;margin-bottom:0.3rem;">Değişim Yüzdesi (%)</label>
+              <input type="number" id="topluYuzde" step="0.1" placeholder="ör: 5 veya -3" style="padding:0.6rem 0.8rem;border:2px solid #e0e0e0;border-radius:6px;font-size:0.9rem;width:150px;">
+            </div>
+            <button onclick="topluFiyatGuncelle()" style="padding:0.6rem 1.25rem;background:var(--primary);color:#fff;border:none;border-radius:6px;font-size:0.9rem;font-weight:600;cursor:pointer;">Toplu Güncelle</button>
+          </div>
+          <div id="topluSonuc" style="margin-top:1rem;"></div>
+        </div>
+      </div>
+
+      <!-- Tek tek güncelleme -->
+      <div class="panel-section">
+        <div class="panel-header">
+          <h2>Araç Bazlı Fiyat Güncelleme</h2>
+        </div>
+        <table>
+          <thead><tr><th>Marka</th><th>Model</th><th>Mevcut Fiyat</th><th>Yeni Fiyat (TL)</th><th>İşlem</th><th>Son Güncelleme</th></tr></thead>
+          <tbody id="fiyatTablosu"></tbody>
+        </table>
+      </div>
+
+      <!-- Fiyat Geçmişi -->
+      <div class="panel-section">
+        <div class="panel-header">
+          <h2>Fiyat Değişim Geçmişi</h2>
+        </div>
+        <table>
+          <thead><tr><th>Tarih</th><th>Marka</th><th>Model</th><th>Eski Fiyat</th><th>Yeni Fiyat</th><th>Değişim</th><th>Tip</th></tr></thead>
+          <tbody id="gecmisTablosu"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ARAÇ MODAL -->
+  <div class="modal-overlay" id="aracModal">
+    <div class="modal">
+      <h3 id="aracModalBaslik">Yeni Araç Ekle</h3>
+      <form class="modal-form" id="aracForm" onsubmit="return aracKaydet(event)">
+        <input type="hidden" id="aracEditId">
+        <label>Marka</label>
+        <input type="text" id="aMarka" required>
+        <label>Model</label>
+        <input type="text" id="aModel" required>
+        <label>Segment</label>
+        <select id="aSegment" required>
+          <option value="sedan">Sedan</option>
+          <option value="suv">SUV</option>
+          <option value="hatchback">Hatchback</option>
+          <option value="crossover">Crossover</option>
+        </select>
+        <label>Yakıt</label>
+        <select id="aYakit" required>
+          <option value="benzin">Benzin</option>
+          <option value="dizel">Dizel</option>
+          <option value="hybrid">Hybrid</option>
+          <option value="elektrik">Elektrik</option>
+        </select>
+        <label>Motor</label>
+        <input type="text" id="aMotor" required placeholder="ör: 1.5L Turbo">
+        <label>Vites</label>
+        <input type="text" id="aVites" required placeholder="ör: DSG 7">
+        <label>Beygir Gücü</label>
+        <input type="number" id="aHp" required>
+        <label>Fiyat (TL)</label>
+        <input type="number" id="aFiyat" required>
+        <label>Görsel URL</label>
+        <input type="url" id="aGorsel" placeholder="https://...">
+        <div class="modal-btns">
+          <button type="button" class="btn-cancel" onclick="modalKapat()">İptal</button>
+          <button type="submit" class="btn-save">Kaydet</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- DURUM DEĞİŞTİRME MODAL -->
+  <div class="modal-overlay" id="durumModal">
+    <div class="modal" style="width:350px;">
+      <h3>Durum Güncelle</h3>
+      <input type="hidden" id="durumLeadId">
+      <select id="durumSelect" style="width:100%;padding:0.6rem;border:2px solid #e0e0e0;border-radius:6px;font-size:1rem;margin:1rem 0;">
+        <option value="yeni">Yeni</option>
+        <option value="arandi">Arandı</option>
+        <option value="randevu">Randevu</option>
+        <option value="tamamlandi">Tamamlandı</option>
+        <option value="iptal">İptal</option>
+      </select>
+      <div class="modal-btns">
+        <button class="btn-cancel" onclick="modalKapat()">İptal</button>
+        <button class="btn-save" onclick="durumGuncelle()">Güncelle</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let adminKey = '';
+    let currentTab = 'dashboard';
+
+    // ─── AUTH ────────────────────────
+    async function girisYap() {
+      const sifre = document.getElementById('loginSifre').value;
+      try {
+        const res = await fetch('/api/admin/istatistikler', { headers: { 'x-admin-key': sifre } });
+        if (res.ok) {
+          adminKey = sifre;
+          document.getElementById('loginOverlay').style.display = 'none';
+          dashboardYukle();
+        } else {
+          document.getElementById('loginError').style.display = 'block';
+        }
+      } catch { document.getElementById('loginError').style.display = 'block'; }
+    }
+
+    function cikisYap() {
+      adminKey = '';
+      document.getElementById('loginOverlay').style.display = 'flex';
+      document.getElementById('loginSifre').value = '';
+      document.getElementById('loginError').style.display = 'none';
+    }
+
+    function apiFetch(url, options = {}) {
+      options.headers = { ...options.headers, 'x-admin-key': adminKey, 'Content-Type': 'application/json' };
+      return fetch(url, options);
+    }
+
+    // ─── SCORE RENDER ────────────────
+    function scoreHtml(puan) {
+      const cls = puan >= 70 ? 'hot' : puan >= 40 ? 'warm' : 'cold';
+      return `
+        <div class="score-${cls}">
+          <span class="score-bar"><span class="score-fill" style="width:${puan}%"></span></span>
+          <span class="score-text ${cls}">${puan}</span>
+        </div>
+      `;
+    }
+
+    function durumBadge(durum) {
+      const cls = durum === 'arandi' ? 'arandi' : durum === 'tamamlandi' ? 'tamamlandi' : durum;
+      return `<span class="badge badge-${cls}">${durum}</span>`;
+    }
+
+    // ─── TABS ────────────────────────
+    function tabDegistir(tab) {
+      document.querySelectorAll('.admin-nav-links a').forEach(a => a.classList.remove('active'));
+      event.target.classList.add('active');
+      ['dashboard', 'leadler', 'araclar', 'fiyat'].forEach(t => {
+        document.getElementById('tab-' + t).classList.toggle('tab-hidden', t !== tab);
+      });
+      currentTab = tab;
+      if (tab === 'dashboard') dashboardYukle();
+      else if (tab === 'leadler') leadleriYukle();
+      else if (tab === 'araclar') araclariYukle();
+      else if (tab === 'fiyat') fiyatTabYukle();
+    }
+
+    // ─── DASHBOARD ───────────────────
+    async function dashboardYukle() {
+      const res = await apiFetch('/api/admin/istatistikler');
+      const data = await res.json();
+
+      // Uyarılar
+      let alerts = '';
+      if (data.bekleyen > 0) {
+        alerts += `<div class="alert alert-danger"><span class="alert-icon">&#9888;</span> ${data.bekleyen} lead 2+ saattir "yeni" durumda bekliyor! Hemen arayın.</div>`;
+      }
+      if (data.takipGerekli > 0) {
+        alerts += `<div class="alert alert-warning"><span class="alert-icon">&#128276;</span> ${data.takipGerekli} lead "arandı" durumda 48+ saattir güncellenmedi. Takip edin.</div>`;
+      }
+      document.getElementById('alertBar').innerHTML = alerts;
+
+      document.getElementById('statsGrid').innerHTML = `
+        <div class="stat-card"><div class="stat-number">${data.toplam}</div><div class="stat-label">Toplam Lead</div></div>
+        <div class="stat-card sicak"><div class="stat-number">${data.sicakLead}</div><div class="stat-label">Sıcak Lead (70+)</div></div>
+        <div class="stat-card ort-puan"><div class="stat-number">${data.ortPuan}</div><div class="stat-label">Ort. Puan</div></div>
+        <div class="stat-card yeni"><div class="stat-number">${data.yeni}</div><div class="stat-label">Yeni</div></div>
+        <div class="stat-card arandi"><div class="stat-number">${data.arandi}</div><div class="stat-label">Arandı</div></div>
+        <div class="stat-card randevu"><div class="stat-number">${data.randevu}</div><div class="stat-label">Randevu</div></div>
+        <div class="stat-card tamamlandi"><div class="stat-number">${data.tamamlandi}</div><div class="stat-label">Tamamlandı</div></div>
+      `;
+
+      document.getElementById('popularGrid').innerHTML = `
+        <div class="popular-card">
+          <h3>En Çok Talep Edilen Araçlar</h3>
+          ${data.populerAraclar.map(a => `<div class="popular-item"><span>${a.arac}</span><span class="popular-count">${a.sayi}</span></div>`).join('') || '<p style="color:#999;font-size:0.85rem;">Henüz talep yok</p>'}
+        </div>
+        <div class="popular-card">
+          <h3>En Çok Talep Gelen Şehirler</h3>
+          ${data.populerSehirler.map(s => `<div class="popular-item"><span>${s.sehir}</span><span class="popular-count">${s.sayi}</span></div>`).join('') || '<p style="color:#999;font-size:0.85rem;">Henüz talep yok</p>'}
+        </div>
+        <div class="popular-card">
+          <h3>Trafik Kaynakları</h3>
+          ${data.kaynaklar.map(k => `<div class="popular-item"><span>${k.kaynak}</span><span class="popular-count">${k.sayi}</span></div>`).join('') || '<p style="color:#999;font-size:0.85rem;">Henüz veri yok</p>'}
+        </div>
+      `;
+
+      // Son talepler
+      const leadsRes = await apiFetch('/api/admin/leads?sayfa=1&sirala=puan');
+      const leadsData = await leadsRes.json();
+      document.getElementById('sonTalepler').innerHTML = leadsData.leads.slice(0, 8).map(l => `
+        <tr>
+          <td>${scoreHtml(l.puan || 0)}</td>
+          <td>${l.ad_soyad}</td>
+          <td><a href="tel:${l.telefon}">${l.telefon}</a></td>
+          <td>${l.arac}</td>
+          <td>${l.sehir}</td>
+          <td>${l.kaynak || 'direkt'}</td>
+          <td>${durumBadge(l.durum)}</td>
+          <td>${new Date(l.created_at).toLocaleDateString('tr-TR')}</td>
+        </tr>
+      `).join('') || '<tr><td colspan="8" style="text-align:center;color:#999;">Henüz talep yok</td></tr>';
+    }
+
+    // ─── LEADLER ─────────────────────
+    let leadSayfa = 1;
+
+    async function leadleriYukle(sayfa = 1) {
+      leadSayfa = sayfa;
+      const durum = document.getElementById('leadFiltre').value;
+      const sirala = document.getElementById('leadSirala').value;
+      const params = new URLSearchParams({ sayfa });
+      if (durum) params.set('durum', durum);
+      if (sirala) params.set('sirala', sirala);
+
+      const res = await apiFetch('/api/admin/leads?' + params);
+      const data = await res.json();
+
+      const now = new Date();
+
+      document.getElementById('leadTablosu').innerHTML = data.leads.map(l => {
+        const created = new Date(l.created_at);
+        const hoursDiff = (now - created) / (1000 * 60 * 60);
+        const isStale = (l.durum === 'yeni' && hoursDiff > 2) || (l.durum === 'arandi' && hoursDiff > 48);
+
+        return `
+        <tr class="${isStale ? 'row-stale' : ''}">
+          <td>${scoreHtml(l.puan || 0)}</td>
+          <td>${l.ad_soyad} ${isStale ? '<span class="stale-icon" title="Acil takip gerekli">&#9888;</span>' : ''}</td>
+          <td><a href="tel:${l.telefon}">${l.telefon}</a></td>
+          <td>${l.eposta || '-'}</td>
+          <td>${l.arac}</td>
+          <td>${l.sehir}</td>
+          <td>${l.tercih_tarih || '-'}</td>
+          <td>${l.kaynak || 'direkt'}</td>
+          <td><span class="badge badge-${l.durum}" style="cursor:pointer" onclick="durumModalAc(${l.id},'${l.durum}')">${l.durum}</span></td>
+          <td>${new Date(l.created_at).toLocaleDateString('tr-TR')}</td>
+          <td><button class="action-btn delete" onclick="leadSil(${l.id})">Sil</button></td>
+        </tr>`;
+      }).join('') || '<tr><td colspan="11" style="text-align:center;color:#999;">Talep bulunamadı</td></tr>';
+
+      let pagHtml = '';
+      for (let i = 1; i <= data.toplam_sayfa; i++) {
+        pagHtml += `<button class="${i === data.sayfa ? 'active' : ''}" onclick="leadleriYukle(${i})">${i}</button>`;
+      }
+      document.getElementById('leadPagination').innerHTML = pagHtml;
+    }
+
+    function durumModalAc(id, mevcut) {
+      document.getElementById('durumLeadId').value = id;
+      document.getElementById('durumSelect').value = mevcut;
+      document.getElementById('durumModal').classList.add('active');
+    }
+
+    async function durumGuncelle() {
+      const id = document.getElementById('durumLeadId').value;
+      const durum = document.getElementById('durumSelect').value;
+      await apiFetch('/api/admin/leads/' + id, { method: 'PATCH', body: JSON.stringify({ durum }) });
+      modalKapat();
+      leadleriYukle(leadSayfa);
+      if (currentTab === 'dashboard') dashboardYukle();
+    }
+
+    async function leadSil(id) {
+      if (!confirm('Bu talebi silmek istediğinize emin misiniz?')) return;
+      await apiFetch('/api/admin/leads/' + id, { method: 'DELETE' });
+      leadleriYukle(leadSayfa);
+    }
+
+    function csvExport() {
+      fetch('/api/admin/leads/export', { headers: { 'x-admin-key': adminKey } })
+        .then(r => r.blob())
+        .then(blob => {
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(blob);
+          a.download = 'leads.csv';
+          a.click();
+        });
+    }
+
+    // ─── ARAÇLAR ─────────────────────
+    async function araclariYukle() {
+      const res = await fetch('/api/araclar');
+      const araclar = await res.json();
+
+      document.getElementById('aracTablosu').innerHTML = araclar.map(a => `
+        <tr>
+          <td>${a.id}</td>
+          <td>${a.gorsel ? `<img src="${a.gorsel}" style="width:80px;height:50px;object-fit:cover;border-radius:4px;" onerror="this.src=''">` : '-'}</td>
+          <td>${a.marka}</td>
+          <td>${a.model}</td>
+          <td>${a.segment}</td>
+          <td>${a.motor}</td>
+          <td>${a.hp}</td>
+          <td>${new Intl.NumberFormat('tr-TR').format(a.fiyat)} TL</td>
+          <td>${a.aktif ? '<span style="color:#27ae60">Aktif</span>' : '<span style="color:#999">Pasif</span>'}</td>
+          <td>
+            <button class="action-btn edit" onclick="aracDuzenle(${a.id})">Düzenle</button>
+            <button class="action-btn delete" onclick="aracSil(${a.id})">Sil</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function yeniAracModal() {
+      document.getElementById('aracModalBaslik').textContent = 'Yeni Araç Ekle';
+      document.getElementById('aracForm').reset();
+      document.getElementById('aracEditId').value = '';
+      document.getElementById('aracModal').classList.add('active');
+    }
+
+    async function aracDuzenle(id) {
+      const res = await fetch('/api/araclar/' + id);
+      const a = await res.json();
+      document.getElementById('aracModalBaslik').textContent = 'Araç Düzenle';
+      document.getElementById('aracEditId').value = a.id;
+      document.getElementById('aMarka').value = a.marka;
+      document.getElementById('aModel').value = a.model;
+      document.getElementById('aSegment').value = a.segment;
+      document.getElementById('aYakit').value = a.yakit;
+      document.getElementById('aMotor').value = a.motor;
+      document.getElementById('aVites').value = a.vites;
+      document.getElementById('aHp').value = a.hp;
+      document.getElementById('aFiyat').value = a.fiyat;
+      document.getElementById('aGorsel').value = a.gorsel || '';
+      document.getElementById('aracModal').classList.add('active');
+    }
+
+    async function aracKaydet(e) {
+      e.preventDefault();
+      const id = document.getElementById('aracEditId').value;
+      const body = {
+        marka: document.getElementById('aMarka').value,
+        model: document.getElementById('aModel').value,
+        segment: document.getElementById('aSegment').value,
+        yakit: document.getElementById('aYakit').value,
+        motor: document.getElementById('aMotor').value,
+        vites: document.getElementById('aVites').value,
+        hp: parseInt(document.getElementById('aHp').value),
+        fiyat: parseInt(document.getElementById('aFiyat').value),
+        gorsel: document.getElementById('aGorsel').value || null,
+        aktif: 1
+      };
+
+      if (id) {
+        await apiFetch('/api/admin/araclar/' + id, { method: 'PUT', body: JSON.stringify(body) });
+      } else {
+        await apiFetch('/api/admin/araclar', { method: 'POST', body: JSON.stringify(body) });
+      }
+      modalKapat();
+      araclariYukle();
+      return false;
+    }
+
+    async function aracSil(id) {
+      if (!confirm('Bu aracı silmek istediğinize emin misiniz?')) return;
+      await apiFetch('/api/admin/araclar/' + id, { method: 'DELETE' });
+      araclariYukle();
+    }
+
+    function modalKapat() {
+      document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
+    }
+
+    document.querySelectorAll('.modal-overlay').forEach(m => {
+      m.addEventListener('click', e => { if (e.target === m) modalKapat(); });
+    });
+
+    // ─── FİYAT GÜNCELLE ───────────────
+    async function fiyatTabYukle() {
+      // Marka dropdown doldur
+      const markaRes = await fetch('/api/markalar');
+      const markalar = await markaRes.json();
+      const markaSelect = document.getElementById('topluMarka');
+      markaSelect.innerHTML = '<option value="">Tüm Markalar</option>';
+      markalar.forEach(m => {
+        markaSelect.innerHTML += `<option value="${m}">${m}</option>`;
+      });
+
+      // Araç fiyat tablosu
+      const aracRes = await fetch('/api/araclar');
+      const araclar = await aracRes.json();
+      document.getElementById('fiyatTablosu').innerHTML = araclar.map(a => `
+        <tr>
+          <td>${a.marka}</td>
+          <td>${a.model}</td>
+          <td>${new Intl.NumberFormat('tr-TR').format(a.fiyat)} TL</td>
+          <td><input type="number" id="fiyat-${a.id}" placeholder="${a.fiyat}" style="width:140px;padding:0.4rem 0.6rem;border:2px solid #e0e0e0;border-radius:6px;font-size:0.85rem;"></td>
+          <td><button class="action-btn edit" onclick="tekFiyatGuncelle(${a.id})">Güncelle</button></td>
+          <td style="font-size:0.8rem;color:#999;">${a.son_guncelleme ? new Date(a.son_guncelleme).toLocaleDateString('tr-TR') : '-'}</td>
+        </tr>
+      `).join('');
+
+      // Geçmiş yükle
+      fiyatGecmisiYukle();
+    }
+
+    async function tekFiyatGuncelle(id) {
+      const input = document.getElementById('fiyat-' + id);
+      const yeniFiyat = parseInt(input.value);
+      if (!yeniFiyat || yeniFiyat <= 0) { alert('Geçerli bir fiyat girin'); return; }
+
+      const res = await apiFetch('/api/admin/araclar/' + id + '/fiyat', {
+        method: 'PATCH',
+        body: JSON.stringify({ yeni_fiyat: yeniFiyat })
+      });
+      const data = await res.json();
+      if (data.success) {
+        input.value = '';
+        fiyatTabYukle();
+      }
+    }
+
+    async function topluFiyatGuncelle() {
+      const yuzde = parseFloat(document.getElementById('topluYuzde').value);
+      if (isNaN(yuzde)) { alert('Geçerli bir yüzde değeri girin'); return; }
+
+      const marka = document.getElementById('topluMarka').value;
+      const markaText = marka || 'tüm markalar';
+      const artisText = yuzde >= 0 ? `%${yuzde} artış` : `%${Math.abs(yuzde)} düşüş`;
+
+      if (!confirm(`${markaText} için ${artisText} uygulanacak. Onaylıyor musunuz?`)) return;
+
+      const body = { yuzde };
+      if (marka) body.marka = marka;
+
+      const res = await apiFetch('/api/admin/fiyat-guncelle/toplu', {
+        method: 'POST',
+        body: JSON.stringify(body)
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        document.getElementById('topluSonuc').innerHTML = `
+          <div style="background:#d1fae5;color:#065f46;padding:1rem;border-radius:8px;font-weight:600;">
+            ${data.guncellenen} araç başarıyla güncellendi!
+          </div>
+        `;
+        document.getElementById('topluYuzde').value = '';
+        setTimeout(() => {
+          document.getElementById('topluSonuc').innerHTML = '';
+          fiyatTabYukle();
+        }, 2000);
+      }
+    }
+
+    async function fiyatGecmisiYukle() {
+      const res = await apiFetch('/api/admin/fiyat-gecmisi');
+      const gecmis = await res.json();
+
+      document.getElementById('gecmisTablosu').innerHTML = gecmis.length ? gecmis.map(g => {
+        const degisim = parseFloat(g.degisim_yuzde);
+        const renk = degisim > 0 ? '#e74c3c' : degisim < 0 ? '#27ae60' : '#666';
+        const ok = degisim > 0 ? '&#9650;' : degisim < 0 ? '&#9660;' : '';
+        return `
+          <tr>
+            <td>${new Date(g.created_at).toLocaleDateString('tr-TR')}</td>
+            <td>${g.marka}</td>
+            <td>${g.model}</td>
+            <td>${new Intl.NumberFormat('tr-TR').format(g.eski_fiyat)} TL</td>
+            <td>${new Intl.NumberFormat('tr-TR').format(g.yeni_fiyat)} TL</td>
+            <td style="color:${renk};font-weight:700;">${ok} %${Math.abs(degisim).toFixed(1)}</td>
+            <td><span class="badge badge-${g.guncelleme_tipi === 'toplu' ? 'arandi' : 'yeni'}">${g.guncelleme_tipi}</span></td>
+          </tr>
+        `;
+      }).join('') : '<tr><td colspan="7" style="text-align:center;color:#999;padding:2rem;">Henüz fiyat değişikliği yok</td></tr>';
+    }
+  </script>
+</body>
+</html>

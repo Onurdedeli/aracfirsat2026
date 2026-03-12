@@ -1,0 +1,6 @@
+node_modules/
+aracfirsat.db
+aracfirsat.db-shm
+aracfirsat.db-wal
+.env
+.DS_Store
