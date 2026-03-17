@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AraçFırsat - Sıfır Araç Fiyat Karşılaştırma</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="container nav-content">
+      <a href="#" class="logo">
+        <svg class="logo-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="8" fill="#1a73e8"/>
+          <path d="M6 20.5C6 20.5 8 17 11 17C13 17 13.5 18.5 16 18.5C18.5 18.5 19 17 21 17C24 17 26 20.5 26 20.5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="11" cy="21" r="2.5" fill="#1a1a2e" stroke="white" stroke-width="1.5"/>
+          <circle cx="21" cy="21" r="2.5" fill="#1a1a2e" stroke="white" stroke-width="1.5"/>
+          <path d="M10 17L12 12H20L22 17" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M12 12L13.5 8H18.5L20 12" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M14 10H18" stroke="rgba(255,255,255,0.5)" stroke-width="1" stroke-linecap="round"/>
+        </svg>
+        <span class="logo-text">araç<span>fırsat</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#araclar">Araçlar</a></li>
+        <li><a href="#karsilastir">Karşılaştır</a></li>
+        <li><a href="#test-surusu">Test Sürüşü</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <h1>Sıfır Araç Fiyatlarını<br>Karşılaştır</h1>
+      <p>Türkiye'deki tüm sıfır araç fiyatlarını tek sayfada incele, karşılaştır ve test sürüşü talep et.</p>
+      <div class="hero-search">
+        <select id="heroMarka">
+          <option value="">Marka Seçin</option>
+        </select>
+        <select id="heroSegment">
+          <option value="">Segment</option>
+          <option value="sedan">Sedan</option>
+          <option value="suv">SUV</option>
+          <option value="hatchback">Hatchback</option>
+          <option value="crossover">Crossover</option>
+        </select>
+        <button onclick="heroAra()">Ara</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARAÇ LİSTESİ -->
+  <section id="araclar" class="section">
+    <div class="container">
+      <h2 class="section-title">Sıfır Araçlar</h2>
+      <p id="sonGuncelleme" class="section-desc" style="font-size:0.85rem;color:#999;margin-bottom:1rem;"></p>
+
+      <div class="filters">
+        <select id="filtreMarka" onchange="filtrele()">
+          <option value="">Tüm Markalar</option>
+        </select>
+        <select id="filtreSegment" onchange="filtrele()">
+          <option value="">Tüm Segmentler</option>
+          <option value="sedan">Sedan</option>
+          <option value="suv">SUV</option>
+          <option value="hatchback">Hatchback</option>
+          <option value="crossover">Crossover</option>
+        </select>
+        <select id="filtreYakit" onchange="filtrele()">
+          <option value="">Tüm Yakıt Tipleri</option>
+          <option value="benzin">Benzin</option>
+          <option value="dizel">Dizel</option>
+          <option value="hybrid">Hybrid</option>
+          <option value="elektrik">Elektrik</option>
+        </select>
+        <select id="filtreSirala" onchange="filtrele()">
+          <option value="fiyat-artan">Fiyat (Düşükten Yükseğe)</option>
+          <option value="fiyat-azalan">Fiyat (Yüksekten Düşüğe)</option>
+          <option value="isim">İsim (A-Z)</option>
+        </select>
+      </div>
+
+      <div id="aracListesi" class="car-grid"></div>
+    </div>
+  </section>
+
+  <!-- KARŞILAŞTIRMA -->
+  <section id="karsilastir" class="section section-alt">
+    <div class="container">
+      <h2 class="section-title">Araç Karşılaştır</h2>
+      <p class="section-desc">Listeden araçları seçerek yan yana karşılaştırın.</p>
+
+      <div class="compare-selectors">
+        <select id="compare1" onchange="karsilastir()">
+          <option value="">1. Araç Seçin</option>
+        </select>
+        <span class="vs">VS</span>
+        <select id="compare2" onchange="karsilastir()">
+          <option value="">2. Araç Seçin</option>
+        </select>
+      </div>
+
+      <div id="compareResult" class="compare-table-wrapper"></div>
+
+      <!-- KARŞILAŞTIRMA SONRASI CTA -->
+      <div id="compareCTA" class="compare-cta" style="display:none;">
+        <div class="cta-box">
+          <h3>Hangisine karar veremediniz mi?</h3>
+          <p>Uzmanımız sizi arasın, size özel fiyat teklifi sunalım.</p>
+          <form class="cta-form" onsubmit="return ctaFormGonder(event)">
+            <input type="tel" id="ctaTelefon" placeholder="Telefon numaranız" required>
+            <button type="submit">Beni Arayın</button>
+          </form>
+          <div id="ctaBasari" class="cta-success" style="display:none;">En kısa sürede aranacaksınız!</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MULTI-STEP TEST SÜRÜŞÜ FORMU -->
+  <section id="test-surusu" class="section">
+    <div class="container">
+      <h2 class="section-title">Test Sürüşü Talebi</h2>
+      <p class="section-desc">3 adımda test sürüşü randevunuzu oluşturun.</p>
+
+      <!-- Progress bar -->
+      <div class="step-progress">
+        <div class="step-bar">
+          <div class="step-fill" id="stepFill" style="width:33%"></div>
+        </div>
+        <div class="step-labels">
+          <span class="step-label active" data-step="1">1. Araç Seçimi</span>
+          <span class="step-label" data-step="2">2. Tarih & Şehir</span>
+          <span class="step-label" data-step="3">3. Bilgileriniz</span>
+        </div>
+      </div>
+
+      <form id="leadForm" class="lead-form" onsubmit="return formGonder(event)">
+        <!-- ADIM 1: Araç -->
+        <div class="form-step active" id="step1">
+          <div class="form-group" style="grid-column:1/-1;">
+            <label>Hangi aracı test etmek istersiniz? *</label>
+            <select id="formArac" required>
+              <option value="">Araç Seçin</option>
+            </select>
+          </div>
+          <div class="step-buttons">
+            <span></span>
+            <button type="button" class="btn-next" onclick="adimIleri(2)">Devam Et &rarr;</button>
+          </div>
+        </div>
+
+        <!-- ADIM 2: Tarih & Şehir -->
+        <div class="form-step" id="step2">
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Şehir *</label>
+              <select id="sehir" required>
+                <option value="">Şehir Seçin</option>
+                <option>İstanbul</option>
+                <option>Ankara</option>
+                <option>İzmir</option>
+                <option>Bursa</option>
+                <option>Antalya</option>
+                <option>Adana</option>
+                <option>Konya</option>
+                <option>Gaziantep</option>
+                <option>Diğer</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Tercih Ettiğiniz Tarih</label>
+              <input type="date" id="tercihTarih" min="">
+            </div>
+          </div>
+          <div class="step-buttons">
+            <button type="button" class="btn-prev" onclick="adimGeri(1)">&larr; Geri</button>
+            <button type="button" class="btn-next" onclick="adimIleri(3)">Devam Et &rarr;</button>
+          </div>
+        </div>
+
+        <!-- ADIM 3: Kişisel Bilgiler -->
+        <div class="form-step" id="step3">
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Ad Soyad *</label>
+              <input type="text" id="adSoyad" required placeholder="Adınız Soyadınız">
+            </div>
+            <div class="form-group">
+              <label>Telefon *</label>
+              <input type="tel" id="telefon" required placeholder="05XX XXX XX XX">
+            </div>
+            <div class="form-group">
+              <label>E-posta</label>
+              <input type="email" id="eposta" placeholder="ornek@mail.com">
+            </div>
+            <div class="form-group">
+              <label>Not</label>
+              <textarea id="notText" rows="3" placeholder="Ek bilgi veya tercihleriniz..."></textarea>
+            </div>
+          </div>
+          <div class="step-buttons">
+            <button type="button" class="btn-prev" onclick="adimGeri(2)">&larr; Geri</button>
+            <button type="submit" class="btn-submit">Test Sürüşü Talep Et</button>
+          </div>
+        </div>
+      </form>
+
+      <div id="formBasari" class="success-msg" style="display:none;">
+        <div class="success-icon">&#10003;</div>
+        <h3>Talebiniz alındı!</h3>
+        <p>En kısa sürede sizinle iletişime geçeceğiz.</p>
+        <div id="whatsappInfo" class="whatsapp-info">
+          <p>Hızlı iletişim için bize WhatsApp'tan da ulaşabilirsiniz:</p>
+          <a href="https://wa.me/905XXXXXXXXX?text=Merhaba,%20test%20s%C3%BCr%C3%BC%C5%9F%C3%BC%20talebi%20olu%C5%9Fturdum" class="whatsapp-btn" target="_blank">
+            WhatsApp ile Mesaj Gönder
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLICK-TO-CALL (Mobil) -->
+  <a href="tel:+905XXXXXXXXX" class="click-to-call" id="clickToCall">
+    <span class="call-icon">&#9742;</span>
+    <span class="call-text">Hemen Ara</span>
+  </a>
+
+  <!-- EXIT INTENT POPUP -->
+  <div class="exit-overlay" id="exitPopup">
+    <div class="exit-modal">
+      <button class="exit-close" onclick="exitKapat()">&times;</button>
+      <div class="exit-content">
+        <div class="exit-icon">&#128640;</div>
+        <h3>Aracınızı henüz buldunuz mu?</h3>
+        <p>Telefonunuzu bırakın, size özel fiyat teklifi gönderelim.</p>
+        <form class="exit-form" onsubmit="return exitFormGonder(event)">
+          <input type="tel" id="exitTelefon" placeholder="05XX XXX XX XX" required>
+          <button type="submit">Özel Teklif Al</button>
+        </form>
+        <div id="exitBasari" class="exit-success" style="display:none;">
+          Talebiniz alındı! Sizi arayacağız.
+        </div>
+        <p class="exit-note">* Bilgileriniz gizli tutulur, spam göndermeyiz.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 AraçFırsat - Tüm hakları saklıdır.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
