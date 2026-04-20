@@ -55,6 +55,10 @@ const ARAC_VERILERI = [
 
 let tumAraclar = [];
 
+// ─── STATİK MOD ALGILAMA ─────────────────────────────────
+// GitHub Pages veya statik hosting'de API mevcut değil
+const STATIK_MOD = !window.location.hostname.includes('localhost') && !window.location.hostname.includes('127.0.0.1');
+
 // ─── UTM TAKIBI ──────────────────────────────────────────
 function getUTM() {
   const params = new URLSearchParams(window.location.search);
@@ -72,21 +76,24 @@ function fiyatFormat(fiyat) {
 }
 
 async function araclariYukle() {
-  try {
-    const res = await fetch('/api/araclar');
-    if (res.ok) { tumAraclar = await res.json(); return tumAraclar; }
-  } catch {}
-  // Fallback: gömülü veri (GitHub Pages)
+  if (!STATIK_MOD) {
+    try {
+      const res = await fetch('/api/araclar');
+      if (res.ok) { tumAraclar = await res.json(); return tumAraclar; }
+    } catch {}
+  }
   tumAraclar = ARAC_VERILERI;
   return tumAraclar;
 }
 
 async function markalariDoldur() {
   let markalar;
-  try {
-    const res = await fetch('/api/markalar');
-    if (res.ok) { markalar = await res.json(); }
-  } catch {}
+  if (!STATIK_MOD) {
+    try {
+      const res = await fetch('/api/markalar');
+      if (res.ok) { markalar = await res.json(); }
+    } catch {}
+  }
   if (!markalar) {
     markalar = [...new Set(ARAC_VERILERI.map(a => a.marka))].sort();
   }
@@ -134,17 +141,18 @@ async function filtrele() {
   const yakit = document.getElementById('filtreYakit').value;
   const sirala = document.getElementById('filtreSirala').value;
 
-  // Önce API'den dene, yoksa lokal filtrele
   let sonuc;
-  try {
-    const params = new URLSearchParams();
-    if (marka) params.set('marka', marka);
-    if (segment) params.set('segment', segment);
-    if (yakit) params.set('yakit', yakit);
-    if (sirala) params.set('sirala', sirala);
-    const res = await fetch('/api/araclar?' + params);
-    if (res.ok) { sonuc = await res.json(); }
-  } catch {}
+  if (!STATIK_MOD) {
+    try {
+      const params = new URLSearchParams();
+      if (marka) params.set('marka', marka);
+      if (segment) params.set('segment', segment);
+      if (yakit) params.set('yakit', yakit);
+      if (sirala) params.set('sirala', sirala);
+      const res = await fetch('/api/araclar?' + params);
+      if (res.ok) { sonuc = await res.json(); }
+    } catch {}
+  }
 
   if (!sonuc) {
     // Lokal filtreleme (GitHub Pages)
@@ -241,13 +249,15 @@ function karsilastir() {
 async function ctaFormGonder(e) {
   e.preventDefault();
   const telefon = document.getElementById('ctaTelefon').value;
-  try {
-    await fetch('/api/leads/hizli', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ telefon, kaynak: 'karsilastirma-cta', ...UTM })
-    });
-  } catch {}
+  if (!STATIK_MOD) {
+    try {
+      await fetch('/api/leads/hizli', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ telefon, kaynak: 'karsilastirma-cta', ...UTM })
+      });
+    } catch {}
+  }
 
   // HubSpot'a lead gönder
   hubspotLeadGonder({ phone: telefon, kaynak: 'karsilastirma-cta' });
@@ -352,16 +362,18 @@ async function formGonder(e) {
     ...UTM
   };
 
-  try {
-    const res = await fetch('/api/leads', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
-    });
-    const data = await res.json();
-    if (!data.success) throw new Error();
-  } catch {
-    // GitHub Pages'da API yok, yine de başarı göster
+  if (!STATIK_MOD) {
+    try {
+      const res = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      const data = await res.json();
+      if (!data.success) throw new Error();
+    } catch {}
+  } else {
+    // Statik modda API yok, sadece HubSpot'a gönder
   }
 
   // HubSpot'a lead gönder
@@ -417,13 +429,15 @@ function exitKapat() {
 async function exitFormGonder(e) {
   e.preventDefault();
   const telefon = document.getElementById('exitTelefon').value;
-  try {
-    await fetch('/api/leads/hizli', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ telefon, kaynak: 'exit-intent', ...UTM })
-    });
-  } catch {}
+  if (!STATIK_MOD) {
+    try {
+      await fetch('/api/leads/hizli', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ telefon, kaynak: 'exit-intent', ...UTM })
+      });
+    } catch {}
+  }
 
   // HubSpot'a lead gönder
   hubspotLeadGonder({ phone: telefon, kaynak: 'exit-intent' });
@@ -472,20 +486,21 @@ function tarihMinAyarla() {
 
 // ─── SON GÜNCELLEME TARİHİ ────────────────────────────────
 async function sonGuncellemeGoster() {
-  try {
-    const res = await fetch('/api/son-guncelleme');
-    if (res.ok) {
-      const data = await res.json();
-      if (data.tarih) {
-        const tarih = new Date(data.tarih);
-        const formatted = tarih.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
-        const el = document.getElementById('sonGuncelleme');
-        if (el) el.textContent = `Fiyatlar son güncelleme: ${formatted}`;
-        return;
+  if (!STATIK_MOD) {
+    try {
+      const res = await fetch('/api/son-guncelleme');
+      if (res.ok) {
+        const data = await res.json();
+        if (data.tarih) {
+          const tarih = new Date(data.tarih);
+          const formatted = tarih.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
+          const el = document.getElementById('sonGuncelleme');
+          if (el) el.textContent = `Fiyatlar son güncelleme: ${formatted}`;
+          return;
+        }
       }
-    }
-  } catch {}
-  // Fallback
+    } catch {}
+  }
   const el = document.getElementById('sonGuncelleme');
   if (el) el.textContent = `Fiyatlar son güncelleme: ${new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}`;
 }
