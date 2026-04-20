@@ -305,7 +305,7 @@ app.post('/api/leads/hizli', async (req, res) => {
 });
 
 // ─── API: ADMIN ──────────────────────────────────────────
-const ADMIN_SIFRE = 'aracfirsat2026';
+const ADMIN_SIFRE = '11041984';
 
 function adminAuth(req, res, next) {
   const sifre = req.headers['x-admin-key'];

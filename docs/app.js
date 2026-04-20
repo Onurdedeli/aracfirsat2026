@@ -165,6 +165,7 @@ async function filtrele() {
     grid.innerHTML = '<p style="text-align:center;grid-column:1/-1;color:#999;padding:3rem;">Araç bulunamadı.</p>';
   } else {
     grid.innerHTML = sonuc.map(aracKarti).join('');
+    kartAnimasyonu();
   }
 }
 
@@ -233,6 +234,7 @@ function karsilastir() {
   `;
 
   cta.style.display = 'block';
+  tabloAnimasyonu();
 }
 
 // Karsilastirma CTA formu
@@ -246,6 +248,10 @@ async function ctaFormGonder(e) {
       body: JSON.stringify({ telefon, kaynak: 'karsilastirma-cta', ...UTM })
     });
   } catch {}
+
+  // HubSpot'a lead gönder
+  hubspotLeadGonder({ phone: telefon, kaynak: 'karsilastirma-cta' });
+
   document.querySelector('.cta-form').style.display = 'none';
   document.getElementById('ctaBasari').style.display = 'block';
   setTimeout(() => {
@@ -281,24 +287,35 @@ function adimIleri(step) {
     }
   }
 
-  document.getElementById('step' + currentStep).classList.remove('active');
-  document.getElementById('step' + step).classList.add('active');
+  const prev = currentStep;
   currentStep = step;
-
-  document.getElementById('stepFill').style.width = (step * 33.33) + '%';
   document.querySelectorAll('.step-label').forEach(l => {
     l.classList.toggle('active', parseInt(l.dataset.step) <= step);
   });
+
+  if (typeof gsap !== 'undefined') {
+    formAdimAnimasyonu(prev, step, true);
+  } else {
+    document.getElementById('step' + prev).classList.remove('active');
+    document.getElementById('step' + step).classList.add('active');
+    document.getElementById('stepFill').style.width = (step * 33.33) + '%';
+  }
 }
 
 function adimGeri(step) {
-  document.getElementById('step' + currentStep).classList.remove('active');
-  document.getElementById('step' + step).classList.add('active');
+  const prev = currentStep;
   currentStep = step;
-  document.getElementById('stepFill').style.width = (step * 33.33) + '%';
   document.querySelectorAll('.step-label').forEach(l => {
     l.classList.toggle('active', parseInt(l.dataset.step) <= step);
   });
+
+  if (typeof gsap !== 'undefined') {
+    formAdimAnimasyonu(prev, step, false);
+  } else {
+    document.getElementById('step' + prev).classList.remove('active');
+    document.getElementById('step' + step).classList.add('active');
+    document.getElementById('stepFill').style.width = (step * 33.33) + '%';
+  }
 }
 
 function testSurusuGit(id) {
@@ -347,9 +364,19 @@ async function formGonder(e) {
     // GitHub Pages'da API yok, yine de başarı göster
   }
 
+  // HubSpot'a lead gönder
+  hubspotLeadGonder({
+    email: body.eposta,
+    phone: body.telefon,
+    firstname: body.ad_soyad,
+    kaynak: 'test-surusu-formu',
+    arac: body.arac,
+    sehir: body.sehir
+  });
+
   document.getElementById('leadForm').style.display = 'none';
   document.querySelector('.step-progress').style.display = 'none';
-  document.getElementById('formBasari').style.display = 'block';
+  basariAnimasyonu('formBasari');
   setTimeout(() => {
     document.getElementById('leadForm').reset();
     document.getElementById('leadForm').style.display = 'block';
@@ -371,10 +398,20 @@ function exitPopupGoster() {
   exitShown = true;
   sessionStorage.setItem('exitShown', 'true');
   document.getElementById('exitPopup').classList.add('active');
+  exitPopupAnimasyonAc();
 }
 
 function exitKapat() {
-  document.getElementById('exitPopup').classList.remove('active');
+  if (typeof gsap !== 'undefined') {
+    exitPopupAnimasyonKapat(() => {
+      document.getElementById('exitPopup').classList.remove('active');
+      // Reset opacity for potential re-show
+      gsap.set('#exitPopup', { opacity: 1 });
+      gsap.set('.exit-modal', { opacity: 1, y: 0 });
+    });
+  } else {
+    document.getElementById('exitPopup').classList.remove('active');
+  }
 }
 
 async function exitFormGonder(e) {
@@ -387,6 +424,10 @@ async function exitFormGonder(e) {
       body: JSON.stringify({ telefon, kaynak: 'exit-intent', ...UTM })
     });
   } catch {}
+
+  // HubSpot'a lead gönder
+  hubspotLeadGonder({ phone: telefon, kaynak: 'exit-intent' });
+
   document.querySelector('.exit-form').style.display = 'none';
   document.getElementById('exitBasari').style.display = 'block';
   setTimeout(() => exitKapat(), 2500);
@@ -449,6 +490,211 @@ async function sonGuncellemeGoster() {
   if (el) el.textContent = `Fiyatlar son güncelleme: ${new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}`;
 }
 
+// ─── GSAP ANIMASYONLARI ──────────────────────────────────
+function gsapInit() {
+  gsap.registerPlugin(ScrollTrigger);
+
+  // 1. Hero açılış animasyonu
+  const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+  heroTl
+    .to('.hero h1', { opacity: 1, y: 0, duration: 0.8 }, 0)
+    .fromTo('.hero h1', { y: -30 }, { y: 0 }, 0)
+    .to('.hero p', { opacity: 1, y: 0, duration: 0.7 }, 0.2)
+    .fromTo('.hero p', { y: 20 }, { y: 0 }, 0.2)
+    .to('.hero-search', { opacity: 1, y: 0, duration: 0.7 }, 0.4)
+    .fromTo('.hero-search', { y: 30 }, { y: 0 }, 0.4);
+
+  // 8. Scroll-triggered section başlıkları
+  gsap.utils.toArray('.section-title').forEach(title => {
+    gsap.to(title, {
+      opacity: 1, y: 0, duration: 0.7, ease: 'power2.out',
+      scrollTrigger: { trigger: title, start: 'top 85%', once: true }
+    });
+    gsap.set(title, { y: 20 });
+  });
+  gsap.utils.toArray('.section-desc').forEach(desc => {
+    gsap.to(desc, {
+      opacity: 1, y: 0, duration: 0.6, ease: 'power2.out',
+      scrollTrigger: { trigger: desc, start: 'top 85%', once: true }
+    });
+    gsap.set(desc, { y: 15 });
+  });
+
+  // 9. Navbar scroll efekti
+  ScrollTrigger.create({
+    start: 'top -80',
+    onEnter: () => gsap.to('.navbar', { boxShadow: '0 4px 20px rgba(0,0,0,0.3)', duration: 0.3 }),
+    onLeaveBack: () => gsap.to('.navbar', { boxShadow: 'none', duration: 0.3 })
+  });
+
+  // 10. Click-to-call GSAP pulse
+  function clickToCallPulse() {
+    const btn = document.getElementById('clickToCall');
+    if (btn && btn.style.display === 'flex') {
+      gsap.to(btn, {
+        scale: 1.1,
+        boxShadow: '0 4px 28px rgba(39,174,96,0.7)',
+        duration: 0.4,
+        yoyo: true,
+        repeat: 1,
+        ease: 'power2.inOut'
+      });
+    }
+  }
+  setInterval(clickToCallPulse, 3000);
+}
+
+// Kart giriş animasyonu (filtreleme sonrası da çağrılır)
+function kartAnimasyonu() {
+  if (typeof gsap === 'undefined') return;
+  const kartlar = document.querySelectorAll('.car-card');
+  if (kartlar.length === 0) return;
+
+  gsap.fromTo(kartlar,
+    { opacity: 0, y: 40 },
+    { opacity: 1, y: 0, duration: 0.5, stagger: 0.06, ease: 'power2.out' }
+  );
+}
+
+// 3. Kart hover animasyonları
+function kartHoverInit() {
+  if (typeof gsap === 'undefined') return;
+  document.getElementById('aracListesi').addEventListener('mouseenter', (e) => {
+    const card = e.target.closest('.car-card');
+    if (!card) return;
+    gsap.to(card, { y: -8, boxShadow: '0 12px 32px rgba(0,0,0,0.15)', duration: 0.3, ease: 'power2.out' });
+    const img = card.querySelector('.car-img img');
+    if (img) gsap.to(img, { scale: 1.05, duration: 0.4, ease: 'power2.out' });
+    const price = card.querySelector('.car-price');
+    if (price) gsap.to(price, { scale: 1.05, duration: 0.2 });
+  }, true);
+
+  document.getElementById('aracListesi').addEventListener('mouseleave', (e) => {
+    const card = e.target.closest('.car-card');
+    if (!card) return;
+    gsap.to(card, { y: 0, boxShadow: '0 2px 12px rgba(0,0,0,0.08)', duration: 0.3, ease: 'power2.out' });
+    const img = card.querySelector('.car-img img');
+    if (img) gsap.to(img, { scale: 1, duration: 0.3 });
+    const price = card.querySelector('.car-price');
+    if (price) gsap.to(price, { scale: 1, duration: 0.2 });
+  }, true);
+}
+
+// 4. Karşılaştırma tablosu satır animasyonu
+function tabloAnimasyonu() {
+  if (typeof gsap === 'undefined') return;
+  const rows = document.querySelectorAll('.compare-table tbody tr');
+  if (rows.length === 0) return;
+
+  gsap.fromTo(rows,
+    { opacity: 0, x: -20 },
+    { opacity: 1, x: 0, duration: 0.4, stagger: 0.08, ease: 'power2.out' }
+  );
+
+  // Kazanan hücre vurgusu
+  setTimeout(() => {
+    document.querySelectorAll('.compare-better').forEach(cell => {
+      gsap.fromTo(cell, { scale: 1 }, { scale: 1.08, duration: 0.3, yoyo: true, repeat: 1, ease: 'power2.inOut' });
+    });
+  }, rows.length * 80 + 200);
+}
+
+// 5. Form adım geçiş animasyonu
+function formAdimAnimasyonu(cikanStep, girenStep, ileri) {
+  if (typeof gsap === 'undefined') return;
+  const cikan = document.getElementById('step' + cikanStep);
+  const giren = document.getElementById('step' + girenStep);
+  const yonX = ileri ? -30 : 30;
+
+  gsap.to(cikan, {
+    opacity: 0, x: yonX, duration: 0.25, ease: 'power2.in',
+    onComplete: () => {
+      cikan.classList.remove('active');
+      giren.classList.add('active');
+      gsap.fromTo(giren,
+        { opacity: 0, x: -yonX },
+        { opacity: 1, x: 0, duration: 0.35, ease: 'power2.out' }
+      );
+    }
+  });
+
+  // Progress bar
+  gsap.to('#stepFill', { width: (girenStep * 33.33) + '%', duration: 0.4, ease: 'power2.inOut' });
+}
+
+// 6. Başarı mesajı bounce animasyonu
+function basariAnimasyonu(elementId) {
+  if (typeof gsap === 'undefined') return;
+  const el = document.getElementById(elementId);
+  if (!el) return;
+
+  el.style.display = 'block';
+  gsap.fromTo(el,
+    { opacity: 0, scale: 0.8 },
+    { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.7)' }
+  );
+
+  const icon = el.querySelector('.success-icon');
+  if (icon) {
+    gsap.fromTo(icon, { rotation: 0, scale: 0 }, { rotation: 360, scale: 1, duration: 0.6, ease: 'back.out(2)' });
+  }
+}
+
+// 7. Exit popup animasyonu
+function exitPopupAnimasyonAc() {
+  if (typeof gsap === 'undefined') return;
+  const overlay = document.getElementById('exitPopup');
+  const modal = overlay.querySelector('.exit-modal');
+  const children = modal.querySelectorAll('.exit-icon, .exit-content h3, .exit-content > p, .exit-form, .exit-note');
+
+  gsap.fromTo(overlay, { opacity: 0 }, { opacity: 1, duration: 0.3 });
+  gsap.fromTo(modal,
+    { y: -40, opacity: 0, scale: 0.95 },
+    { y: 0, opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(1.5)', delay: 0.1 }
+  );
+  gsap.fromTo(children,
+    { opacity: 0, y: 15 },
+    { opacity: 1, y: 0, duration: 0.3, stagger: 0.08, ease: 'power2.out', delay: 0.3 }
+  );
+}
+
+function exitPopupAnimasyonKapat(callback) {
+  if (typeof gsap === 'undefined') { if (callback) callback(); return; }
+  const overlay = document.getElementById('exitPopup');
+  const modal = overlay.querySelector('.exit-modal');
+
+  gsap.to(modal, { y: -30, opacity: 0, duration: 0.25, ease: 'power2.in' });
+  gsap.to(overlay, {
+    opacity: 0, duration: 0.3, delay: 0.1,
+    onComplete: () => { if (callback) callback(); }
+  });
+}
+
+// ─── HUBSPOT ENTEGRASYONU ────────────────────────────────
+function hubspotLeadGonder(data) {
+  var _hsq = window._hsq = window._hsq || [];
+  // Identify contact
+  _hsq.push(['identify', {
+    email: data.email || '',
+    phone: data.phone || '',
+    firstname: data.firstname || '',
+    company: data.company || '',
+    hs_lead_status: 'NEW'
+  }]);
+  // Track event
+  _hsq.push(['trackCustomBehavioralEvent', {
+    name: 'pe148267297_aracfirsat_lead',
+    properties: {
+      kaynak: data.kaynak || '',
+      arac: data.arac || '',
+      sehir: data.sehir || '',
+      telefon: data.phone || ''
+    }
+  }]);
+  // Track pageview to flush identify
+  _hsq.push(['trackPageView']);
+}
+
 // ─── SAYFA YÜKLENDİĞİNDE ────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
   await araclariYukle();
@@ -460,4 +706,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   tarihMinAyarla();
   sonGuncellemeGoster();
   window.addEventListener('resize', mobilKontrol);
+
+  // GSAP başlat
+  if (typeof gsap !== 'undefined') {
+    gsapInit();
+    kartHoverInit();
+  }
 });
