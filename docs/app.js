@@ -686,28 +686,28 @@ function exitPopupAnimasyonKapat(callback) {
 }
 
 // ─── HUBSPOT ENTEGRASYONU ────────────────────────────────
+const HUBSPOT_PORTAL_ID = '148267519';
+const HUBSPOT_FORM_ID = '6682f757-8340-4c04-a898-a7c480a431b6';
+
 function hubspotLeadGonder(data) {
-  var _hsq = window._hsq = window._hsq || [];
-  // Identify contact
-  _hsq.push(['identify', {
-    email: data.email || '',
-    phone: data.phone || '',
-    firstname: data.firstname || '',
-    company: data.company || '',
-    hs_lead_status: 'NEW'
-  }]);
-  // Track event
-  _hsq.push(['trackCustomBehavioralEvent', {
-    name: 'pe148267297_aracfirsat_lead',
-    properties: {
-      kaynak: data.kaynak || '',
-      arac: data.arac || '',
-      sehir: data.sehir || '',
-      telefon: data.phone || ''
+  const fields = [];
+  if (data.email) fields.push({ name: 'email', value: data.email });
+  if (data.phone) fields.push({ name: 'phone', value: data.phone });
+  if (data.firstname) fields.push({ name: 'firstname', value: data.firstname });
+
+  const payload = {
+    fields,
+    context: {
+      pageUri: window.location.href,
+      pageName: document.title
     }
-  }]);
-  // Track pageview to flush identify
-  _hsq.push(['trackPageView']);
+  };
+
+  fetch(`https://api.hsforms.com/submissions/v3/integration/submit/${HUBSPOT_PORTAL_ID}/${HUBSPOT_FORM_ID}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).catch(() => {});
 }
 
 // ─── SAYFA YÜKLENDİĞİNDE ────────────────────────────────
