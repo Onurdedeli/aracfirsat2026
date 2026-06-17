@@ -80,9 +80,8 @@ body { font-family: 'Segoe UI', system-ui, sans-serif; color: var(--text); }
 
 .car-card {
   background: #fff; border-radius: var(--radius); overflow: hidden;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
 }
-.car-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
 
 .car-img {
   height: 200px; background: linear-gradient(135deg, #e8eaf6, #c5cae9);
@@ -177,8 +176,7 @@ body { font-family: 'Segoe UI', system-ui, sans-serif; color: var(--text); }
   box-shadow: 0 2px 12px rgba(0,0,0,0.08);
 }
 .form-step { display: none; }
-.form-step.active { display: block; animation: fadeIn 0.3s ease; }
-@keyframes fadeIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+.form-step.active { display: block; }
 
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
 .form-group { display: flex; flex-direction: column; }
@@ -243,13 +241,8 @@ body { font-family: 'Segoe UI', system-ui, sans-serif; color: var(--text); }
   box-shadow: 0 4px 16px rgba(39,174,96,0.4);
   align-items: center; gap: 0.5rem;
   font-weight: 700; font-size: 1rem;
-  animation: callPulse 2s ease-in-out infinite;
 }
 .call-icon { font-size: 1.3rem; }
-@keyframes callPulse {
-  0%, 100% { box-shadow: 0 4px 16px rgba(39,174,96,0.4); }
-  50% { box-shadow: 0 4px 24px rgba(39,174,96,0.7); }
-}
 
 /* EXIT INTENT POPUP */
 .exit-overlay {
@@ -260,9 +253,7 @@ body { font-family: 'Segoe UI', system-ui, sans-serif; color: var(--text); }
 .exit-modal {
   background: #fff; border-radius: 16px; padding: 0;
   max-width: 420px; width: 90%; overflow: hidden; position: relative;
-  animation: exitSlide 0.4s ease;
 }
-@keyframes exitSlide { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
 .exit-close {
   position: absolute; top: 12px; right: 16px;
@@ -308,3 +299,8 @@ body { font-family: 'Segoe UI', system-ui, sans-serif; color: var(--text); }
   .step-labels { font-size: 0.75rem; }
   body { padding-bottom: 70px; } /* click-to-call space */
 }
+
+/* GSAP INITIAL STATES */
+.hero h1, .hero p, .hero-search { opacity: 0; }
+.section-title, .section-desc { opacity: 0; }
+.navbar { box-shadow: none; }
