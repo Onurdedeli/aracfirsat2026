@@ -19,22 +19,24 @@
     .legal-page a { color: #0066cc; }
     .legal-page .back-link { display: inline-block; margin-top: 2rem; }
   </style>
-  <!-- Meta Pixel Code -->
+  <!-- Meta Pixel Code (çerez onayına bağlı: cerez.js "Kabul Et" sonrası yükler) -->
   <script>
-  !function(f,b,e,v,n,t,s)
-  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-  n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window, document,'script',
-  'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '3980272248805261');
-  fbq('track', 'PageView');
+  window.metaPixelYukle = function () {
+    if (window.__metaPixelYuklendi) return;
+    window.__metaPixelYuklendi = true;
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '3980272248805261');
+    fbq('track', 'PageView');
+  };
+  try { if (localStorage.getItem('cerezOnayi') === 'kabul') window.metaPixelYukle(); } catch (e) {}
   </script>
-  <noscript><img height="1" width="1" style="display:none"
-  src="https://www.facebook.com/tr?id=3980272248805261&ev=PageView&noscript=1"
-  /></noscript>
   <!-- End Meta Pixel Code -->
 </head>
 <body>
@@ -90,8 +92,14 @@
     </ul>
     <p>Yukarıdaki hizmet sağlayıcıların bir kısmı verilerinizi yurt dışında bulunan sunucularda işleyebilir. Bu aktarımlar KVKK m.9 hükümleri ve açık rızanız çerçevesinde gerçekleştirilir.</p>
 
-    <h2>6. Çerezler (Cookies)</h2>
-    <p>Site’de oturum yönetimi, performans analizi, reklam ölçümü ve kullanıcı deneyimini iyileştirme amacıyla zorunlu, performans ve pazarlama çerezleri kullanılmaktadır. Tarayıcı ayarlarınızdan çerezleri her zaman yönetebilir veya silebilirsiniz.</p>
+    <h2 id="cerezler">6. Çerezler (Cookies)</h2>
+    <p>Site’de, sitenin çalışması için gerekli zorunlu çerezlerin yanı sıra reklam ölçümü ve performans analizi amacıyla pazarlama ve analitik çerezleri kullanılmaktadır:</p>
+    <ul>
+      <li><strong>Zorunlu:</strong> Çerez tercihinizin hatırlanması (tarayıcı yerel depolaması). Onay gerektirmez.</li>
+      <li><strong>Pazarlama:</strong> Meta Pixel (Meta Platforms, Inc.) — reklam performansının ölçülmesi ve reklam hedefleme.</li>
+      <li><strong>Analitik/Pazarlama:</strong> HubSpot izleme kodu (HubSpot, Inc.) — site ziyaretlerinin ve form etkileşimlerinin analizi.</li>
+    </ul>
+    <p>Pazarlama ve analitik çerezleri yalnızca çerez bildirimindeki “Kabul Et” seçeneği ile açık rızanızı vermeniz halinde kullanılır. Tercihinizi istediğiniz zaman sayfa altındaki “Çerez Tercihleri” bağlantısından değiştirebilir, tarayıcı ayarlarınızdan çerezleri silebilirsiniz.</p>
 
     <h2>7. Saklama Süresi</h2>
     <p>Kişisel verileriniz; işleme amacının gerektirdiği süre, ilgili mevzuatta öngörülen asgari süreler ve dava zamanaşımı süreleri dikkate alınarak saklanır. Süre sona erdiğinde veriler silinir, yok edilir veya anonimleştirilir.</p>
@@ -124,7 +132,9 @@
     <div class="container">
       <p>&copy; 2026 AraçFırsat - Tüm hakları saklıdır.</p>
       <p style="font-size:0.8rem;color:#888;margin-top:0.5rem;">Bu site Smatch Bilişim Teknolojileri A.Ş.'ye aittir.</p>
+      <p style="font-size:0.85rem;margin-top:0.75rem;"><a href="#" onclick="cerezTercihleriniAc(); return false;" style="color:#bbb;text-decoration:underline;">Çerez Tercihleri</a></p>
     </div>
   </footer>
+  <script src="cerez.js"></script>
 </body>
 </html>

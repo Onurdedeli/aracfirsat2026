@@ -1,56 +1,56 @@
 // ─── GÖMÜLÜ ARAÇ VERİLERİ (GitHub Pages statik mod) ─────
 const ARAC_VERILERI = [
-  { id:1, marka:"Toyota", model:"Corolla 1.5 Vision", segment:"sedan", yakit:"benzin", motor:"1.5L Benzin", vites:"CVT", hp:125, fiyat:1285000, gorsel:"img/car-1.jpg", aktif:1 },
-  { id:2, marka:"Toyota", model:"C-HR 1.8 Hybrid", segment:"crossover", yakit:"hybrid", motor:"1.8L Hybrid", vites:"e-CVT", hp:140, fiyat:1695000, gorsel:"img/car-2.jpg", aktif:1 },
-  { id:3, marka:"Honda", model:"Civic 1.5 Turbo Elegance", segment:"sedan", yakit:"benzin", motor:"1.5L Turbo", vites:"CVT", hp:182, fiyat:1520000, gorsel:"img/car-3.jpg", aktif:1 },
-  { id:4, marka:"Hyundai", model:"Tucson 1.6 T-GDI Elite", segment:"suv", yakit:"benzin", motor:"1.6L Turbo", vites:"DCT 7", hp:180, fiyat:1750000, gorsel:"img/car-4.jpg", aktif:1 },
-  { id:5, marka:"Volkswagen", model:"Golf 1.5 TSI Style", segment:"hatchback", yakit:"benzin", motor:"1.5L TSI", vites:"DSG 7", hp:150, fiyat:1450000, gorsel:"img/car-5.jpg", aktif:1 },
-  { id:6, marka:"Volkswagen", model:"Tiguan 1.5 TSI Life", segment:"suv", yakit:"benzin", motor:"1.5L TSI", vites:"DSG 7", hp:150, fiyat:2100000, gorsel:"img/car-6.jpg", aktif:1 },
-  { id:7, marka:"BMW", model:"320i M Sport", segment:"sedan", yakit:"benzin", motor:"2.0L Turbo", vites:"Otomatik 8", hp:184, fiyat:3250000, gorsel:"img/car-7.jpg", aktif:1 },
-  { id:8, marka:"Mercedes", model:"A 200 AMG Line", segment:"hatchback", yakit:"benzin", motor:"1.3L Turbo", vites:"DCT 7", hp:163, fiyat:2750000, gorsel:"img/car-8.jpg", aktif:1 },
-  { id:9, marka:"Renault", model:"Clio 1.0 TCe Touch", segment:"hatchback", yakit:"benzin", motor:"1.0L Turbo", vites:"Manuel 5", hp:100, fiyat:875000, gorsel:"img/car-9.jpg", aktif:1 },
-  { id:10, marka:"Fiat", model:"Egea 1.4 Urban Plus", segment:"sedan", yakit:"benzin", motor:"1.4L", vites:"Manuel 5", hp:95, fiyat:785000, gorsel:"img/car-10.jpg", aktif:1 },
-  { id:11, marka:"Togg", model:"T10X Uzun Menzil", segment:"suv", yakit:"elektrik", motor:"Elektrik", vites:"Otonom", hp:400, fiyat:1550000, gorsel:"img/car-11.jpg", aktif:1 },
-  { id:12, marka:"Kia", model:"Sportage 1.6 T-GDI GT-Line", segment:"suv", yakit:"hybrid", motor:"1.6L Turbo Hybrid", vites:"Otomatik 6", hp:230, fiyat:1890000, gorsel:"img/car-12.jpg", aktif:1 },
-  { id:13, marka:"Skoda", model:"Octavia 1.5 TSI Style", segment:"sedan", yakit:"benzin", motor:"1.5L TSI", vites:"DSG 7", hp:150, fiyat:1380000, gorsel:"img/car-13.jpg", aktif:1 },
-  { id:14, marka:"Peugeot", model:"3008 1.2 Allure", segment:"suv", yakit:"benzin", motor:"1.2L Turbo", vites:"Otomatik 8", hp:130, fiyat:1650000, gorsel:"img/car-14.jpg", aktif:1 },
-  { id:15, marka:"Hyundai", model:"i20 1.4 MPI Elite", segment:"hatchback", yakit:"benzin", motor:"1.4L", vites:"Otomatik 6", hp:100, fiyat:945000, gorsel:"img/car-15.jpg", aktif:1 },
-  { id:16, marka:"Dacia", model:"Duster 1.3 TCe Journey", segment:"suv", yakit:"benzin", motor:"1.3L Turbo", vites:"CVT", hp:150, fiyat:1150000, gorsel:"img/car-16.jpg", aktif:1 },
-  { id:17, marka:"Volvo", model:"XC40 B3 Plus", segment:"suv", yakit:"hybrid", motor:"1.5L Mild Hybrid", vites:"Otomatik 7", hp:163, fiyat:2450000, gorsel:"img/car-17.jpg", aktif:1 },
-  { id:18, marka:"Audi", model:"A3 Sedan 35 TFSI", segment:"sedan", yakit:"benzin", motor:"1.5L TFSI", vites:"S-Tronic 7", hp:150, fiyat:2380000, gorsel:"img/car-18.jpg", aktif:1 },
-  { id:19, marka:"Tesla", model:"Model 3 Long Range", segment:"sedan", yakit:"elektrik", motor:"Elektrik", vites:"Otonom", hp:350, fiyat:2150000, gorsel:"img/car-19.jpg", aktif:1 },
-  { id:20, marka:"Tesla", model:"Model Y Performance", segment:"suv", yakit:"elektrik", motor:"Elektrik", vites:"Otonom", hp:462, fiyat:2650000, gorsel:"img/car-20.jpg", aktif:1 },
-  { id:21, marka:"Ford", model:"Puma 1.0 EcoBoost ST-Line", segment:"crossover", yakit:"hybrid", motor:"1.0L EcoBoost mHEV", vites:"Otomatik 7", hp:125, fiyat:1320000, gorsel:"img/car-21.jpg", aktif:1 },
-  { id:22, marka:"Ford", model:"Kuga 1.5 EcoBoost Titanium", segment:"suv", yakit:"benzin", motor:"1.5L EcoBoost", vites:"Otomatik 8", hp:150, fiyat:1780000, gorsel:"img/car-22.jpg", aktif:1 },
-  { id:23, marka:"Opel", model:"Corsa 1.2 Turbo GS Line", segment:"hatchback", yakit:"benzin", motor:"1.2L Turbo", vites:"Otomatik 8", hp:130, fiyat:985000, gorsel:"img/car-23.jpg", aktif:1 },
-  { id:24, marka:"Opel", model:"Grandland 1.2 Turbo Elegance", segment:"suv", yakit:"benzin", motor:"1.2L Turbo", vites:"Otomatik 8", hp:130, fiyat:1580000, gorsel:"img/car-24.jpg", aktif:1 },
-  { id:25, marka:"Nissan", model:"Qashqai 1.3 DIG-T N-Connecta", segment:"suv", yakit:"benzin", motor:"1.3L Turbo", vites:"CVT", hp:158, fiyat:1650000, gorsel:"img/car-25.jpg", aktif:1 },
-  { id:26, marka:"Citroen", model:"C3 1.2 PureTech Shine", segment:"hatchback", yakit:"benzin", motor:"1.2L PureTech", vites:"Manuel 5", hp:83, fiyat:820000, gorsel:"img/car-26.jpg", aktif:1 },
-  { id:27, marka:"Cupra", model:"Formentor 1.5 TSI V", segment:"crossover", yakit:"benzin", motor:"1.5L TSI", vites:"DSG 7", hp:150, fiyat:1750000, gorsel:"img/car-27.jpg", aktif:1 },
-  { id:28, marka:"Mazda", model:"CX-30 2.0 Skyactiv-G", segment:"crossover", yakit:"benzin", motor:"2.0L Skyactiv", vites:"Otomatik 6", hp:150, fiyat:1420000, gorsel:"img/car-28.jpg", aktif:1 },
-  { id:29, marka:"MG", model:"ZS EV Luxury", segment:"suv", yakit:"elektrik", motor:"Elektrik", vites:"Otonom", hp:177, fiyat:1250000, gorsel:"img/car-29.jpg", aktif:1 },
-  { id:30, marka:"BYD", model:"Seal Design", segment:"sedan", yakit:"elektrik", motor:"Elektrik", vites:"Otonom", hp:313, fiyat:1950000, gorsel:"img/car-30.jpg", aktif:1 },
-  { id:31, marka:"Toyota", model:"Yaris 1.5 Hybrid Fun", segment:"hatchback", yakit:"hybrid", motor:"1.5L Hybrid", vites:"e-CVT", hp:116, fiyat:1085000, gorsel:"img/car-31.jpg", aktif:1 },
-  { id:32, marka:"Volkswagen", model:"Polo 1.0 TSI Life", segment:"hatchback", yakit:"benzin", motor:"1.0L TSI", vites:"DSG 7", hp:95, fiyat:1050000, gorsel:"img/car-32.jpg", aktif:1 },
-  { id:33, marka:"Volkswagen", model:"T-Roc 1.5 TSI Style", segment:"crossover", yakit:"benzin", motor:"1.5L TSI", vites:"DSG 7", hp:150, fiyat:1680000, gorsel:"img/car-33.jpg", aktif:1 },
-  { id:34, marka:"Renault", model:"Taliant 1.0 TCe Joy", segment:"sedan", yakit:"benzin", motor:"1.0L Turbo", vites:"Manuel 5", hp:90, fiyat:685000, gorsel:"img/car-34.jpg", aktif:1 },
-  { id:35, marka:"Renault", model:"Captur 1.3 TCe Iconic", segment:"crossover", yakit:"benzin", motor:"1.3L Turbo", vites:"EDC 7", hp:130, fiyat:1280000, gorsel:"img/car-35.jpg", aktif:1 },
-  { id:36, marka:"Fiat", model:"Egea Cross 1.4 Fire", segment:"crossover", yakit:"benzin", motor:"1.4L", vites:"Manuel 5", hp:95, fiyat:920000, gorsel:"img/car-36.jpg", aktif:1 },
-  { id:37, marka:"Dacia", model:"Sandero 1.0 TCe Comfort", segment:"hatchback", yakit:"benzin", motor:"1.0L Turbo", vites:"CVT", hp:90, fiyat:720000, gorsel:"img/car-37.jpg", aktif:1 },
-  { id:38, marka:"Hyundai", model:"Bayon 1.0 T-GDI Elite", segment:"crossover", yakit:"benzin", motor:"1.0L Turbo", vites:"DCT 7", hp:100, fiyat:1050000, gorsel:"img/car-38.jpg", aktif:1 },
-  { id:39, marka:"Peugeot", model:"208 1.2 PureTech Allure", segment:"hatchback", yakit:"benzin", motor:"1.2L PureTech", vites:"Otomatik 8", hp:100, fiyat:1020000, gorsel:"img/car-39.jpg", aktif:1 },
-  { id:40, marka:"Peugeot", model:"2008 1.2 PureTech GT", segment:"crossover", yakit:"benzin", motor:"1.2L PureTech", vites:"Otomatik 8", hp:130, fiyat:1380000, gorsel:"img/car-40.jpg", aktif:1 },
-  { id:41, marka:"Seat", model:"Leon 1.5 TSI FR", segment:"hatchback", yakit:"benzin", motor:"1.5L TSI", vites:"DSG 7", hp:150, fiyat:1350000, gorsel:"img/car-41.jpg", aktif:1 },
-  { id:42, marka:"Seat", model:"Arona 1.0 TSI Xperience", segment:"crossover", yakit:"benzin", motor:"1.0L TSI", vites:"DSG 7", hp:110, fiyat:1180000, gorsel:"img/car-42.jpg", aktif:1 },
-  { id:43, marka:"Toyota", model:"Corolla Cross 1.8 Hybrid", segment:"suv", yakit:"hybrid", motor:"1.8L Hybrid", vites:"e-CVT", hp:140, fiyat:1550000, gorsel:"img/car-43.jpg", aktif:1 },
-  { id:44, marka:"Skoda", model:"Kamiq 1.0 TSI Style", segment:"crossover", yakit:"benzin", motor:"1.0L TSI", vites:"DSG 7", hp:110, fiyat:1180000, gorsel:"img/car-44.jpg", aktif:1 },
-  { id:45, marka:"Kia", model:"Ceed 1.5 T-GDI GT-Line", segment:"hatchback", yakit:"benzin", motor:"1.5L Turbo", vites:"DCT 7", hp:160, fiyat:1290000, gorsel:"img/car-45.jpg", aktif:1 },
-  { id:46, marka:"Honda", model:"HR-V 1.5 e:HEV Advance", segment:"suv", yakit:"hybrid", motor:"1.5L Hybrid", vites:"e-CVT", hp:131, fiyat:1480000, gorsel:"img/car-46.jpg", aktif:1 },
-  { id:47, marka:"BMW", model:"X1 sDrive18i M Sport", segment:"suv", yakit:"benzin", motor:"1.5L Turbo", vites:"Otomatik 7", hp:136, fiyat:2850000, gorsel:"img/car-47.jpg", aktif:1 },
-  { id:48, marka:"Mercedes", model:"GLA 200 AMG Line", segment:"suv", yakit:"benzin", motor:"1.3L Turbo", vites:"DCT 7", hp:163, fiyat:2950000, gorsel:"img/car-48.jpg", aktif:1 },
-  { id:49, marka:"Chery", model:"Tiggo 7 Pro 1.5 Turbo", segment:"suv", yakit:"benzin", motor:"1.5L Turbo", vites:"CVT", hp:147, fiyat:1280000, gorsel:"img/car-49.jpg", aktif:1 },
-  { id:50, marka:"Suzuki", model:"Vitara 1.4 Boosterjet GLX", segment:"suv", yakit:"hybrid", motor:"1.4L Mild Hybrid", vites:"Otomatik 6", hp:129, fiyat:1350000, gorsel:"img/car-50.jpg", aktif:1 },
-  { id:51, marka:"Volkswagen", model:"Passat 1.5 TSI Elegance", segment:"sedan", yakit:"benzin", motor:"1.5L TSI", vites:"DSG 7", hp:150, fiyat:2050000, gorsel:"img/car-51.jpg", aktif:1 }
+  { id:1, marka:"Toyota", model:"Corolla 1.5 Vision Plus", segment:"sedan", yakit:"benzin", motor:"1.5L Benzin", vites:"CVT", hp:125, fiyat:2545500, gorsel:"img/car-1.jpg", aktif:1 },
+  { id:2, marka:"Toyota", model:"C-HR 1.8 Hybrid Flame", segment:"crossover", yakit:"hybrid", motor:"1.8L Hybrid", vites:"e-CVT", hp:140, fiyat:2859000, gorsel:"img/car-2.jpg", aktif:1 },
+  { id:3, marka:"Honda", model:"Civic 1.5 Turbo Elegance", segment:"sedan", yakit:"benzin", motor:"1.5L Turbo", vites:"CVT", hp:182, fiyat:1520000, gorsel:"img/car-3.jpg", aktif:0 },
+  { id:4, marka:"Hyundai", model:"Tucson 1.6 T-GDI Elite", segment:"suv", yakit:"benzin", motor:"1.6L Turbo", vites:"DCT 7", hp:180, fiyat:3520000, gorsel:"img/car-4.jpg", aktif:1 },
+  { id:5, marka:"Volkswagen", model:"Golf 1.5 eTSI Style", segment:"hatchback", yakit:"hybrid", motor:"1.5L eTSI Mild Hybrid", vites:"DSG 7", hp:150, fiyat:3591000, gorsel:"img/car-5.jpg", aktif:1 },
+  { id:6, marka:"Volkswagen", model:"Tiguan 1.5 eTSI Life", segment:"suv", yakit:"hybrid", motor:"1.5L eTSI Mild Hybrid", vites:"DSG 7", hp:150, fiyat:3600000, gorsel:"img/car-6.jpg", aktif:1 },
+  { id:7, marka:"BMW", model:"320i M Sport", segment:"sedan", yakit:"benzin", motor:"2.0L Turbo", vites:"Otomatik 8", hp:184, fiyat:6378000, gorsel:"img/car-7.jpg", aktif:1 },
+  { id:8, marka:"Mercedes", model:"A 200 AMG Line", segment:"hatchback", yakit:"benzin", motor:"1.3L Turbo", vites:"DCT 7", hp:163, fiyat:2750000, gorsel:"img/car-8.jpg", aktif:0 },
+  { id:9, marka:"Renault", model:"Clio 1.2 TCe Evolution Plus", segment:"hatchback", yakit:"benzin", motor:"TCe Benzin", vites:"EDC", hp:115, fiyat:1830000, gorsel:"img/car-9.jpg", aktif:1 },
+  { id:10, marka:"Fiat", model:"Egea Sedan 1.6 Multijet Urban", segment:"sedan", yakit:"dizel", motor:"1.6L Multijet Dizel", vites:"Manuel 6", hp:130, fiyat:1599900, gorsel:"img/car-10.jpg", aktif:1 },
+  { id:11, marka:"Togg", model:"T10X V1 RWD Uzun Menzil", segment:"suv", yakit:"elektrik", motor:"Elektrik", vites:"Otonom", hp:400, fiyat:2219668, gorsel:"img/car-11.jpg", aktif:1 },
+  { id:12, marka:"Kia", model:"Sportage 1.6 T-GDI GT-Line 4x4", segment:"suv", yakit:"benzin", motor:"1.6L Turbo", vites:"DCT 7", hp:180, fiyat:3650000, gorsel:"img/car-12.jpg", aktif:1 },
+  { id:13, marka:"Skoda", model:"Octavia 1.5 TSI mHEV Elite", segment:"sedan", yakit:"hybrid", motor:"1.5L TSI Mild Hybrid", vites:"DSG 7", hp:150, fiyat:2779900, gorsel:"img/car-13.jpg", aktif:1 },
+  { id:14, marka:"Peugeot", model:"3008 1.2 Hybrid 145 Allure", segment:"suv", yakit:"hybrid", motor:"1.2L Hybrid", vites:"eDCS6", hp:145, fiyat:2967000, gorsel:"img/car-14.jpg", aktif:1 },
+  { id:15, marka:"Hyundai", model:"i20 1.0 T-GDI Elite", segment:"hatchback", yakit:"benzin", motor:"1.0L Turbo", vites:"DCT 7", hp:90, fiyat:2091000, gorsel:"img/car-15.jpg", aktif:1 },
+  { id:16, marka:"Dacia", model:"Duster 1.3 TCe Evolution", segment:"suv", yakit:"benzin", motor:"1.3L Turbo", vites:"EDC", hp:145, fiyat:2050000, gorsel:"img/car-16.jpg", aktif:1 },
+  { id:17, marka:"Volvo", model:"XC40 B3 Plus", segment:"suv", yakit:"hybrid", motor:"1.5L Mild Hybrid", vites:"Otomatik 7", hp:163, fiyat:2450000, gorsel:"img/car-17.jpg", aktif:0 },
+  { id:18, marka:"Audi", model:"A3 Sedan 1.5 TFSI Advanced", segment:"sedan", yakit:"benzin", motor:"1.5L TFSI", vites:"S-Tronic 7", hp:150, fiyat:4297796, gorsel:"img/car-18.jpg", aktif:1 },
+  { id:19, marka:"Tesla", model:"Model 3 Long Range", segment:"sedan", yakit:"elektrik", motor:"Elektrik", vites:"Otonom", hp:350, fiyat:2150000, gorsel:"img/car-19.jpg", aktif:0 },
+  { id:20, marka:"Tesla", model:"Model Y Performance AWD", segment:"suv", yakit:"elektrik", motor:"Elektrik", vites:"Otonom", hp:462, fiyat:4966500, gorsel:"img/car-20.jpg", aktif:1 },
+  { id:21, marka:"Ford", model:"Puma 1.0 EcoBoost mHEV Titanium", segment:"crossover", yakit:"hybrid", motor:"1.0L EcoBoost mHEV", vites:"Otomatik 7", hp:125, fiyat:2171100, gorsel:"img/car-21.jpg", aktif:1 },
+  { id:22, marka:"Ford", model:"Kuga 1.5 EcoBoost Titanium", segment:"suv", yakit:"benzin", motor:"1.5L EcoBoost", vites:"Otomatik 8", hp:186, fiyat:2591400, gorsel:"img/car-22.jpg", aktif:1 },
+  { id:23, marka:"Opel", model:"Corsa 1.2 Hybrid GS", segment:"hatchback", yakit:"hybrid", motor:"1.2L Hybrid", vites:"e-DCT6", hp:136, fiyat:1955000, gorsel:"img/car-23.jpg", aktif:1 },
+  { id:24, marka:"Opel", model:"Grandland 1.2 Hybrid Edition", segment:"suv", yakit:"hybrid", motor:"1.2L Hybrid", vites:"e-DCT6", hp:136, fiyat:2850000, gorsel:"img/car-24.jpg", aktif:1 },
+  { id:25, marka:"Nissan", model:"Qashqai 1.3 DIG-T Mild Hybrid Skypack", segment:"suv", yakit:"hybrid", motor:"1.3L Turbo Mild Hybrid", vites:"CVT", hp:158, fiyat:3298200, gorsel:"img/car-25.jpg", aktif:1 },
+  { id:26, marka:"Citroen", model:"C3 1.2 PureTech Shine", segment:"hatchback", yakit:"benzin", motor:"1.2L PureTech", vites:"Manuel 5", hp:83, fiyat:820000, gorsel:"img/car-26.jpg", aktif:0 },
+  { id:27, marka:"Cupra", model:"Formentor 1.5 eTSI Impulse", segment:"crossover", yakit:"hybrid", motor:"1.5L eTSI Mild Hybrid", vites:"DSG 7", hp:150, fiyat:2860000, gorsel:"img/car-27.jpg", aktif:1 },
+  { id:28, marka:"Mazda", model:"CX-30 2.0 Skyactiv-G", segment:"crossover", yakit:"benzin", motor:"2.0L Skyactiv", vites:"Otomatik 6", hp:150, fiyat:1420000, gorsel:"img/car-28.jpg", aktif:0 },
+  { id:29, marka:"MG", model:"ZS EV Luxury", segment:"suv", yakit:"elektrik", motor:"Elektrik", vites:"Otonom", hp:177, fiyat:1250000, gorsel:"img/car-29.jpg", aktif:0 },
+  { id:30, marka:"BYD", model:"Seal AWD Excellence", segment:"sedan", yakit:"elektrik", motor:"Elektrik", vites:"Otonom", hp:523, fiyat:4077000, gorsel:"img/car-30.jpg", aktif:1 },
+  { id:31, marka:"Toyota", model:"Yaris 1.5 Hybrid Flame", segment:"hatchback", yakit:"hybrid", motor:"1.5L Hybrid", vites:"e-CVT", hp:116, fiyat:2521000, gorsel:"img/car-31.jpg", aktif:1 },
+  { id:32, marka:"Volkswagen", model:"Polo 1.0 TSI Life", segment:"hatchback", yakit:"benzin", motor:"1.0L TSI", vites:"DSG 7", hp:95, fiyat:1050000, gorsel:"img/car-32.jpg", aktif:0 },
+  { id:33, marka:"Volkswagen", model:"T-Roc 1.5 eTSI Style", segment:"crossover", yakit:"hybrid", motor:"1.5L eTSI Mild Hybrid", vites:"DSG 7", hp:150, fiyat:3505000, gorsel:"img/car-33.jpg", aktif:1 },
+  { id:34, marka:"Renault", model:"Taliant 1.0 TCe Joy", segment:"sedan", yakit:"benzin", motor:"1.0L Turbo", vites:"Manuel 5", hp:90, fiyat:685000, gorsel:"img/car-34.jpg", aktif:0 },
+  { id:35, marka:"Renault", model:"Captur 1.3 Mild Hybrid Techno", segment:"crossover", yakit:"hybrid", motor:"1.3L Mild Hybrid", vites:"EDC", hp:140, fiyat:2325000, gorsel:"img/car-35.jpg", aktif:1 },
+  { id:36, marka:"Fiat", model:"Egea Cross 1.6 Multijet Street", segment:"crossover", yakit:"dizel", motor:"1.6L Multijet Dizel", vites:"DCT 6", hp:130, fiyat:1990900, gorsel:"img/car-36.jpg", aktif:1 },
+  { id:37, marka:"Dacia", model:"Sandero 1.0 TCe 100 Expression", segment:"hatchback", yakit:"benzin", motor:"1.0L Turbo", vites:"Manuel", hp:100, fiyat:1460000, gorsel:"img/car-37.jpg", aktif:1 },
+  { id:38, marka:"Hyundai", model:"Bayon 1.0 T-GDI Elite", segment:"crossover", yakit:"benzin", motor:"1.0L Turbo", vites:"DCT 7", hp:90, fiyat:2212000, gorsel:"img/car-38.jpg", aktif:1 },
+  { id:39, marka:"Peugeot", model:"208 1.2 PureTech Allure", segment:"hatchback", yakit:"benzin", motor:"1.2L PureTech", vites:"Otomatik 8", hp:100, fiyat:1020000, gorsel:"img/car-39.jpg", aktif:0 },
+  { id:40, marka:"Peugeot", model:"2008 1.2 Hybrid 145 GT", segment:"crossover", yakit:"hybrid", motor:"1.2L Hybrid", vites:"eDCS6", hp:145, fiyat:2632000, gorsel:"img/car-40.jpg", aktif:1 },
+  { id:41, marka:"Seat", model:"Leon 1.5 eTSI Style", segment:"hatchback", yakit:"hybrid", motor:"1.5L eTSI Mild Hybrid", vites:"DSG 7", hp:116, fiyat:2560000, gorsel:"img/car-41.jpg", aktif:1 },
+  { id:42, marka:"Seat", model:"Arona 1.0 TSI Style Plus", segment:"crossover", yakit:"benzin", motor:"1.0L TSI", vites:"DSG 7", hp:116, fiyat:2050000, gorsel:"img/car-42.jpg", aktif:1 },
+  { id:43, marka:"Toyota", model:"Corolla Cross 1.8 Hybrid Flame", segment:"suv", yakit:"hybrid", motor:"1.8L Hybrid", vites:"e-CVT", hp:140, fiyat:3413000, gorsel:"img/car-43.jpg", aktif:1 },
+  { id:44, marka:"Skoda", model:"Kamiq 1.0 TSI Elite", segment:"crossover", yakit:"benzin", motor:"1.0L TSI", vites:"DSG 7", hp:115, fiyat:2149900, gorsel:"img/car-44.jpg", aktif:1 },
+  { id:45, marka:"Kia", model:"Ceed 1.5 T-GDI GT-Line", segment:"hatchback", yakit:"benzin", motor:"1.5L Turbo", vites:"DCT 7", hp:160, fiyat:1290000, gorsel:"img/car-45.jpg", aktif:0 },
+  { id:46, marka:"Honda", model:"HR-V 1.5 e:HEV Advance", segment:"suv", yakit:"hybrid", motor:"1.5L Hybrid", vites:"e-CVT", hp:131, fiyat:2965000, gorsel:"img/car-46.jpg", aktif:1 },
+  { id:47, marka:"BMW", model:"X1 sDrive18i M Sport", segment:"suv", yakit:"benzin", motor:"1.5L Turbo", vites:"Otomatik 7", hp:136, fiyat:2850000, gorsel:"img/car-47.jpg", aktif:0 },
+  { id:48, marka:"Mercedes", model:"GLA 200 AMG Line", segment:"suv", yakit:"benzin", motor:"1.3L Turbo", vites:"DCT 7", hp:163, fiyat:2950000, gorsel:"img/car-48.jpg", aktif:0 },
+  { id:49, marka:"Chery", model:"Tiggo 7 1.6 TGDI Comfort", segment:"suv", yakit:"benzin", motor:"1.6L Turbo", vites:"DCT 7", hp:145, fiyat:2264400, gorsel:"img/car-49.jpg", aktif:1 },
+  { id:50, marka:"Suzuki", model:"Vitara 1.4 Boosterjet GLX Black Edition", segment:"suv", yakit:"hybrid", motor:"1.4L Mild Hybrid", vites:"Otomatik 6", hp:129, fiyat:2665000, gorsel:"img/car-50.jpg", aktif:1 },
+  { id:51, marka:"Volkswagen", model:"Passat 1.5 eTSI Elegance", segment:"sedan", yakit:"hybrid", motor:"1.5L eTSI Mild Hybrid", vites:"DSG 7", hp:150, fiyat:5053000, gorsel:"img/car-51.jpg", aktif:1 }
 ];
 
 let tumAraclar = [];
@@ -71,7 +71,7 @@ function getUTM() {
 const UTM = getUTM();
 
 // Statik moddaki araç fiyatlarının en son güncellendiği tarih — fiyatları güncelleyince bunu da değiştirin
-const FIYAT_GUNCELLEME_TARIHI = '2026-03-17';
+const FIYAT_GUNCELLEME_TARIHI = '2026-10-23';
 
 // ─── YARDIMCILAR ─────────────────────────────────────────
 function fiyatFormat(fiyat) {
@@ -85,7 +85,8 @@ async function araclariYukle() {
       if (res.ok) { tumAraclar = await res.json(); return tumAraclar; }
     } catch {}
   }
-  tumAraclar = ARAC_VERILERI;
+  // Satıştan kalkan / güncel fiyatı doğrulanamayan araçlar aktif:0 ile gizlenir
+  tumAraclar = ARAC_VERILERI.filter(a => a.aktif);
   return tumAraclar;
 }
 
@@ -98,7 +99,7 @@ async function markalariDoldur() {
     } catch {}
   }
   if (!markalar) {
-    markalar = [...new Set(ARAC_VERILERI.map(a => a.marka))].sort();
+    markalar = [...new Set(tumAraclar.map(a => a.marka))].sort();
   }
   ['heroMarka', 'filtreMarka'].forEach(id => {
     const el = document.getElementById(id);
