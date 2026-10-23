@@ -70,6 +70,9 @@ function getUTM() {
 }
 const UTM = getUTM();
 
+// Statik moddaki araç fiyatlarının en son güncellendiği tarih — fiyatları güncelleyince bunu da değiştirin
+const FIYAT_GUNCELLEME_TARIHI = '2026-03-17';
+
 // ─── YARDIMCILAR ─────────────────────────────────────────
 function fiyatFormat(fiyat) {
   return new Intl.NumberFormat('tr-TR').format(fiyat) + ' ₺';
@@ -248,19 +251,15 @@ function karsilastir() {
 // Karsilastirma CTA formu
 async function ctaFormGonder(e) {
   e.preventDefault();
-  const telefon = document.getElementById('ctaTelefon').value;
-  if (!STATIK_MOD) {
-    try {
-      await fetch('/api/leads/hizli', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ telefon, kaynak: 'karsilastirma-cta', ...UTM })
-      });
-    } catch {}
-  }
+  const telefon = telefonDogrula(document.getElementById('ctaTelefon'));
+  if (!telefon) return false;
 
-  // HubSpot'a lead gönder
-  hubspotLeadGonder({ phone: telefon, kaynak: 'karsilastirma-cta' });
+  const basarili = await gonderimKilidi(e, () => leadIlet({
+    apiYolu: '/api/leads/hizli',
+    apiBody: { telefon, kaynak: 'karsilastirma-cta', ...UTM },
+    hubspot: { phone: telefon, kaynak: 'karsilastirma-cta' }
+  }));
+  if (!basarili) return false;
   metaLeadGonder('karsilastirma-cta');
 
   document.querySelector('.cta-form').style.display = 'none';
@@ -350,10 +349,13 @@ function formAracDoldur() {
 async function formGonder(e) {
   e.preventDefault();
 
+  const telefon = telefonDogrula(document.getElementById('telefon'));
+  if (!telefon) return false;
+
   const aracSelect = document.getElementById('formArac');
   const body = {
     ad_soyad: document.getElementById('adSoyad').value,
-    telefon: document.getElementById('telefon').value,
+    telefon,
     eposta: document.getElementById('eposta').value,
     arac: aracSelect.selectedOptions[0].textContent,
     sehir: document.getElementById('sehir').value,
@@ -363,29 +365,22 @@ async function formGonder(e) {
     ...UTM
   };
 
-  if (!STATIK_MOD) {
-    try {
-      const res = await fetch('/api/leads', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body)
-      });
-      const data = await res.json();
-      if (!data.success) throw new Error();
-    } catch {}
-  } else {
-    // Statik modda API yok, sadece HubSpot'a gönder
-  }
-
-  // HubSpot'a lead gönder
-  hubspotLeadGonder({
-    email: body.eposta,
-    phone: body.telefon,
-    firstname: body.ad_soyad,
-    kaynak: 'test-surusu-formu',
-    arac: body.arac,
-    sehir: body.sehir
-  });
+  const basarili = await gonderimKilidi(e, () => leadIlet({
+    apiYolu: '/api/leads',
+    apiBody: body,
+    hubspot: {
+      email: body.eposta,
+      phone: body.telefon,
+      firstname: body.ad_soyad,
+      kaynak: 'test-surusu-formu',
+      arac: body.arac,
+      sehir: body.sehir,
+      tercih_tarih: body.tercih_tarih,
+      not_text: body.not_text,
+      ticari_izin: document.getElementById('ticariIzin').checked
+    }
+  }));
+  if (!basarili) return false;
   metaLeadGonder('test-surusu-formu');
 
   document.getElementById('leadForm').style.display = 'none';
@@ -430,19 +425,15 @@ function exitKapat() {
 
 async function exitFormGonder(e) {
   e.preventDefault();
-  const telefon = document.getElementById('exitTelefon').value;
-  if (!STATIK_MOD) {
-    try {
-      await fetch('/api/leads/hizli', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ telefon, kaynak: 'exit-intent', ...UTM })
-      });
-    } catch {}
-  }
+  const telefon = telefonDogrula(document.getElementById('exitTelefon'));
+  if (!telefon) return false;
 
-  // HubSpot'a lead gönder
-  hubspotLeadGonder({ phone: telefon, kaynak: 'exit-intent' });
+  const basarili = await gonderimKilidi(e, () => leadIlet({
+    apiYolu: '/api/leads/hizli',
+    apiBody: { telefon, kaynak: 'exit-intent', ...UTM },
+    hubspot: { phone: telefon, kaynak: 'exit-intent' }
+  }));
+  if (!basarili) return false;
   metaLeadGonder('exit-intent');
 
   document.querySelector('.exit-form').style.display = 'none';
@@ -505,7 +496,7 @@ async function sonGuncellemeGoster() {
     } catch {}
   }
   const el = document.getElementById('sonGuncelleme');
-  if (el) el.textContent = `Fiyatlar son güncelleme: ${new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}`;
+  if (el) el.textContent = `Fiyatlar son güncelleme: ${new Date(FIYAT_GUNCELLEME_TARIHI).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}`;
 }
 
 // ─── GSAP ANIMASYONLARI ──────────────────────────────────
@@ -697,25 +688,87 @@ function metaLeadGonder(kaynak) {
   if (typeof fbq === 'function') fbq('track', 'Lead', { content_name: kaynak });
 }
 
-function hubspotLeadGonder(data) {
-  const fields = [];
-  if (data.email) fields.push({ name: 'email', value: data.email });
-  if (data.phone) fields.push({ name: 'phone', value: data.phone });
-  if (data.firstname) fields.push({ name: 'firstname', value: data.firstname });
+// Türkiye cep telefonu: 05XX XXX XX XX, 5XX..., +90 5XX... kabul edilir; +905XXXXXXXXX döner
+function telefonDogrula(input) {
+  const rakam = input.value.replace(/\D/g, '').replace(/^(90|0)/, '');
+  const gecerli = /^5\d{9}$/.test(rakam);
+  input.setCustomValidity(gecerli ? '' : 'Lütfen geçerli bir cep telefonu girin (05XX XXX XX XX).');
+  if (!gecerli) {
+    input.reportValidity();
+    return null;
+  }
+  return '+90' + rakam;
+}
 
-  const payload = {
-    fields,
-    context: {
-      pageUri: window.location.href,
-      pageName: document.title
+// Gönderim sürerken butonu kilitler, çift gönderimi engeller
+async function gonderimKilidi(e, islem) {
+  const buton = e.submitter || e.target.querySelector('[type=submit]');
+  if (buton) buton.disabled = true;
+  try {
+    const basarili = await islem();
+    if (!basarili) alert('Talebiniz iletilemedi. Lütfen birazdan tekrar deneyin.');
+    return basarili;
+  } finally {
+    if (buton) buton.disabled = false;
+  }
+}
+
+// Lead'i API'ye (sunucu modunda) ve HubSpot'a iletir; en az biri başarılıysa true
+async function leadIlet({ apiYolu, apiBody, hubspot }) {
+  let apiBasarili = false;
+  if (!STATIK_MOD) {
+    try {
+      const res = await fetch(apiYolu, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(apiBody)
+      });
+      apiBasarili = res.ok;
+    } catch {}
+  }
+  const hubspotBasarili = await hubspotLeadGonder(hubspot);
+  return apiBasarili || hubspotBasarili;
+}
+
+async function hubspotLeadGonder(data) {
+  const temel = [];
+  if (data.email) temel.push({ name: 'email', value: data.email });
+  if (data.phone) temel.push({ name: 'phone', value: data.phone });
+  if (data.firstname) temel.push({ name: 'firstname', value: data.firstname });
+
+  // Araç, şehir, kaynak ve UTM bilgisi satış ekibi için not alanına yazılır
+  const params = new URLSearchParams(window.location.search);
+  const utm = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
+    .filter(k => params.get(k)).map(k => `${k}=${params.get(k)}`).join(', ');
+  const not = [
+    `Kaynak: ${data.kaynak}`,
+    data.arac && `Araç: ${data.arac}`,
+    data.sehir && `Şehir: ${data.sehir}`,
+    data.tercih_tarih && `Tercih edilen tarih: ${data.tercih_tarih}`,
+    data.not_text && `Not: ${data.not_text}`,
+    `UTM: ${utm || '-'}`,
+    `KVKK aydınlatma/yurt dışı aktarım onayı: evet (${new Date().toLocaleString('tr-TR')})`,
+    data.ticari_izin !== undefined && `Ticari ileti izni: ${data.ticari_izin ? 'evet' : 'hayır'}`
+  ].filter(Boolean).join('\n');
+
+  const ek = [{ name: 'message', value: not }];
+  if (data.sehir) ek.push({ name: 'city', value: data.sehir });
+
+  const gonder = async (fields) => {
+    try {
+      const res = await fetch(`https://api.hsforms.com/submissions/v3/integration/submit/${HUBSPOT_PORTAL_ID}/${HUBSPOT_FORM_ID}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fields, context: { pageUri: window.location.href, pageName: document.title } })
+      });
+      return res.ok;
+    } catch {
+      return false;
     }
   };
 
-  fetch(`https://api.hsforms.com/submissions/v3/integration/submit/${HUBSPOT_PORTAL_ID}/${HUBSPOT_FORM_ID}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  }).catch(() => {});
+  // HubSpot ek alanları reddederse lead'i kaybetmemek için temel alanlarla tekrar dene
+  return (await gonder([...temel, ...ek])) || (await gonder(temel));
 }
 
 // ─── SAYFA YÜKLENDİĞİNDE ────────────────────────────────
@@ -728,6 +781,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   mobilKontrol();
   tarihMinAyarla();
   sonGuncellemeGoster();
+  document.querySelectorAll('input[type=tel]').forEach(i => i.addEventListener('input', () => i.setCustomValidity('')));
   window.addEventListener('resize', mobilKontrol);
 
   // GSAP başlat

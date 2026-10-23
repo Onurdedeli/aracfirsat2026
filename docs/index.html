@@ -197,8 +197,9 @@
           <h3>Hangisine karar veremediniz mi?</h3>
           <p>Uzmanımız sizi arasın, size özel fiyat teklifi sunalım.</p>
           <form class="cta-form" onsubmit="return ctaFormGonder(event)">
-            <input type="tel" id="ctaTelefon" placeholder="Telefon numaranız" required>
+            <input type="tel" id="ctaTelefon" placeholder="05XX XXX XX XX" inputmode="tel" autocomplete="tel" required>
             <button type="submit">Beni Arayın</button>
+            <label class="onay"><input type="checkbox" required> <span><a href="/gizlilik-politikasi.html" target="_blank">Aydınlatma Metni</a>'ni okudum; kişisel verilerimin talebim için işlenmesine ve yurt dışına aktarılmasına açık rıza veriyorum.</span></label>
           </form>
           <div id="ctaBasari" class="cta-success" style="display:none;">En kısa sürede aranacaksınız!</div>
         </div>
@@ -277,7 +278,7 @@
             </div>
             <div class="form-group">
               <label>Telefon *</label>
-              <input type="tel" id="telefon" required placeholder="05XX XXX XX XX">
+              <input type="tel" id="telefon" required placeholder="05XX XXX XX XX" inputmode="tel" autocomplete="tel">
             </div>
             <div class="form-group">
               <label>E-posta</label>
@@ -287,6 +288,10 @@
               <label>Not</label>
               <textarea id="notText" rows="3" placeholder="Ek bilgi veya tercihleriniz..."></textarea>
             </div>
+          </div>
+          <div class="onay-grubu">
+            <label class="onay"><input type="checkbox" required> <span><a href="/gizlilik-politikasi.html" target="_blank">Aydınlatma Metni</a>'ni okudum; kişisel verilerimin talebim için işlenmesine ve yurt dışına aktarılmasına açık rıza veriyorum.</span></label>
+            <label class="onay"><input type="checkbox" id="ticariIzin"> <span>Kampanya ve fırsatlardan SMS, arama ve e-posta ile haberdar olmak istiyorum. (İsteğe bağlı)</span></label>
           </div>
           <div class="step-buttons">
             <button type="button" class="btn-prev" onclick="adimGeri(2)">&larr; Geri</button>
@@ -324,8 +329,9 @@
         <h3>Aracınızı henüz buldunuz mu?</h3>
         <p>Telefonunuzu bırakın, size özel fiyat teklifi gönderelim.</p>
         <form class="exit-form" onsubmit="return exitFormGonder(event)">
-          <input type="tel" id="exitTelefon" placeholder="05XX XXX XX XX" required>
+          <input type="tel" id="exitTelefon" placeholder="05XX XXX XX XX" inputmode="tel" autocomplete="tel" required>
           <button type="submit">Özel Teklif Al</button>
+          <label class="onay"><input type="checkbox" required> <span><a href="/gizlilik-politikasi.html" target="_blank">Aydınlatma Metni</a>'ni okudum; kişisel verilerimin talebim için işlenmesine ve yurt dışına aktarılmasına açık rıza veriyorum.</span></label>
         </form>
         <div id="exitBasari" class="exit-success" style="display:none;">
           Talebiniz alındı! Sizi arayacağız.

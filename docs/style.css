@@ -304,3 +304,12 @@ body { font-family: 'Segoe UI', system-ui, sans-serif; color: var(--text); }
 .hero h1, .hero p, .hero-search { opacity: 0; }
 .section-title, .section-desc { opacity: 0; }
 .navbar { box-shadow: none; }
+
+/* KVKK ONAY KUTULARI */
+.cta-form, .exit-form { flex-wrap: wrap; }
+.onay { flex-basis: 100%; display: flex; gap: 0.5rem; align-items: flex-start; text-align: left; font-size: 0.78rem; line-height: 1.4; cursor: pointer; }
+.onay input { margin-top: 0.15rem; flex-shrink: 0; width: 16px; height: 16px; }
+.onay a { color: inherit; text-decoration: underline; }
+.cta-form .onay { color: rgba(255,255,255,0.9); }
+.exit-form .onay { color: var(--text-light); }
+.onay-grubu { display: flex; flex-direction: column; gap: 0.6rem; margin: 1rem 0; color: var(--text-light); }
