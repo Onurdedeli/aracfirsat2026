@@ -261,6 +261,7 @@ async function ctaFormGonder(e) {
 
   // HubSpot'a lead gönder
   hubspotLeadGonder({ phone: telefon, kaynak: 'karsilastirma-cta' });
+  metaLeadGonder('karsilastirma-cta');
 
   document.querySelector('.cta-form').style.display = 'none';
   document.getElementById('ctaBasari').style.display = 'block';
@@ -385,6 +386,7 @@ async function formGonder(e) {
     arac: body.arac,
     sehir: body.sehir
   });
+  metaLeadGonder('test-surusu-formu');
 
   document.getElementById('leadForm').style.display = 'none';
   document.querySelector('.step-progress').style.display = 'none';
@@ -441,6 +443,7 @@ async function exitFormGonder(e) {
 
   // HubSpot'a lead gönder
   hubspotLeadGonder({ phone: telefon, kaynak: 'exit-intent' });
+  metaLeadGonder('exit-intent');
 
   document.querySelector('.exit-form').style.display = 'none';
   document.getElementById('exitBasari').style.display = 'block';
@@ -688,6 +691,11 @@ function exitPopupAnimasyonKapat(callback) {
 // ─── HUBSPOT ENTEGRASYONU ────────────────────────────────
 const HUBSPOT_PORTAL_ID = '148267519';
 const HUBSPOT_FORM_ID = '6682f757-8340-4c04-a898-a7c480a431b6';
+
+// Meta Pixel Lead olayı (lead kampanyaları optimizasyonu için)
+function metaLeadGonder(kaynak) {
+  if (typeof fbq === 'function') fbq('track', 'Lead', { content_name: kaynak });
+}
 
 function hubspotLeadGonder(data) {
   const fields = [];
