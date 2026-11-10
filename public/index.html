@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AraçFırsat - Sıfır Araç Fiyat Karşılaştırma | 2026 Güncel Fiyatlar</title>
-  <meta name="description" content="Türkiye'deki tüm sıfır araç fiyatlarını karşılaştırın. 35+ model, güncel fiyatlar, detaylı özellik karşılaştırması ve test sürüşü talebi. Toyota, Volkswagen, BMW, Mercedes, Renault, Hyundai ve daha fazlası.">
-  <meta name="keywords" content="sıfır araç fiyatları, araç karşılaştırma, 2026 araba fiyatları, sıfır km araç, test sürüşü, Toyota, Volkswagen, BMW, Mercedes, Renault, Hyundai, Fiat, Kia, Togg, araç fiyat listesi, Türkiye araç fiyatları">
+  <title>AraçFırsat - Sıfır Araç ve Motosiklet Fiyat Karşılaştırma | 2026 Güncel Fiyatlar</title>
+  <meta name="description" content="Türkiye'deki sıfır otomobil ve motosiklet fiyatlarını karşılaştırın. Güncel fiyatlar, detaylı özellik karşılaştırması ve test sürüşü talebi. Toyota, Volkswagen, BMW, Renault, Honda, Yamaha ve daha fazlası.">
+  <meta name="keywords" content="sıfır araç fiyatları, araç karşılaştırma, 2026 araba fiyatları, sıfır km araç, test sürüşü, Toyota, Volkswagen, BMW, Mercedes, Renault, Hyundai, Fiat, Kia, Togg, araç fiyat listesi, Türkiye araç fiyatları, sıfır motosiklet fiyatları, motosiklet karşılaştırma, scooter fiyatları">
   <meta name="author" content="Smatch Bilişim Teknolojileri A.Ş.">
   <meta name="robots" content="index, follow">
   <meta name="google-site-verification" content="y14waEdY8IpE9_f3QtyjW6KPgI7lmRp8FZwKGkzQKjE">
@@ -112,7 +112,8 @@
         <span class="logo-text">araç<span>fırsat</span></span>
       </a>
       <ul class="nav-links">
-        <li><a href="#araclar">Araçlar</a></li>
+        <li><a href="#araclar" onclick="tipSec('otomobil')">Otomobiller</a></li>
+        <li><a href="#araclar" onclick="tipSec('motosiklet')">Motosikletler</a></li>
         <li><a href="#karsilastir">Karşılaştır</a></li>
         <li><a href="#test-surusu">Test Sürüşü</a></li>
       </ul>
@@ -123,17 +124,17 @@
   <section class="hero">
     <div class="container">
       <h1>Sıfır Araç Fiyatlarını<br>Karşılaştır</h1>
-      <p>Türkiye'deki tüm sıfır araç fiyatlarını tek sayfada incele, karşılaştır ve test sürüşü talep et.</p>
+      <p>Türkiye'deki sıfır otomobil ve motosiklet fiyatlarını tek sayfada incele, karşılaştır ve test sürüşü talep et.</p>
+      <div class="tip-sekmeler hero-sekmeler" role="tablist">
+        <button type="button" class="tip-sekme active" data-tip="otomobil" role="tab" onclick="tipSec('otomobil')">&#128663; Otomobil</button>
+        <button type="button" class="tip-sekme" data-tip="motosiklet" role="tab" onclick="tipSec('motosiklet')">&#127949; Motosiklet</button>
+      </div>
       <div class="hero-search">
         <select id="heroMarka">
           <option value="">Marka Seçin</option>
         </select>
         <select id="heroSegment">
           <option value="">Segment</option>
-          <option value="sedan">Sedan</option>
-          <option value="suv">SUV</option>
-          <option value="hatchback">Hatchback</option>
-          <option value="crossover">Crossover</option>
         </select>
         <button onclick="heroAra()">Ara</button>
       </div>
@@ -143,8 +144,13 @@
   <!-- ARAÇ LİSTESİ -->
   <section id="araclar" class="section">
     <div class="container">
-      <h2 class="section-title">Sıfır Araçlar</h2>
+      <h2 class="section-title" id="listeBaslik">Sıfır Otomobiller</h2>
       <p id="sonGuncelleme" class="section-desc" style="font-size:0.85rem;color:#999;margin-bottom:1rem;"></p>
+
+      <div class="tip-sekmeler" role="tablist">
+        <button type="button" class="tip-sekme active" data-tip="otomobil" role="tab" onclick="tipSec('otomobil')">&#128663; Otomobil</button>
+        <button type="button" class="tip-sekme" data-tip="motosiklet" role="tab" onclick="tipSec('motosiklet')">&#127949; Motosiklet</button>
+      </div>
 
       <div class="filters">
         <select id="filtreMarka" onchange="filtrele()">
@@ -152,17 +158,9 @@
         </select>
         <select id="filtreSegment" onchange="filtrele()">
           <option value="">Tüm Segmentler</option>
-          <option value="sedan">Sedan</option>
-          <option value="suv">SUV</option>
-          <option value="hatchback">Hatchback</option>
-          <option value="crossover">Crossover</option>
         </select>
         <select id="filtreYakit" onchange="filtrele()">
           <option value="">Tüm Yakıt Tipleri</option>
-          <option value="benzin">Benzin</option>
-          <option value="dizel">Dizel</option>
-          <option value="hybrid">Hybrid</option>
-          <option value="elektrik">Elektrik</option>
         </select>
         <select id="filtreSirala" onchange="filtrele()">
           <option value="fiyat-artan">Fiyat (Düşükten Yükseğe)</option>

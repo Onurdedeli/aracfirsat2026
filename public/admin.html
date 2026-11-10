@@ -284,7 +284,7 @@
           </div>
         </div>
         <table>
-          <thead><tr><th>ID</th><th>Görsel</th><th>Marka</th><th>Model</th><th>Segment</th><th>Motor</th><th>HP</th><th>Fiyat</th><th>Durum</th><th>İşlem</th></tr></thead>
+          <thead><tr><th>ID</th><th>Görsel</th><th>Tip</th><th>Marka</th><th>Model</th><th>Segment</th><th>Motor</th><th>HP</th><th>Fiyat</th><th>Durum</th><th>İşlem</th></tr></thead>
           <tbody id="aracTablosu"></tbody>
         </table>
       </div>
@@ -346,17 +346,17 @@
       <h3 id="aracModalBaslik">Yeni Araç Ekle</h3>
       <form class="modal-form" id="aracForm" onsubmit="return aracKaydet(event)">
         <input type="hidden" id="aracEditId">
+        <label>Tip</label>
+        <select id="aTip" required onchange="segmentleriDoldur()">
+          <option value="otomobil">Otomobil</option>
+          <option value="motosiklet">Motosiklet</option>
+        </select>
         <label>Marka</label>
         <input type="text" id="aMarka" required>
         <label>Model</label>
         <input type="text" id="aModel" required>
         <label>Segment</label>
-        <select id="aSegment" required>
-          <option value="sedan">Sedan</option>
-          <option value="suv">SUV</option>
-          <option value="hatchback">Hatchback</option>
-          <option value="crossover">Crossover</option>
-        </select>
+        <select id="aSegment" required></select>
         <label>Yakıt</label>
         <select id="aYakit" required>
           <option value="benzin">Benzin</option>
@@ -365,7 +365,7 @@
           <option value="elektrik">Elektrik</option>
         </select>
         <label>Motor</label>
-        <input type="text" id="aMotor" required placeholder="ör: 1.5L Turbo">
+        <input type="text" id="aMotor" required placeholder="ör: 1.5L Turbo / 125 cc">
         <label>Vites</label>
         <input type="text" id="aVites" required placeholder="ör: DSG 7">
         <label>Beygir Gücü</label>
@@ -604,6 +604,7 @@
         <tr>
           <td>${a.id}</td>
           <td>${a.gorsel ? `<img src="${a.gorsel}" style="width:80px;height:50px;object-fit:cover;border-radius:4px;" onerror="this.src=''">` : '-'}</td>
+          <td>${a.tip === 'motosiklet' ? 'Motosiklet' : 'Otomobil'}</td>
           <td>${a.marka}</td>
           <td>${a.model}</td>
           <td>${a.segment}</td>
@@ -619,9 +620,22 @@
       `).join('');
     }
 
+    const SEGMENTLER = {
+      otomobil: { sedan: 'Sedan', suv: 'SUV', hatchback: 'Hatchback', crossover: 'Crossover' },
+      motosiklet: { scooter: 'Scooter', naked: 'Naked', adventure: 'Adventure', sport: 'Sport', touring: 'Touring', cruiser: 'Cruiser' }
+    };
+
+    // Segment seçeneklerini seçili araç tipine göre doldurur
+    function segmentleriDoldur() {
+      const el = document.getElementById('aSegment');
+      el.length = 0;
+      Object.entries(SEGMENTLER[document.getElementById('aTip').value]).forEach(([deger, etiket]) => el.add(new Option(etiket, deger)));
+    }
+
     function yeniAracModal() {
       document.getElementById('aracModalBaslik').textContent = 'Yeni Araç Ekle';
       document.getElementById('aracForm').reset();
+      segmentleriDoldur();
       document.getElementById('aracEditId').value = '';
       document.getElementById('aracModal').classList.add('active');
     }
@@ -631,6 +645,8 @@
       const a = await res.json();
       document.getElementById('aracModalBaslik').textContent = 'Araç Düzenle';
       document.getElementById('aracEditId').value = a.id;
+      document.getElementById('aTip').value = a.tip || 'otomobil';
+      segmentleriDoldur();
       document.getElementById('aMarka').value = a.marka;
       document.getElementById('aModel').value = a.model;
       document.getElementById('aSegment').value = a.segment;
@@ -647,6 +663,7 @@
       e.preventDefault();
       const id = document.getElementById('aracEditId').value;
       const body = {
+        tip: document.getElementById('aTip').value,
         marka: document.getElementById('aMarka').value,
         model: document.getElementById('aModel').value,
         segment: document.getElementById('aSegment').value,

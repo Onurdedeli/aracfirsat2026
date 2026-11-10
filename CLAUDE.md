@@ -8,7 +8,7 @@ AracFirsat2026 is a Turkish zero-kilometer (new) car price comparison website wi
 
 ## Commands
 
-- **Start server:** `npm start` (runs on port 3000)
+- **Start server:** `npm start` (runs on port 3000, or `PORT` env)
 - **Dev mode (auto-reload):** `npm run dev` (uses `node --watch`)
 - **Install dependencies:** `npm install`
 
@@ -20,7 +20,8 @@ No test framework, linter, or build step is configured.
 
 All backend logic lives in one file:
 - **Database:** SQLite via better-sqlite3 with WAL mode. DB file is `aracfirsat.db`. Tables: `araclar` (vehicles), `leads` (test drive requests), `fiyat_gecmisi` (price history). Schema is created on startup with ALTER TABLE migrations for new columns.
-- **Seed data:** 51 vehicles are seeded on first run when `araclar` table is empty.
+- **Seed data:** 51 cars are seeded on first run when `araclar` table is empty; 17 motorcycles are seeded when there are no `tip = 'motosiklet'` rows.
+- **Vehicle type:** `araclar.tip` is `otomobil` or `motosiklet`. Car segments: sedan/suv/hatchback/crossover; motorcycle segments: scooter/naked/adventure/sport/touring/cruiser. Motorcycle `hp` is metric PS.
 - **Lead scoring:** `leadPuanHesapla()` scores leads 0-100 based on luxury brand, email provided, notes length, preferred date, city size, and vehicle price.
 - **Admin auth:** Simple header-based auth (`x-admin-key` header) - not session-based.
 - **Email:** Nodemailer integration (disabled by default via `MAIL_CONFIG.enabled`).
@@ -29,8 +30,8 @@ All backend logic lives in one file:
 ### API Routes
 
 Public:
-- `GET /api/araclar` - list vehicles (filterable by marka/segment/yakit, sortable)
-- `GET /api/markalar` - distinct brand list
+- `GET /api/araclar` - list vehicles (filterable by tip/marka/segment/yakit, sortable)
+- `GET /api/markalar` - distinct brand list (optional `?tip=`)
 - `POST /api/leads` - submit test drive lead
 - `POST /api/leads/hizli` - quick lead (phone only, for exit-intent)
 - `GET /api/fiyat-gecmisi/:aracId` - price history for a vehicle
@@ -58,6 +59,7 @@ Admin (require `x-admin-key` header):
 
 - All UI text, variable names, and comments are in Turkish
 - Currency is Turkish Lira (TRY), formatted as `1.285.000 ₺`
-- Vehicle images follow `car-{N}.jpg` pattern in `public/img/` and `docs/img/`
+- Vehicle images follow `car-{N}.jpg` (cars) and `moto-{N}.jpg` (motorcycles) in `public/img/` and `docs/img/`; every photo needs a credit in `fotograf-kaynaklari.html`
+- Static motorcycle data lives in `MOTOSIKLET_VERILERI` in `app.js` (ids start at 101); `?tip=motosiklet` opens the motorcycle tab
 - Database column names are in Turkish (e.g., `marka`, `fiyat`, `yakit`, `sehir`)
 - Lead statuses: `yeni`, `arandi`, `randevu`, `tamamlandi`, `iptal`

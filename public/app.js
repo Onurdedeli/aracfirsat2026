@@ -53,7 +53,49 @@ const ARAC_VERILERI = [
   { id:51, marka:"Volkswagen", model:"Passat 1.5 eTSI Elegance", segment:"sedan", yakit:"hybrid", motor:"1.5L eTSI Mild Hybrid", vites:"DSG 7", hp:150, fiyat:5053000, gorsel:"img/car-51.jpg", aktif:1 }
 ];
 
+// ─── GÖMÜLÜ MOTOSİKLET VERİLERİ (GitHub Pages statik mod) ─
+// id'ler 101'den başlar, otomobil id'leriyle çakışmaz
+const MOTOSIKLET_VERILERI = [
+  { id:101, tip:"motosiklet", marka:"Honda", model:"PCX125", segment:"scooter", yakit:"benzin", motor:"125 cc", vites:"CVT", hp:13, fiyat:207000, gorsel:"img/moto-1.jpg", aktif:1 },
+  { id:102, tip:"motosiklet", marka:"Yamaha", model:"NMAX 125", segment:"scooter", yakit:"benzin", motor:"125 cc", vites:"CVT", hp:12, fiyat:307000, gorsel:"img/moto-2.jpg", aktif:1 },
+  { id:103, tip:"motosiklet", marka:"Honda", model:"Forza 250", segment:"scooter", yakit:"benzin", motor:"249 cc", vites:"CVT", hp:23, fiyat:385750, gorsel:"img/moto-3.jpg", aktif:1 },
+  { id:104, tip:"motosiklet", marka:"Yamaha", model:"XMAX 250", segment:"scooter", yakit:"benzin", motor:"250 cc", vites:"CVT", hp:23, fiyat:401000, gorsel:"img/moto-4.jpg", aktif:1 },
+  { id:105, tip:"motosiklet", marka:"Yamaha", model:"NEO's Çift Bataryalı", segment:"scooter", yakit:"elektrik", motor:"Elektrik", vites:"Otomatik", hp:3, fiyat:149500, gorsel:"img/moto-5.jpg", aktif:1 },
+  { id:106, tip:"motosiklet", marka:"Bajaj", model:"Pulsar NS 200 UG2", segment:"naked", yakit:"benzin", motor:"199 cc", vites:"Manuel 6", hp:25, fiyat:231700, gorsel:"img/moto-6.jpg", aktif:1 },
+  { id:107, tip:"motosiklet", marka:"KTM", model:"390 Duke", segment:"naked", yakit:"benzin", motor:"399 cc", vites:"Manuel 6", hp:45, fiyat:587000, gorsel:"img/moto-7.jpg", aktif:1 },
+  { id:108, tip:"motosiklet", marka:"Yamaha", model:"MT-07", segment:"naked", yakit:"benzin", motor:"689 cc", vites:"Manuel 6", hp:73, fiyat:812500, gorsel:"img/moto-8.jpg", aktif:1 },
+  { id:109, tip:"motosiklet", marka:"Honda", model:"CB650R", segment:"naked", yakit:"benzin", motor:"649 cc", vites:"Manuel 6", hp:95, fiyat:869250, gorsel:"img/moto-9.jpg", aktif:1 },
+  { id:110, tip:"motosiklet", marka:"Honda", model:"NX500", segment:"adventure", yakit:"benzin", motor:"471 cc", vites:"Manuel 6", hp:48, fiyat:620000, gorsel:"img/moto-10.jpg", aktif:1 },
+  { id:111, tip:"motosiklet", marka:"Yamaha", model:"Ténéré 700", segment:"adventure", yakit:"benzin", motor:"689 cc", vites:"Manuel 6", hp:73, fiyat:966500, gorsel:"img/moto-11.jpg", aktif:1 },
+  { id:112, tip:"motosiklet", marka:"Honda", model:"CRF1100L Africa Twin ES-DCT", segment:"adventure", yakit:"benzin", motor:"1084 cc", vites:"DCT", hp:102, fiyat:1405000, gorsel:"img/moto-12.jpg", aktif:1 },
+  { id:113, tip:"motosiklet", marka:"BMW", model:"R 1300 GS", segment:"adventure", yakit:"benzin", motor:"1300 cc Boxer", vites:"Manuel 6", hp:145, fiyat:2049823, gorsel:"img/moto-13.jpg", aktif:1 },
+  { id:114, tip:"motosiklet", marka:"Yamaha", model:"YZF-R3", segment:"sport", yakit:"benzin", motor:"321 cc", vites:"Manuel 6", hp:42, fiyat:641500, gorsel:"img/moto-14.jpg", aktif:1 },
+  { id:115, tip:"motosiklet", marka:"CFMoto", model:"675 SR-R", segment:"sport", yakit:"benzin", motor:"674 cc", vites:"Manuel 6", hp:95, fiyat:611800, gorsel:"img/moto-15.jpg", aktif:1 },
+  { id:116, tip:"motosiklet", marka:"Honda", model:"CBR650R", segment:"sport", yakit:"benzin", motor:"649 cc", vites:"Manuel 6", hp:95, fiyat:885750, gorsel:"img/moto-16.jpg", aktif:1 },
+  { id:117, tip:"motosiklet", marka:"Honda", model:"GL1800 Gold Wing", segment:"touring", yakit:"benzin", motor:"1833 cc Boxer", vites:"DCT", hp:126, fiyat:2857500, gorsel:"img/moto-17.jpg", aktif:1 }
+];
+
 let tumAraclar = [];
+
+// ─── ARAÇ TİPLERİ ────────────────────────────────────────
+const TIPLER = {
+  otomobil: {
+    etiket: 'Otomobil', baslik: 'Sıfır Otomobiller', ikon: '&#128663;',
+    segmentler: { sedan: 'Sedan', suv: 'SUV', hatchback: 'Hatchback', crossover: 'Crossover' }
+  },
+  motosiklet: {
+    etiket: 'Motosiklet', baslik: 'Sıfır Motosikletler', ikon: '&#127949;',
+    segmentler: { scooter: 'Scooter', naked: 'Naked', adventure: 'Adventure', sport: 'Sport', touring: 'Touring', cruiser: 'Cruiser' }
+  }
+};
+const YAKIT_ETIKETLERI = { benzin: 'Benzin', dizel: 'Dizel', hybrid: 'Hybrid', elektrik: 'Elektrik' };
+
+// ?tip=motosiklet ile gelen ziyaretçi (ör. reklam linki) doğrudan motosiklet sekmesini görür
+let aktifTip = new URLSearchParams(window.location.search).get('tip') === 'motosiklet' ? 'motosiklet' : 'otomobil';
+
+function aracTipi(arac) {
+  return arac.tip || 'otomobil';
+}
 
 // ─── STATİK MOD ALGILAMA ─────────────────────────────────
 // GitHub Pages veya statik hosting'de API mevcut değil
@@ -86,29 +128,46 @@ async function araclariYukle() {
     } catch {}
   }
   // Satıştan kalkan / güncel fiyatı doğrulanamayan araçlar aktif:0 ile gizlenir
-  tumAraclar = ARAC_VERILERI.filter(a => a.aktif);
+  tumAraclar = [...ARAC_VERILERI, ...MOTOSIKLET_VERILERI].filter(a => a.aktif);
   return tumAraclar;
 }
 
-async function markalariDoldur() {
-  let markalar;
-  if (!STATIK_MOD) {
-    try {
-      const res = await fetch('/api/markalar');
-      if (res.ok) { markalar = await res.json(); }
-    } catch {}
-  }
-  if (!markalar) {
-    markalar = [...new Set(tumAraclar.map(a => a.marka))].sort();
-  }
-  ['heroMarka', 'filtreMarka'].forEach(id => {
-    const el = document.getElementById(id);
-    markalar.forEach(m => {
-      const opt = document.createElement('option');
-      opt.value = m; opt.textContent = m;
-      el.appendChild(opt);
-    });
+// Select'i ilk (boş) seçeneği koruyarak verilen [değer, etiket] çiftleriyle doldurur
+function secenekleriYaz(id, secenekler) {
+  const el = document.getElementById(id);
+  el.length = 1;
+  secenekler.forEach(([deger, etiket]) => el.add(new Option(etiket, deger)));
+}
+
+// Marka, segment ve yakıt filtrelerini aktif tipte bulunan araçlara göre doldurur
+function filtreSecenekleriniDoldur() {
+  const araclar = tumAraclar.filter(a => aracTipi(a) === aktifTip);
+  const markalar = [...new Set(araclar.map(a => a.marka))].sort((a, b) => a.localeCompare(b, 'tr'));
+  const segmentler = Object.entries(TIPLER[aktifTip].segmentler).filter(([s]) => araclar.some(a => a.segment === s));
+  const yakitlar = Object.entries(YAKIT_ETIKETLERI).filter(([y]) => araclar.some(a => a.yakit === y));
+
+  ['heroMarka', 'filtreMarka'].forEach(id => secenekleriYaz(id, markalar.map(m => [m, m])));
+  ['heroSegment', 'filtreSegment'].forEach(id => secenekleriYaz(id, segmentler));
+  secenekleriYaz('filtreYakit', yakitlar);
+}
+
+function tipSec(tip) {
+  if (!TIPLER[tip]) return;
+  aktifTip = tip;
+  document.querySelectorAll('.tip-sekme').forEach(b => {
+    const aktif = b.dataset.tip === tip;
+    b.classList.toggle('active', aktif);
+    b.setAttribute('aria-selected', aktif);
   });
+  document.getElementById('listeBaslik').textContent = TIPLER[tip].baslik;
+  filtreSecenekleriniDoldur();
+  filtrele();
+
+  // Paylaşılan link aynı sekmeyi açsın; UTM vb. diğer parametreler korunur
+  const params = new URLSearchParams(window.location.search);
+  if (tip === 'otomobil') params.delete('tip'); else params.set('tip', tip);
+  const sorgu = params.toString();
+  history.replaceState(null, '', window.location.pathname + (sorgu ? '?' + sorgu : '') + window.location.hash);
 }
 
 // ─── ARAC KARTI ──────────────────────────────────────────
@@ -117,7 +176,7 @@ function aracKarti(arac) {
     <div class="car-card" data-id="${arac.id}">
       <div class="car-img">
         <img src="${arac.gorsel}" alt="${arac.marka} ${arac.model}"
-             onerror="this.parentElement.innerHTML='&#128663;'; this.remove();">
+             onerror="this.parentElement.innerHTML='${TIPLER[aracTipi(arac)].ikon}'; this.remove();">
       </div>
       <div class="car-info">
         <div class="car-brand">${arac.marka}</div>
@@ -148,7 +207,7 @@ async function filtrele() {
   let sonuc;
   if (!STATIK_MOD) {
     try {
-      const params = new URLSearchParams();
+      const params = new URLSearchParams({ tip: aktifTip });
       if (marka) params.set('marka', marka);
       if (segment) params.set('segment', segment);
       if (yakit) params.set('yakit', yakit);
@@ -161,6 +220,7 @@ async function filtrele() {
   if (!sonuc) {
     // Lokal filtreleme (GitHub Pages)
     sonuc = tumAraclar.filter(a => {
+      if (aracTipi(a) !== aktifTip) return false;
       if (marka && a.marka !== marka) return false;
       if (segment && a.segment !== segment) return false;
       if (yakit && a.yakit !== yakit) return false;
@@ -174,7 +234,7 @@ async function filtrele() {
 
   const grid = document.getElementById('aracListesi');
   if (sonuc.length === 0) {
-    grid.innerHTML = '<p style="text-align:center;grid-column:1/-1;color:#999;padding:3rem;">Araç bulunamadı.</p>';
+    grid.innerHTML = `<p style="text-align:center;grid-column:1/-1;color:#999;padding:3rem;">${TIPLER[aktifTip].etiket} bulunamadı.</p>`;
   } else {
     grid.innerHTML = sonuc.map(aracKarti).join('');
     kartAnimasyonu();
@@ -188,16 +248,22 @@ function heroAra() {
   document.getElementById('araclar').scrollIntoView({ behavior: 'smooth' });
 }
 
+// Araç seçimi dropdown'larını Otomobil / Motosiklet gruplarıyla doldurur
+function aracSecenekleriEkle(el, metin) {
+  Object.entries(TIPLER).forEach(([tip, t]) => {
+    const araclar = tumAraclar.filter(a => aracTipi(a) === tip);
+    if (araclar.length === 0) return;
+    const grup = document.createElement('optgroup');
+    grup.label = t.etiket;
+    araclar.forEach(a => grup.appendChild(new Option(metin(a), a.id)));
+    el.appendChild(grup);
+  });
+}
+
 // ─── KARSILASTIRMA ───────────────────────────────────────
 function karsilastirmaDropdownDoldur() {
   ['compare1', 'compare2'].forEach(id => {
-    const el = document.getElementById(id);
-    tumAraclar.forEach(a => {
-      const opt = document.createElement('option');
-      opt.value = a.id;
-      opt.textContent = `${a.marka} ${a.model}`;
-      el.appendChild(opt);
-    });
+    aracSecenekleriEkle(document.getElementById(id), a => `${a.marka} ${a.model}`);
   });
 }
 
@@ -216,6 +282,7 @@ function karsilastir() {
   const rows = [
     ['Marka', a1.marka, a2.marka],
     ['Model', a1.model, a2.model],
+    ['Tip', TIPLER[aracTipi(a1)].etiket, TIPLER[aracTipi(a2)].etiket],
     ['Segment', a1.segment.toUpperCase(), a2.segment.toUpperCase()],
     ['Motor', a1.motor, a2.motor],
     ['Beygir Gücü', a1.hp + ' HP', a2.hp + ' HP', a1.hp > a2.hp ? 1 : a2.hp > a1.hp ? 2 : 0],
@@ -337,13 +404,7 @@ function testSurusuGit(id) {
 }
 
 function formAracDoldur() {
-  const el = document.getElementById('formArac');
-  tumAraclar.forEach(a => {
-    const opt = document.createElement('option');
-    opt.value = a.id;
-    opt.textContent = `${a.marka} ${a.model} - ${fiyatFormat(a.fiyat)}`;
-    el.appendChild(opt);
-  });
+  aracSecenekleriEkle(document.getElementById('formArac'), a => `${a.marka} ${a.model} - ${fiyatFormat(a.fiyat)}`);
 }
 
 // Form gonder
@@ -354,6 +415,7 @@ async function formGonder(e) {
   if (!telefon) return false;
 
   const aracSelect = document.getElementById('formArac');
+  const secilenArac = tumAraclar.find(a => a.id === parseInt(aracSelect.value));
   const body = {
     ad_soyad: document.getElementById('adSoyad').value,
     telefon,
@@ -374,6 +436,7 @@ async function formGonder(e) {
       phone: body.telefon,
       firstname: body.ad_soyad,
       kaynak: 'test-surusu-formu',
+      arac_tipi: secilenArac && TIPLER[aracTipi(secilenArac)].etiket,
       arac: body.arac,
       sehir: body.sehir,
       tercih_tarih: body.tercih_tarih,
@@ -743,6 +806,7 @@ async function hubspotLeadGonder(data) {
     .filter(k => params.get(k)).map(k => `${k}=${params.get(k)}`).join(', ');
   const not = [
     `Kaynak: ${data.kaynak}`,
+    data.arac_tipi && `Araç tipi: ${data.arac_tipi}`,
     data.arac && `Araç: ${data.arac}`,
     data.sehir && `Şehir: ${data.sehir}`,
     data.tercih_tarih && `Tercih edilen tarih: ${data.tercih_tarih}`,
@@ -775,10 +839,9 @@ async function hubspotLeadGonder(data) {
 // ─── SAYFA YÜKLENDİĞİNDE ────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
   await araclariYukle();
-  await markalariDoldur();
   karsilastirmaDropdownDoldur();
   formAracDoldur();
-  filtrele();
+  tipSec(aktifTip);
   mobilKontrol();
   tarihMinAyarla();
   sonGuncellemeGoster();

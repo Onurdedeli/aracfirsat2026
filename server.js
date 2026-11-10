@@ -5,7 +5,7 @@ const cron = require('node-cron');
 const path = require('path');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.json());
@@ -70,6 +70,8 @@ try { db.exec('ALTER TABLE leads ADD COLUMN utm_campaign TEXT'); } catch {}
 try { db.exec('ALTER TABLE leads ADD COLUMN tercih_tarih TEXT'); } catch {}
 try { db.exec("ALTER TABLE araclar ADD COLUMN son_guncelleme TEXT"); } catch {}
 try { db.exec("UPDATE araclar SET son_guncelleme = datetime('now') WHERE son_guncelleme IS NULL"); } catch {}
+// Araç tipi: otomobil | motosiklet (mevcut kayıtlar otomobil sayılır)
+try { db.exec("ALTER TABLE araclar ADD COLUMN tip TEXT NOT NULL DEFAULT 'otomobil'"); } catch {}
 
 // Araçları seed et (tablo boşsa)
 const aracSayisi = db.prepare('SELECT COUNT(*) as c FROM araclar').get().c;
@@ -133,6 +135,36 @@ if (aracSayisi === 0) {
     stmt.run(a.marka, a.model, a.segment, a.yakit, a.motor, a.vites, a.hp, a.fiyat, a.gorsel);
   }
   console.log('Araclar veritabanina eklendi.');
+}
+
+// Motosikletleri seed et (henüz motosiklet yoksa)
+const motoSayisi = db.prepare("SELECT COUNT(*) as c FROM araclar WHERE tip = 'motosiklet'").get().c;
+if (motoSayisi === 0) {
+  const motosikletSeed = [
+    { marka: "Honda", model: "PCX125", segment: "scooter", yakit: "benzin", motor: "125 cc", vites: "CVT", hp: 13, fiyat: 207000, gorsel: "/img/moto-1.jpg" },
+    { marka: "Yamaha", model: "NMAX 125", segment: "scooter", yakit: "benzin", motor: "125 cc", vites: "CVT", hp: 12, fiyat: 307000, gorsel: "/img/moto-2.jpg" },
+    { marka: "Honda", model: "Forza 250", segment: "scooter", yakit: "benzin", motor: "249 cc", vites: "CVT", hp: 23, fiyat: 385750, gorsel: "/img/moto-3.jpg" },
+    { marka: "Yamaha", model: "XMAX 250", segment: "scooter", yakit: "benzin", motor: "250 cc", vites: "CVT", hp: 23, fiyat: 401000, gorsel: "/img/moto-4.jpg" },
+    { marka: "Yamaha", model: "NEO's Çift Bataryalı", segment: "scooter", yakit: "elektrik", motor: "Elektrik", vites: "Otomatik", hp: 3, fiyat: 149500, gorsel: "/img/moto-5.jpg" },
+    { marka: "Bajaj", model: "Pulsar NS 200 UG2", segment: "naked", yakit: "benzin", motor: "199 cc", vites: "Manuel 6", hp: 25, fiyat: 231700, gorsel: "/img/moto-6.jpg" },
+    { marka: "KTM", model: "390 Duke", segment: "naked", yakit: "benzin", motor: "399 cc", vites: "Manuel 6", hp: 45, fiyat: 587000, gorsel: "/img/moto-7.jpg" },
+    { marka: "Yamaha", model: "MT-07", segment: "naked", yakit: "benzin", motor: "689 cc", vites: "Manuel 6", hp: 73, fiyat: 812500, gorsel: "/img/moto-8.jpg" },
+    { marka: "Honda", model: "CB650R", segment: "naked", yakit: "benzin", motor: "649 cc", vites: "Manuel 6", hp: 95, fiyat: 869250, gorsel: "/img/moto-9.jpg" },
+    { marka: "Honda", model: "NX500", segment: "adventure", yakit: "benzin", motor: "471 cc", vites: "Manuel 6", hp: 48, fiyat: 620000, gorsel: "/img/moto-10.jpg" },
+    { marka: "Yamaha", model: "Ténéré 700", segment: "adventure", yakit: "benzin", motor: "689 cc", vites: "Manuel 6", hp: 73, fiyat: 966500, gorsel: "/img/moto-11.jpg" },
+    { marka: "Honda", model: "CRF1100L Africa Twin ES-DCT", segment: "adventure", yakit: "benzin", motor: "1084 cc", vites: "DCT", hp: 102, fiyat: 1405000, gorsel: "/img/moto-12.jpg" },
+    { marka: "BMW", model: "R 1300 GS", segment: "adventure", yakit: "benzin", motor: "1300 cc Boxer", vites: "Manuel 6", hp: 145, fiyat: 2049823, gorsel: "/img/moto-13.jpg" },
+    { marka: "Yamaha", model: "YZF-R3", segment: "sport", yakit: "benzin", motor: "321 cc", vites: "Manuel 6", hp: 42, fiyat: 641500, gorsel: "/img/moto-14.jpg" },
+    { marka: "CFMoto", model: "675 SR-R", segment: "sport", yakit: "benzin", motor: "674 cc", vites: "Manuel 6", hp: 95, fiyat: 611800, gorsel: "/img/moto-15.jpg" },
+    { marka: "Honda", model: "CBR650R", segment: "sport", yakit: "benzin", motor: "649 cc", vites: "Manuel 6", hp: 95, fiyat: 885750, gorsel: "/img/moto-16.jpg" },
+    { marka: "Honda", model: "GL1800 Gold Wing", segment: "touring", yakit: "benzin", motor: "1833 cc Boxer", vites: "DCT", hp: 126, fiyat: 2857500, gorsel: "/img/moto-17.jpg" }
+  ];
+
+  const stmt = db.prepare(`INSERT INTO araclar (tip, marka, model, segment, yakit, motor, vites, hp, fiyat, gorsel) VALUES ('motosiklet', ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
+  for (const m of motosikletSeed) {
+    stmt.run(m.marka, m.model, m.segment, m.yakit, m.motor, m.vites, m.hp, m.fiyat, m.gorsel);
+  }
+  if (motosikletSeed.length) console.log('Motosikletler veritabanina eklendi.');
 }
 
 // ─── LEAD SCORING ────────────────────────────────────────
@@ -239,10 +271,11 @@ function whatsappAkisiBaslat(lead) {
 
 // ─── API: ARACLAR ────────────────────────────────────────
 app.get('/api/araclar', (req, res) => {
-  const { marka, segment, yakit, sirala } = req.query;
+  const { tip, marka, segment, yakit, sirala } = req.query;
   let sql = 'SELECT * FROM araclar WHERE aktif = 1';
   const params = [];
 
+  if (tip) { sql += ' AND tip = ?'; params.push(tip); }
   if (marka) { sql += ' AND marka = ?'; params.push(marka); }
   if (segment) { sql += ' AND segment = ?'; params.push(segment); }
   if (yakit) { sql += ' AND yakit = ?'; params.push(yakit); }
@@ -262,7 +295,10 @@ app.get('/api/araclar/:id', (req, res) => {
 });
 
 app.get('/api/markalar', (req, res) => {
-  const markalar = db.prepare('SELECT DISTINCT marka FROM araclar WHERE aktif = 1 ORDER BY marka').all();
+  const { tip } = req.query;
+  const markalar = tip
+    ? db.prepare('SELECT DISTINCT marka FROM araclar WHERE aktif = 1 AND tip = ? ORDER BY marka').all(tip)
+    : db.prepare('SELECT DISTINCT marka FROM araclar WHERE aktif = 1 ORDER BY marka').all();
   res.json(markalar.map(m => m.marka));
 });
 
@@ -395,18 +431,18 @@ app.get('/api/admin/istatistikler', adminAuth, (req, res) => {
 
 // Admin arac CRUD
 app.post('/api/admin/araclar', adminAuth, (req, res) => {
-  const { marka, model, segment, yakit, motor, vites, hp, fiyat, gorsel } = req.body;
+  const { tip, marka, model, segment, yakit, motor, vites, hp, fiyat, gorsel } = req.body;
   const result = db.prepare(
-    'INSERT INTO araclar (marka, model, segment, yakit, motor, vites, hp, fiyat, gorsel) VALUES (?,?,?,?,?,?,?,?,?)'
-  ).run(marka, model, segment, yakit, motor, vites, hp, fiyat, gorsel || null);
+    'INSERT INTO araclar (tip, marka, model, segment, yakit, motor, vites, hp, fiyat, gorsel) VALUES (?,?,?,?,?,?,?,?,?,?)'
+  ).run(tip || 'otomobil', marka, model, segment, yakit, motor, vites, hp, fiyat, gorsel || null);
   res.json({ success: true, id: result.lastInsertRowid });
 });
 
 app.put('/api/admin/araclar/:id', adminAuth, (req, res) => {
-  const { marka, model, segment, yakit, motor, vites, hp, fiyat, gorsel, aktif } = req.body;
+  const { tip, marka, model, segment, yakit, motor, vites, hp, fiyat, gorsel, aktif } = req.body;
   db.prepare(
-    'UPDATE araclar SET marka=?, model=?, segment=?, yakit=?, motor=?, vites=?, hp=?, fiyat=?, gorsel=?, aktif=? WHERE id=?'
-  ).run(marka, model, segment, yakit, motor, vites, hp, fiyat, gorsel || null, aktif ?? 1, req.params.id);
+    'UPDATE araclar SET tip=?, marka=?, model=?, segment=?, yakit=?, motor=?, vites=?, hp=?, fiyat=?, gorsel=?, aktif=? WHERE id=?'
+  ).run(tip || 'otomobil', marka, model, segment, yakit, motor, vites, hp, fiyat, gorsel || null, aktif ?? 1, req.params.id);
   res.json({ success: true });
 });
 
