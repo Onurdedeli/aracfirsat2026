@@ -63,3 +63,9 @@ Admin (require `x-admin-key` header):
 - Static motorcycle data lives in `MOTOSIKLET_VERILERI` in `app.js` (ids start at 101); `?tip=motosiklet` opens the motorcycle tab
 - Database column names are in Turkish (e.g., `marka`, `fiyat`, `yakit`, `sehir`)
 - Lead statuses: `yeni`, `arandi`, `randevu`, `tamamlandi`, `iptal`
+
+## Fiyat Radarı (social media price-change images)
+
+- `node kreatif/fiyat-radari.js kaydet [YYYY-MM-DD]` snapshots active prices from `docs/app.js` into `veri/fiyat-gecmisi.json`. Run it after every monthly price update.
+- `node kreatif/fiyat-radari.js uret [--tip otomobil|motosiklet|hepsi] [--adet 5]` diffs the last two snapshots and renders feed (1080x1350) and story (1080x1920) PNGs into `kreatif/cikti/` (gitignored) via headless Chrome, using `kreatif/fiyat-radari.html`.
+- A vehicle is only compared when its marka+model string is identical in both snapshots (trim changes are skipped). `--ornek` renders with made-up prices and an "ÖRNEK" watermark — never post those.

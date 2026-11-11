@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<!-- Fiyat Radarı şablonu: kreatif/fiyat-radari.js veriyi #veri betiğine yazar ve Chrome ile PNG'ye çevirir -->
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #1a73e8; --dark: #1a1a2e; --zemin: #f3f4f7; --metin: #1c1c24; --soluk: #8a8f9c;
+    --artis: #e0322b; --dusus: #1e9e4a;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1080px; overflow: hidden; font-family: 'Plus Jakarta Sans', 'Segoe UI', sans-serif; color: var(--metin); }
+  body { background: var(--zemin); display: flex; flex-direction: column; }
+  body.gonderi { height: 1350px; }
+  body.story { height: 1920px; }
+
+  .icerik { flex: 1; display: flex; flex-direction: column; padding: 96px 88px 0; }
+  .story .icerik { padding: 260px 80px 0; } /* üst ~250px Instagram arayüzüne kalır */
+
+  .logo {
+    align-self: flex-start; display: inline-flex; align-items: center; gap: 14px;
+    background: var(--dark); color: #fff; border-radius: 16px; padding: 14px 24px 14px 16px;
+    font-weight: 800; font-size: 34px; letter-spacing: -0.5px;
+  }
+  .logo svg { width: 48px; height: 48px; }
+  .logo span { color: var(--primary); }
+
+  .ust-baslik { margin-top: 64px; color: var(--primary); font-weight: 800; font-size: 32px; letter-spacing: 5px; }
+  h1 { margin-top: 20px; font-size: 68px; font-weight: 800; line-height: 1.08; letter-spacing: -2.5px; }
+  .story h1 { font-size: 84px; }
+
+  .liste { margin-top: 44px; display: flex; flex-direction: column; gap: 18px; }
+  .story .liste { margin-top: 64px; gap: 22px; }
+  .satir {
+    display: flex; align-items: center; gap: 28px; min-height: 108px;
+    background: #fff; border-radius: 22px; padding: 20px 36px;
+  }
+  .story .satir { min-height: 128px; }
+  .ad { flex: 1; min-width: 0; font-weight: 700; font-size: 31px; line-height: 1.2; letter-spacing: -0.3px; }
+  .sag { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+  .fiyat { display: flex; align-items: center; gap: 12px; white-space: nowrap; font-size: 30px; }
+  .eski { color: var(--soluk); font-weight: 500; }
+  .ok { color: var(--soluk); font-size: 26px; }
+  .yeni { color: var(--primary); font-weight: 800; }
+  .yon { width: 0; height: 0; margin-left: 6px; border-left: 17px solid transparent; border-right: 17px solid transparent; }
+  .yon.artis { border-bottom: 28px solid var(--artis); }
+  .yon.dusus { border-top: 28px solid var(--dusus); }
+  .yuzde { font-size: 22px; font-weight: 700; }
+  .yuzde.artis { color: var(--artis); }
+  .yuzde.dusus { color: var(--dusus); }
+
+  .alt {
+    display: flex; justify-content: space-between; align-items: center;
+    background: #fff; padding: 44px 88px; font-size: 28px; color: var(--soluk); font-weight: 500;
+  }
+  .story .alt { padding: 44px 80px 300px; } /* alt ~250px yanıt kutusuna kalır */
+
+  /* --ornek ile üretilen görsel yanlışlıkla paylaşılmasın */
+  .ornek-damga {
+    position: fixed; inset: 0; display: none; place-items: center; pointer-events: none;
+    font-size: 220px; font-weight: 800; color: rgba(224, 50, 43, .16); transform: rotate(-24deg);
+  }
+  body.ornek .ornek-damga { display: grid; }
+</style>
+</head>
+<body>
+  <div class="icerik">
+    <div class="logo">
+      <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#1a73e8"/><path d="M6 20.5C6 20.5 8 17 11 17C13 17 13.5 18.5 16 18.5C18.5 18.5 19 17 21 17C24 17 26 20.5 26 20.5" stroke="white" stroke-width="2" stroke-linecap="round"/><circle cx="11" cy="21" r="2.5" fill="#1a1a2e" stroke="white" stroke-width="1.5"/><circle cx="21" cy="21" r="2.5" fill="#1a1a2e" stroke="white" stroke-width="1.5"/><path d="M10 17L12 12H20L22 17" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 12L13.5 8H18.5L20 12" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <b>araç<span>fırsat</span></b>
+    </div>
+    <p class="ust-baslik" id="ustBaslik">FİYAT RADARI</p>
+    <h1 id="baslik"></h1>
+    <div class="liste" id="liste"></div>
+  </div>
+  <div class="alt">
+    <span id="tarih"></span>
+    <span>aracfirsat.com</span>
+  </div>
+  <div class="ornek-damga">ÖRNEK</div>
+
+<script id="veri" type="application/json">__VERI__</script>
+<script>
+  const veri = JSON.parse(document.getElementById('veri').textContent);
+  const fmt = n => new Intl.NumberFormat('tr-TR').format(n);
+  const yuzdeFmt = n => (n > 0 ? '+' : '−') + '%' + Math.abs(n).toLocaleString('tr-TR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+
+  document.body.className = veri.format + (veri.ornek ? ' ornek' : '');
+  document.getElementById('ustBaslik').textContent = veri.ustBaslik;
+  document.getElementById('baslik').textContent = veri.baslik;
+  document.getElementById('tarih').textContent = 'Fiyatlar son güncelleme: ' + veri.tarih;
+  document.getElementById('liste').innerHTML = veri.satirlar.map(s => {
+    const yon = s.yeni > s.eski ? 'artis' : 'dusus';
+    return `
+      <div class="satir">
+        <div class="ad">${s.marka} ${s.model}</div>
+        <div class="sag">
+          <div class="fiyat">
+            <span class="eski">${fmt(s.eski)}</span><span class="ok">→</span><span class="yeni">${fmt(s.yeni)} ₺</span>
+            <span class="yon ${yon}"></span>
+          </div>
+          <div class="yuzde ${yon}">${yuzdeFmt(s.yuzde)}</div>
+        </div>
+      </div>`;
+  }).join('');
+</script>
+</body>
+</html>

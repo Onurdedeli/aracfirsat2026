@@ -558,7 +558,8 @@ cron.schedule('0 9 1 * *', () => {
   const aracSayisi = db.prepare('SELECT COUNT(*) as c FROM araclar WHERE aktif = 1').get().c;
   console.log(`[CRON] ${aracSayisi} aktif araç fiyat güncellemesi bekliyor.`);
   console.log(`[CRON] Admin panelinden toplu veya tek tek fiyat güncellemesi yapabilirsiniz.`);
-  console.log(`[CRON] Admin: http://localhost:${PORT}/admin -> Fiyat Güncelle sekmesi\n`);
+  console.log(`[CRON] Admin: http://localhost:${PORT}/admin -> Fiyat Güncelle sekmesi`);
+  console.log(`[CRON] Statik site fiyatları (docs/app.js) güncellendikten sonra: node kreatif/fiyat-radari.js kaydet && node kreatif/fiyat-radari.js uret\n`);
 
   // E-posta ile bildirim (eğer aktifse)
   if (transporter) {
