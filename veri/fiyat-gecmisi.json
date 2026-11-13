@@ -1,6 +1,6 @@
 [
   {
-    "tarih": "2026-11-10",
+    "tarih": "2026-10-23",
     "araclar": {
       "1": {
         "tip": "otomobil",
@@ -229,6 +229,66 @@
         "marka": "Volkswagen",
         "model": "Passat 1.5 eTSI Elegance",
         "fiyat": 5053000
+      },
+      "52": {
+        "tip": "otomobil",
+        "marka": "Citroen",
+        "model": "ë-C3 Elektrik 113 Max",
+        "fiyat": 1725000
+      },
+      "53": {
+        "tip": "otomobil",
+        "marka": "Citroen",
+        "model": "C3 Aircross 1.2 Hybrid 145 Max",
+        "fiyat": 2320000
+      },
+      "54": {
+        "tip": "otomobil",
+        "marka": "Citroen",
+        "model": "C4 X 1.2 Hybrid 145 Max",
+        "fiyat": 2345000
+      },
+      "55": {
+        "tip": "otomobil",
+        "marka": "Citroen",
+        "model": "C5 Aircross 1.2 Hybrid 145 Plus",
+        "fiyat": 2865000
+      },
+      "56": {
+        "tip": "otomobil",
+        "marka": "Peugeot",
+        "model": "E-208 Elektrik 136 GT",
+        "fiyat": 2080000
+      },
+      "57": {
+        "tip": "otomobil",
+        "marka": "Peugeot",
+        "model": "408 1.2 Hybrid 145 Allure",
+        "fiyat": 2685000
+      },
+      "58": {
+        "tip": "otomobil",
+        "marka": "Peugeot",
+        "model": "5008 1.2 Hybrid 145 Allure",
+        "fiyat": 3426000
+      },
+      "59": {
+        "tip": "otomobil",
+        "marka": "Opel",
+        "model": "Astra 1.5 Dizel 130 Edition",
+        "fiyat": 2330000
+      },
+      "60": {
+        "tip": "otomobil",
+        "marka": "Opel",
+        "model": "Mokka 1.2 Hybrid GS",
+        "fiyat": 2350000
+      },
+      "61": {
+        "tip": "otomobil",
+        "marka": "Opel",
+        "model": "Frontera 1.2 Hybrid Edition",
+        "fiyat": 2190000
       },
       "101": {
         "tip": "motosiklet",
@@ -359,13 +419,13 @@
         "tip": "otomobil",
         "marka": "Volkswagen",
         "model": "Golf 1.5 eTSI Style",
-        "fiyat": 3591000
+        "fiyat": 3591100
       },
       "6": {
         "tip": "otomobil",
         "marka": "Volkswagen",
         "model": "Tiguan 1.5 eTSI Life",
-        "fiyat": 3600000
+        "fiyat": 3600100
       },
       "7": {
         "tip": "otomobil",
@@ -395,13 +455,13 @@
         "tip": "otomobil",
         "marka": "Kia",
         "model": "Sportage 1.6 T-GDI GT-Line 4x4",
-        "fiyat": 3650000
+        "fiyat": 3500000
       },
       "13": {
         "tip": "otomobil",
         "marka": "Skoda",
         "model": "Octavia 1.5 TSI mHEV Elite",
-        "fiyat": 2779900
+        "fiyat": 2780000
       },
       "14": {
         "tip": "otomobil",
@@ -425,7 +485,7 @@
         "tip": "otomobil",
         "marka": "Audi",
         "model": "A3 Sedan 1.5 TFSI Advanced",
-        "fiyat": 4297796
+        "fiyat": 4297896
       },
       "20": {
         "tip": "otomobil",
@@ -443,7 +503,7 @@
         "tip": "otomobil",
         "marka": "Ford",
         "model": "Kuga 1.5 EcoBoost Titanium",
-        "fiyat": 2591400
+        "fiyat": 2727200
       },
       "23": {
         "tip": "otomobil",
@@ -467,7 +527,7 @@
         "tip": "otomobil",
         "marka": "Cupra",
         "model": "Formentor 1.5 eTSI Impulse",
-        "fiyat": 2860000
+        "fiyat": 2860100
       },
       "30": {
         "tip": "otomobil",
@@ -479,13 +539,13 @@
         "tip": "otomobil",
         "marka": "Toyota",
         "model": "Yaris 1.5 Hybrid Flame",
-        "fiyat": 2521000
+        "fiyat": 2546500
       },
       "33": {
         "tip": "otomobil",
         "marka": "Volkswagen",
         "model": "T-Roc 1.5 eTSI Style",
-        "fiyat": 3505000
+        "fiyat": 3505100
       },
       "35": {
         "tip": "otomobil",
@@ -521,13 +581,13 @@
         "tip": "otomobil",
         "marka": "Seat",
         "model": "Leon 1.5 eTSI Style",
-        "fiyat": 2560000
+        "fiyat": 2560100
       },
       "42": {
         "tip": "otomobil",
         "marka": "Seat",
         "model": "Arona 1.0 TSI Style Plus",
-        "fiyat": 2050000
+        "fiyat": 2050100
       },
       "43": {
         "tip": "otomobil",
@@ -539,7 +599,7 @@
         "tip": "otomobil",
         "marka": "Skoda",
         "model": "Kamiq 1.0 TSI Elite",
-        "fiyat": 2149900
+        "fiyat": 2150000
       },
       "46": {
         "tip": "otomobil",
@@ -551,7 +611,7 @@
         "tip": "otomobil",
         "marka": "Chery",
         "model": "Tiggo 7 1.6 TGDI Comfort",
-        "fiyat": 2264400
+        "fiyat": 2180000
       },
       "50": {
         "tip": "otomobil",
@@ -563,7 +623,7 @@
         "tip": "otomobil",
         "marka": "Volkswagen",
         "model": "Passat 1.5 eTSI Elegance",
-        "fiyat": 5053000
+        "fiyat": 5053100
       },
       "52": {
         "tip": "otomobil",

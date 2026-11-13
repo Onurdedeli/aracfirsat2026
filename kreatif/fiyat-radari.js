@@ -2,8 +2,9 @@
 // Sitedeki fiyatların aylık kaydını tutar ve son iki kayıttan sosyal medya görseli üretir.
 //
 //   node kreatif/fiyat-radari.js kaydet [YYYY-MM-DD]   → docs/app.js'teki güncel fiyatları veri/fiyat-gecmisi.json'a ekler
-//   node kreatif/fiyat-radari.js uret [--tip otomobil|motosiklet|hepsi] [--adet 5]
+//   node kreatif/fiyat-radari.js uret [--tip otomobil|motosiklet|hepsi] [--adet 5] [--esik 0.5]
 //                                                       → son iki kaydı karşılaştırır, kreatif/cikti/ altına PNG yazar
+//                                                         (--esik: bundan küçük % değişimler görsele girmez, ör. 100 TL'lik yuvarlamalar)
 //   node kreatif/fiyat-radari.js uret --ornek           → tasarımı denemek için uydurma fiyatlarla, "ÖRNEK" damgalı görsel
 //
 // Fiyatları app.js'te güncelledikten SONRA "kaydet" çalıştırın. Model adı (versiyon) değişen araçlar
@@ -103,6 +104,7 @@ function ornekOncekiKayit(son) {
 function uret() {
   const tip = argDegeri('tip', 'hepsi');
   const adet = parseInt(argDegeri('adet', '5'));
+  const esik = parseFloat(argDegeri('esik', '0.5'));
   const ornek = process.argv.includes('--ornek');
   if (!['otomobil', 'motosiklet', 'hepsi'].includes(tip)) throw new Error('--tip otomobil, motosiklet ya da hepsi olmalı');
 
@@ -112,9 +114,10 @@ function uret() {
   const onceki = ornek ? ornekOncekiKayit(son) : gecmis.at(-2);
   if (!onceki) throw new Error(`Karşılaştırma için en az iki kayıt gerekir (şu an yalnızca ${son.tarih} var). Denemek için --ornek ekleyin.`);
 
-  const degisenler = karsilastir(onceki, son, tip);
+  const tumDegisenler = karsilastir(onceki, son, tip);
+  const degisenler = tumDegisenler.filter(d => Math.abs(d.yuzde) >= esik);
   if (degisenler.length === 0) {
-    console.log(`${onceki.tarih} → ${son.tarih}: ${tip} için fiyatı değişen araç yok, görsel üretilmedi.`);
+    console.log(`${onceki.tarih} → ${son.tarih}: ${tip} için %${esik} üzeri fiyat değişimi yok (toplam değişen: ${tumDegisenler.length}), görsel üretilmedi.`);
     return;
   }
 
@@ -150,7 +153,7 @@ function uret() {
     console.log('Yazıldı:', path.relative(KOK, png));
   }
 
-  console.log(`\n${onceki.tarih} → ${son.tarih} · ${tip} · ${degisenler.length} araçta fiyat değişti, görselde ${secilen.length} tanesi var:`);
+  console.log(`\n${onceki.tarih} → ${son.tarih} · ${tip} · ${tumDegisenler.length} araçta fiyat değişti, %${esik} üzeri ${degisenler.length}, görselde ${secilen.length}:`);
   secilen.forEach(s => console.log(`  ${s.marka} ${s.model}: ${s.eski} → ${s.yeni} (${s.yuzde > 0 ? '+' : ''}${s.yuzde}%)`));
 }
 

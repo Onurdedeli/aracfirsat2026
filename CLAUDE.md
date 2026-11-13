@@ -68,4 +68,6 @@ Admin (require `x-admin-key` header):
 
 - `node kreatif/fiyat-radari.js kaydet [YYYY-MM-DD]` snapshots active prices from `docs/app.js` into `veri/fiyat-gecmisi.json`. Run it after every monthly price update.
 - `node kreatif/fiyat-radari.js uret [--tip otomobil|motosiklet|hepsi] [--adet 5]` diffs the last two snapshots and renders feed (1080x1350) and story (1080x1920) PNGs into `kreatif/cikti/` (gitignored) via headless Chrome, using `kreatif/fiyat-radari.html`.
+- `node kreatif/fiyat-guncelle.js guncellemeler.json [YYYY-MM-DD]` writes researched prices (`[{id, fiyat, yeni_model?, aktif?}]`, `fiyat: null` = skip) into `public/app.js`, copies it to `docs/app.js` and sets `FIYAT_GUNCELLEME_TARIHI`. Monthly order: research → fiyat-guncelle → fiyat-radari kaydet → fiyat-radari uret.
+- `uret` ignores changes below `--esik` percent (default 0.5) so 100 TL roundings don't appear.
 - A vehicle is only compared when its marka+model string is identical in both snapshots (trim changes are skipped). `--ornek` renders with made-up prices and an "ÖRNEK" watermark — never post those.
