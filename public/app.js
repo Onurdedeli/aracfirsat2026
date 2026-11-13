@@ -50,7 +50,17 @@ const ARAC_VERILERI = [
   { id:48, marka:"Mercedes", model:"GLA 200 AMG Line", segment:"suv", yakit:"benzin", motor:"1.3L Turbo", vites:"DCT 7", hp:163, fiyat:2950000, gorsel:"img/car-48.jpg", aktif:0 },
   { id:49, marka:"Chery", model:"Tiggo 7 1.6 TGDI Comfort", segment:"suv", yakit:"benzin", motor:"1.6L Turbo", vites:"DCT 7", hp:145, fiyat:2264400, gorsel:"img/car-49.jpg", aktif:1 },
   { id:50, marka:"Suzuki", model:"Vitara 1.4 Boosterjet GLX Black Edition", segment:"suv", yakit:"hybrid", motor:"1.4L Mild Hybrid", vites:"Otomatik 6", hp:129, fiyat:2665000, gorsel:"img/car-50.jpg", aktif:1 },
-  { id:51, marka:"Volkswagen", model:"Passat 1.5 eTSI Elegance", segment:"sedan", yakit:"hybrid", motor:"1.5L eTSI Mild Hybrid", vites:"DSG 7", hp:150, fiyat:5053000, gorsel:"img/car-51.jpg", aktif:1 }
+  { id:51, marka:"Volkswagen", model:"Passat 1.5 eTSI Elegance", segment:"sedan", yakit:"hybrid", motor:"1.5L eTSI Mild Hybrid", vites:"DSG 7", hp:150, fiyat:5053000, gorsel:"img/car-51.jpg", aktif:1 },
+  { id:52, marka:"Citroen", model:"ë-C3 Elektrik 113 Max", segment:"hatchback", yakit:"elektrik", motor:"Elektrik", vites:"Otomatik", hp:113, fiyat:1725000, gorsel:"img/car-52.jpg", aktif:1 },
+  { id:53, marka:"Citroen", model:"C3 Aircross 1.2 Hybrid 145 Max", segment:"suv", yakit:"hybrid", motor:"1.2L Hybrid", vites:"eDCS6", hp:145, fiyat:2320000, gorsel:"img/car-53.jpg", aktif:1 },
+  { id:54, marka:"Citroen", model:"C4 X 1.2 Hybrid 145 Max", segment:"sedan", yakit:"hybrid", motor:"1.2L Hybrid", vites:"eDCS6", hp:145, fiyat:2345000, gorsel:"img/car-54.jpg", aktif:1 },
+  { id:55, marka:"Citroen", model:"C5 Aircross 1.2 Hybrid 145 Plus", segment:"suv", yakit:"hybrid", motor:"1.2L Hybrid", vites:"eDCS6", hp:145, fiyat:2865000, gorsel:"img/car-55.jpg", aktif:1 },
+  { id:56, marka:"Peugeot", model:"E-208 Elektrik 136 GT", segment:"hatchback", yakit:"elektrik", motor:"Elektrik", vites:"Otomatik", hp:136, fiyat:2080000, gorsel:"img/car-56.jpg", aktif:1 },
+  { id:57, marka:"Peugeot", model:"408 1.2 Hybrid 145 Allure", segment:"crossover", yakit:"hybrid", motor:"1.2L Hybrid", vites:"eDCS6", hp:145, fiyat:2685000, gorsel:"img/car-57.jpg", aktif:1 },
+  { id:58, marka:"Peugeot", model:"5008 1.2 Hybrid 145 Allure", segment:"suv", yakit:"hybrid", motor:"1.2L Hybrid", vites:"eDCS6", hp:145, fiyat:3426000, gorsel:"img/car-58.jpg", aktif:1 },
+  { id:59, marka:"Opel", model:"Astra 1.5 Dizel 130 Edition", segment:"hatchback", yakit:"dizel", motor:"1.5L Dizel", vites:"Otomatik 8", hp:130, fiyat:2330000, gorsel:"img/car-59.jpg", aktif:1 },
+  { id:60, marka:"Opel", model:"Mokka 1.2 Hybrid GS", segment:"crossover", yakit:"hybrid", motor:"1.2L Hybrid", vites:"e-DCT6", hp:136, fiyat:2350000, gorsel:"img/car-60.jpg", aktif:1 },
+  { id:61, marka:"Opel", model:"Frontera 1.2 Hybrid Edition", segment:"suv", yakit:"hybrid", motor:"1.2L Hybrid", vites:"e-DCT6", hp:136, fiyat:2190000, gorsel:"img/car-61.jpg", aktif:1 }
 ];
 
 // ─── GÖMÜLÜ MOTOSİKLET VERİLERİ (GitHub Pages statik mod) ─
