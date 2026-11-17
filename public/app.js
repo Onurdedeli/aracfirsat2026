@@ -793,8 +793,8 @@ async function gonderimKilidi(e, islem) {
 // ─── SUPABASE (statik sitenin lead kaydı) ────────────────
 // Tablo ve izinler: supabase/leads.sql. Anon anahtar yalnızca INSERT yapabilir, tarayıcıda durması güvenlidir.
 // Boş bırakılırsa Supabase atlanır.
-const SUPABASE_URL = '';
-const SUPABASE_ANON_KEY = '';
+const SUPABASE_URL = 'https://avwqlrpeuwzatciwnhxp.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_PJXaj6K9LDnQN--KTyjAaA_FMZcCgiy';
 
 async function supabaseLeadKaydet(data) {
   if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return false;
