@@ -24,7 +24,7 @@ const ARAC_VERILERI = [
   { id:22, marka:"Ford", model:"Kuga 1.5 EcoBoost Titanium", segment:"suv", yakit:"benzin", motor:"1.5L EcoBoost", vites:"Otomatik 8", hp:186, fiyat:2727200, gorsel:"img/car-22.jpg", aktif:1 },
   { id:23, marka:"Opel", model:"Corsa 1.2 Hybrid GS", segment:"hatchback", yakit:"hybrid", motor:"1.2L Hybrid", vites:"e-DCT6", hp:136, fiyat:1955000, gorsel:"img/car-23.jpg", aktif:1 },
   { id:24, marka:"Opel", model:"Grandland 1.2 Hybrid Edition", segment:"suv", yakit:"hybrid", motor:"1.2L Hybrid", vites:"e-DCT6", hp:136, fiyat:2850000, gorsel:"img/car-24.jpg", aktif:1 },
-  { id:25, marka:"Nissan", model:"Qashqai 1.3 DIG-T Mild Hybrid Skypack", segment:"suv", yakit:"hybrid", motor:"1.3L Turbo Mild Hybrid", vites:"CVT", hp:158, fiyat:3298200, gorsel:"img/car-25.jpg", aktif:1 },
+  { id:25, marka:"Nissan", model:"Qashqai 1.3 DIG-T Mild Hybrid Skypack", segment:"suv", yakit:"hybrid", motor:"1.3L Turbo Mild Hybrid", vites:"CVT", hp:158, fiyat:3308200, gorsel:"img/car-25.jpg", aktif:1 },
   { id:26, marka:"Citroen", model:"C3 1.2 PureTech Shine", segment:"hatchback", yakit:"benzin", motor:"1.2L PureTech", vites:"Manuel 5", hp:83, fiyat:820000, gorsel:"img/car-26.jpg", aktif:0 },
   { id:27, marka:"Cupra", model:"Formentor 1.5 eTSI Impulse", segment:"crossover", yakit:"hybrid", motor:"1.5L eTSI Mild Hybrid", vites:"DSG 7", hp:150, fiyat:2860100, gorsel:"img/car-27.jpg", aktif:1 },
   { id:28, marka:"Mazda", model:"CX-30 2.0 Skyactiv-G", segment:"crossover", yakit:"benzin", motor:"2.0L Skyactiv", vites:"Otomatik 6", hp:150, fiyat:1420000, gorsel:"img/car-28.jpg", aktif:0 },
@@ -60,7 +60,10 @@ const ARAC_VERILERI = [
   { id:58, marka:"Peugeot", model:"5008 1.2 Hybrid 145 Allure", segment:"suv", yakit:"hybrid", motor:"1.2L Hybrid", vites:"eDCS6", hp:145, fiyat:3426000, gorsel:"img/car-58.jpg", aktif:1 },
   { id:59, marka:"Opel", model:"Astra 1.5 Dizel 130 Edition", segment:"hatchback", yakit:"dizel", motor:"1.5L Dizel", vites:"Otomatik 8", hp:130, fiyat:2330000, gorsel:"img/car-59.jpg", aktif:1 },
   { id:60, marka:"Opel", model:"Mokka 1.2 Hybrid GS", segment:"crossover", yakit:"hybrid", motor:"1.2L Hybrid", vites:"e-DCT6", hp:136, fiyat:2350000, gorsel:"img/car-60.jpg", aktif:1 },
-  { id:61, marka:"Opel", model:"Frontera 1.2 Hybrid Edition", segment:"suv", yakit:"hybrid", motor:"1.2L Hybrid", vites:"e-DCT6", hp:136, fiyat:2190000, gorsel:"img/car-61.jpg", aktif:1 }
+  { id:61, marka:"Opel", model:"Frontera 1.2 Hybrid Edition", segment:"suv", yakit:"hybrid", motor:"1.2L Hybrid", vites:"e-DCT6", hp:136, fiyat:2190000, gorsel:"img/car-61.jpg", aktif:1 },
+  { id:62, marka:"Nissan", model:"Juke 1.0 DIG-T Platinum", segment:"crossover", yakit:"benzin", motor:"1.0L Turbo", vites:"DCT 7", hp:115, fiyat:2628500, gorsel:"img/car-62.jpg", aktif:1 },
+  { id:63, marka:"Nissan", model:"Qashqai e-POWER Skypack", segment:"suv", yakit:"hybrid", motor:"1.5L e-POWER Hybrid", vites:"Otomatik", hp:190, fiyat:3993600, gorsel:"img/car-63.jpg", aktif:1 },
+  { id:64, marka:"Nissan", model:"X-Trail 1.5 VC-T Mild Hybrid Platinum", segment:"suv", yakit:"hybrid", motor:"1.5L VC-T Mild Hybrid", vites:"CVT", hp:163, fiyat:5098300, gorsel:"img/car-64.jpg", aktif:1 }
 ];
 
 // ─── GÖMÜLÜ MOTOSİKLET VERİLERİ (GitHub Pages statik mod) ─
@@ -123,7 +126,7 @@ function getUTM() {
 const UTM = getUTM();
 
 // Statik moddaki araç fiyatlarının en son güncellendiği tarih — fiyatları güncelleyince bunu da değiştirin
-const FIYAT_GUNCELLEME_TARIHI = '2026-11-13';
+const FIYAT_GUNCELLEME_TARIHI = '2026-11-17';
 
 // ─── YARDIMCILAR ─────────────────────────────────────────
 function fiyatFormat(fiyat) {

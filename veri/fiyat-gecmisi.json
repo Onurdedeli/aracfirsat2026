@@ -788,5 +788,418 @@
         "fiyat": 2857500
       }
     }
+  },
+  {
+    "tarih": "2026-11-17",
+    "araclar": {
+      "1": {
+        "tip": "otomobil",
+        "marka": "Toyota",
+        "model": "Corolla 1.5 Vision Plus",
+        "fiyat": 2545500
+      },
+      "2": {
+        "tip": "otomobil",
+        "marka": "Toyota",
+        "model": "C-HR 1.8 Hybrid Flame",
+        "fiyat": 2859000
+      },
+      "4": {
+        "tip": "otomobil",
+        "marka": "Hyundai",
+        "model": "Tucson 1.6 T-GDI Elite",
+        "fiyat": 3520000
+      },
+      "5": {
+        "tip": "otomobil",
+        "marka": "Volkswagen",
+        "model": "Golf 1.5 eTSI Style",
+        "fiyat": 3591100
+      },
+      "6": {
+        "tip": "otomobil",
+        "marka": "Volkswagen",
+        "model": "Tiguan 1.5 eTSI Life",
+        "fiyat": 3600100
+      },
+      "7": {
+        "tip": "otomobil",
+        "marka": "BMW",
+        "model": "320i M Sport",
+        "fiyat": 6378000
+      },
+      "9": {
+        "tip": "otomobil",
+        "marka": "Renault",
+        "model": "Clio 1.2 TCe Evolution Plus",
+        "fiyat": 1830000
+      },
+      "10": {
+        "tip": "otomobil",
+        "marka": "Fiat",
+        "model": "Egea Sedan 1.6 Multijet Urban",
+        "fiyat": 1599900
+      },
+      "11": {
+        "tip": "otomobil",
+        "marka": "Togg",
+        "model": "T10X V1 RWD Uzun Menzil",
+        "fiyat": 2219668
+      },
+      "12": {
+        "tip": "otomobil",
+        "marka": "Kia",
+        "model": "Sportage 1.6 T-GDI GT-Line 4x4",
+        "fiyat": 3500000
+      },
+      "13": {
+        "tip": "otomobil",
+        "marka": "Skoda",
+        "model": "Octavia 1.5 TSI mHEV Elite",
+        "fiyat": 2780000
+      },
+      "14": {
+        "tip": "otomobil",
+        "marka": "Peugeot",
+        "model": "3008 1.2 Hybrid 145 Allure",
+        "fiyat": 2967000
+      },
+      "15": {
+        "tip": "otomobil",
+        "marka": "Hyundai",
+        "model": "i20 1.0 T-GDI Elite",
+        "fiyat": 2091000
+      },
+      "16": {
+        "tip": "otomobil",
+        "marka": "Dacia",
+        "model": "Duster 1.3 TCe Evolution",
+        "fiyat": 2050000
+      },
+      "18": {
+        "tip": "otomobil",
+        "marka": "Audi",
+        "model": "A3 Sedan 1.5 TFSI Advanced",
+        "fiyat": 4297896
+      },
+      "20": {
+        "tip": "otomobil",
+        "marka": "Tesla",
+        "model": "Model Y Performance AWD",
+        "fiyat": 4966500
+      },
+      "21": {
+        "tip": "otomobil",
+        "marka": "Ford",
+        "model": "Puma 1.0 EcoBoost mHEV Titanium",
+        "fiyat": 2171100
+      },
+      "22": {
+        "tip": "otomobil",
+        "marka": "Ford",
+        "model": "Kuga 1.5 EcoBoost Titanium",
+        "fiyat": 2727200
+      },
+      "23": {
+        "tip": "otomobil",
+        "marka": "Opel",
+        "model": "Corsa 1.2 Hybrid GS",
+        "fiyat": 1955000
+      },
+      "24": {
+        "tip": "otomobil",
+        "marka": "Opel",
+        "model": "Grandland 1.2 Hybrid Edition",
+        "fiyat": 2850000
+      },
+      "25": {
+        "tip": "otomobil",
+        "marka": "Nissan",
+        "model": "Qashqai 1.3 DIG-T Mild Hybrid Skypack",
+        "fiyat": 3308200
+      },
+      "27": {
+        "tip": "otomobil",
+        "marka": "Cupra",
+        "model": "Formentor 1.5 eTSI Impulse",
+        "fiyat": 2860100
+      },
+      "30": {
+        "tip": "otomobil",
+        "marka": "BYD",
+        "model": "Seal AWD Excellence",
+        "fiyat": 4077000
+      },
+      "31": {
+        "tip": "otomobil",
+        "marka": "Toyota",
+        "model": "Yaris 1.5 Hybrid Flame",
+        "fiyat": 2546500
+      },
+      "33": {
+        "tip": "otomobil",
+        "marka": "Volkswagen",
+        "model": "T-Roc 1.5 eTSI Style",
+        "fiyat": 3505100
+      },
+      "35": {
+        "tip": "otomobil",
+        "marka": "Renault",
+        "model": "Captur 1.3 Mild Hybrid Techno",
+        "fiyat": 2325000
+      },
+      "36": {
+        "tip": "otomobil",
+        "marka": "Fiat",
+        "model": "Egea Cross 1.6 Multijet Street",
+        "fiyat": 1990900
+      },
+      "37": {
+        "tip": "otomobil",
+        "marka": "Dacia",
+        "model": "Sandero 1.0 TCe 100 Expression",
+        "fiyat": 1460000
+      },
+      "38": {
+        "tip": "otomobil",
+        "marka": "Hyundai",
+        "model": "Bayon 1.0 T-GDI Elite",
+        "fiyat": 2212000
+      },
+      "40": {
+        "tip": "otomobil",
+        "marka": "Peugeot",
+        "model": "2008 1.2 Hybrid 145 GT",
+        "fiyat": 2632000
+      },
+      "41": {
+        "tip": "otomobil",
+        "marka": "Seat",
+        "model": "Leon 1.5 eTSI Style",
+        "fiyat": 2560100
+      },
+      "42": {
+        "tip": "otomobil",
+        "marka": "Seat",
+        "model": "Arona 1.0 TSI Style Plus",
+        "fiyat": 2050100
+      },
+      "43": {
+        "tip": "otomobil",
+        "marka": "Toyota",
+        "model": "Corolla Cross 1.8 Hybrid Flame",
+        "fiyat": 3413000
+      },
+      "44": {
+        "tip": "otomobil",
+        "marka": "Skoda",
+        "model": "Kamiq 1.0 TSI Elite",
+        "fiyat": 2150000
+      },
+      "46": {
+        "tip": "otomobil",
+        "marka": "Honda",
+        "model": "HR-V 1.5 e:HEV Advance",
+        "fiyat": 2965000
+      },
+      "49": {
+        "tip": "otomobil",
+        "marka": "Chery",
+        "model": "Tiggo 7 1.6 TGDI Comfort",
+        "fiyat": 2180000
+      },
+      "50": {
+        "tip": "otomobil",
+        "marka": "Suzuki",
+        "model": "Vitara 1.4 Boosterjet GLX Black Edition",
+        "fiyat": 2665000
+      },
+      "51": {
+        "tip": "otomobil",
+        "marka": "Volkswagen",
+        "model": "Passat 1.5 eTSI Elegance",
+        "fiyat": 5053100
+      },
+      "52": {
+        "tip": "otomobil",
+        "marka": "Citroen",
+        "model": "ë-C3 Elektrik 113 Max",
+        "fiyat": 1725000
+      },
+      "53": {
+        "tip": "otomobil",
+        "marka": "Citroen",
+        "model": "C3 Aircross 1.2 Hybrid 145 Max",
+        "fiyat": 2320000
+      },
+      "54": {
+        "tip": "otomobil",
+        "marka": "Citroen",
+        "model": "C4 X 1.2 Hybrid 145 Max",
+        "fiyat": 2345000
+      },
+      "55": {
+        "tip": "otomobil",
+        "marka": "Citroen",
+        "model": "C5 Aircross 1.2 Hybrid 145 Plus",
+        "fiyat": 2865000
+      },
+      "56": {
+        "tip": "otomobil",
+        "marka": "Peugeot",
+        "model": "E-208 Elektrik 136 GT",
+        "fiyat": 2080000
+      },
+      "57": {
+        "tip": "otomobil",
+        "marka": "Peugeot",
+        "model": "408 1.2 Hybrid 145 Allure",
+        "fiyat": 2685000
+      },
+      "58": {
+        "tip": "otomobil",
+        "marka": "Peugeot",
+        "model": "5008 1.2 Hybrid 145 Allure",
+        "fiyat": 3426000
+      },
+      "59": {
+        "tip": "otomobil",
+        "marka": "Opel",
+        "model": "Astra 1.5 Dizel 130 Edition",
+        "fiyat": 2330000
+      },
+      "60": {
+        "tip": "otomobil",
+        "marka": "Opel",
+        "model": "Mokka 1.2 Hybrid GS",
+        "fiyat": 2350000
+      },
+      "61": {
+        "tip": "otomobil",
+        "marka": "Opel",
+        "model": "Frontera 1.2 Hybrid Edition",
+        "fiyat": 2190000
+      },
+      "62": {
+        "tip": "otomobil",
+        "marka": "Nissan",
+        "model": "Juke 1.0 DIG-T Platinum",
+        "fiyat": 2628500
+      },
+      "63": {
+        "tip": "otomobil",
+        "marka": "Nissan",
+        "model": "Qashqai e-POWER Skypack",
+        "fiyat": 3993600
+      },
+      "64": {
+        "tip": "otomobil",
+        "marka": "Nissan",
+        "model": "X-Trail 1.5 VC-T Mild Hybrid Platinum",
+        "fiyat": 5098300
+      },
+      "101": {
+        "tip": "motosiklet",
+        "marka": "Honda",
+        "model": "PCX125",
+        "fiyat": 207000
+      },
+      "102": {
+        "tip": "motosiklet",
+        "marka": "Yamaha",
+        "model": "NMAX 125",
+        "fiyat": 307000
+      },
+      "103": {
+        "tip": "motosiklet",
+        "marka": "Honda",
+        "model": "Forza 250",
+        "fiyat": 385750
+      },
+      "104": {
+        "tip": "motosiklet",
+        "marka": "Yamaha",
+        "model": "XMAX 250",
+        "fiyat": 401000
+      },
+      "105": {
+        "tip": "motosiklet",
+        "marka": "Yamaha",
+        "model": "NEO's Çift Bataryalı",
+        "fiyat": 149500
+      },
+      "106": {
+        "tip": "motosiklet",
+        "marka": "Bajaj",
+        "model": "Pulsar NS 200 UG2",
+        "fiyat": 231700
+      },
+      "107": {
+        "tip": "motosiklet",
+        "marka": "KTM",
+        "model": "390 Duke",
+        "fiyat": 587000
+      },
+      "108": {
+        "tip": "motosiklet",
+        "marka": "Yamaha",
+        "model": "MT-07",
+        "fiyat": 812500
+      },
+      "109": {
+        "tip": "motosiklet",
+        "marka": "Honda",
+        "model": "CB650R",
+        "fiyat": 869250
+      },
+      "110": {
+        "tip": "motosiklet",
+        "marka": "Honda",
+        "model": "NX500",
+        "fiyat": 620000
+      },
+      "111": {
+        "tip": "motosiklet",
+        "marka": "Yamaha",
+        "model": "Ténéré 700",
+        "fiyat": 966500
+      },
+      "112": {
+        "tip": "motosiklet",
+        "marka": "Honda",
+        "model": "CRF1100L Africa Twin ES-DCT",
+        "fiyat": 1405000
+      },
+      "113": {
+        "tip": "motosiklet",
+        "marka": "BMW",
+        "model": "R 1300 GS",
+        "fiyat": 2049823
+      },
+      "114": {
+        "tip": "motosiklet",
+        "marka": "Yamaha",
+        "model": "YZF-R3",
+        "fiyat": 641500
+      },
+      "115": {
+        "tip": "motosiklet",
+        "marka": "CFMoto",
+        "model": "675 SR-R",
+        "fiyat": 611800
+      },
+      "116": {
+        "tip": "motosiklet",
+        "marka": "Honda",
+        "model": "CBR650R",
+        "fiyat": 885750
+      },
+      "117": {
+        "tip": "motosiklet",
+        "marka": "Honda",
+        "model": "GL1800 Gold Wing",
+        "fiyat": 2857500
+      }
+    }
   }
 ]
