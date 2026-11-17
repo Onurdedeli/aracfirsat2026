@@ -790,7 +790,49 @@ async function gonderimKilidi(e, islem) {
   }
 }
 
-// Lead'i API'ye (sunucu modunda) ve HubSpot'a iletir; en az biri başarılıysa true
+// ─── SUPABASE (statik sitenin lead kaydı) ────────────────
+// Tablo ve izinler: supabase/leads.sql. Anon anahtar yalnızca INSERT yapabilir, tarayıcıda durması güvenlidir.
+// Boş bırakılırsa Supabase atlanır.
+const SUPABASE_URL = '';
+const SUPABASE_ANON_KEY = '';
+
+async function supabaseLeadKaydet(data) {
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return false;
+  const bos = v => (v === undefined || v === '' ? null : v);
+  const satir = {
+    kaynak: data.kaynak,
+    telefon: data.phone,
+    ad_soyad: bos(data.firstname),
+    eposta: bos(data.email),
+    arac: bos(data.arac),
+    arac_tipi: bos(data.arac_tipi),
+    sehir: bos(data.sehir),
+    tercih_tarih: bos(data.tercih_tarih),
+    not_text: bos(data.not_text),
+    ticari_izin: data.ticari_izin ?? null,
+    kvkk_onay: true,
+    utm_source: bos(UTM.utm_source),
+    utm_medium: bos(UTM.utm_medium),
+    utm_campaign: bos(UTM.utm_campaign),
+    sayfa: window.location.href.slice(0, 500)
+  };
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/leads`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        apikey: SUPABASE_ANON_KEY, // yeni sb_publishable_ anahtarlar JWT değildir; Authorization başlığı gönderilmez
+        Prefer: 'return=minimal'
+      },
+      body: JSON.stringify(satir)
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
+// Lead'i API'ye (sunucu modunda), Supabase'e ve HubSpot'a iletir; en az biri başarılıysa true
 async function leadIlet({ apiYolu, apiBody, hubspot }) {
   let apiBasarili = false;
   if (!STATIK_MOD) {
@@ -803,8 +845,12 @@ async function leadIlet({ apiYolu, apiBody, hubspot }) {
       apiBasarili = res.ok;
     } catch {}
   }
-  const hubspotBasarili = await hubspotLeadGonder(hubspot);
-  return apiBasarili || hubspotBasarili;
+  // HubSpot formu e-postayı zorunlu tutuyor; e-postasız (telefon-only) leadler yalnızca Supabase'e yazılır
+  const [supabaseBasarili, hubspotBasarili] = await Promise.all([
+    supabaseLeadKaydet(hubspot),
+    hubspot.email ? hubspotLeadGonder(hubspot) : false
+  ]);
+  return apiBasarili || supabaseBasarili || hubspotBasarili;
 }
 
 async function hubspotLeadGonder(data) {

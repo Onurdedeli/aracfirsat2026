@@ -55,6 +55,11 @@ Admin (require `x-admin-key` header):
 - **Dynamic:** Express server with SQLite (`server.js` + `public/`)
 - **Static (GitHub Pages):** `docs/` folder mirrors `public/` with hardcoded vehicle data in `app.js` (no API calls). When updating vehicles or frontend, `docs/` must be synced manually.
 
+### Lead Storage on the Static Site
+
+- On GitHub Pages there is no server, so `leadIlet()` in `app.js` writes every lead to Supabase (`SUPABASE_URL` / `SUPABASE_ANON_KEY` constants; empty = skipped) and, only when an email is present, to the HubSpot form. The HubSpot form requires `email` and rejects phone-only submissions with 400.
+- Table, RLS and grants: `supabase/leads.sql` (anon can only INSERT; leads are read in the Supabase dashboard).
+
 ## Key Conventions
 
 - All UI text, variable names, and comments are in Turkish
