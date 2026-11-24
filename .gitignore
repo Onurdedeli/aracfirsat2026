@@ -5,3 +5,6 @@ aracfirsat.db-wal
 .env
 .DS_Store
 kreatif/cikti/
+
+# iCloud senkronizasyon çakışma kopyaları ("dosya 2.html" vb.)
+* 2.*
