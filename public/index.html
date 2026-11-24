@@ -2459,10 +2459,10 @@
         <button type="button" class="tip-sekme" data-tip="motosiklet" role="tab" onclick="tipSec('motosiklet')">&#127949; Motosiklet</button>
       </div>
       <div class="hero-search">
-        <select id="heroMarka">
+        <select id="heroMarka" aria-label="Marka seçin">
           <option value="">Marka Seçin</option>
         </select>
-        <select id="heroSegment">
+        <select id="heroSegment" aria-label="Segment seçin">
           <option value="">Segment</option>
         </select>
         <button onclick="heroAra()">Ara</button>
@@ -2482,16 +2482,16 @@
       </div>
 
       <div class="filters">
-        <select id="filtreMarka" onchange="filtrele()">
+        <select id="filtreMarka" aria-label="Markaya göre filtrele" onchange="filtrele()">
           <option value="">Tüm Markalar</option>
         </select>
-        <select id="filtreSegment" onchange="filtrele()">
+        <select id="filtreSegment" aria-label="Segmente göre filtrele" onchange="filtrele()">
           <option value="">Tüm Segmentler</option>
         </select>
-        <select id="filtreYakit" onchange="filtrele()">
+        <select id="filtreYakit" aria-label="Yakıt tipine göre filtrele" onchange="filtrele()">
           <option value="">Tüm Yakıt Tipleri</option>
         </select>
-        <select id="filtreSirala" onchange="filtrele()">
+        <select id="filtreSirala" aria-label="Sıralama" onchange="filtrele()">
           <option value="fiyat-artan">Fiyat (Düşükten Yükseğe)</option>
           <option value="fiyat-azalan">Fiyat (Yüksekten Düşüğe)</option>
           <option value="isim">İsim (A-Z)</option>
@@ -2973,11 +2973,11 @@
       <p class="section-desc">Listeden araçları seçerek yan yana karşılaştırın.</p>
 
       <div class="compare-selectors">
-        <select id="compare1" onchange="karsilastir()">
+        <select id="compare1" aria-label="Karşılaştırılacak 1. araç" onchange="karsilastir()">
           <option value="">1. Araç Seçin</option>
         </select>
         <span class="vs">VS</span>
-        <select id="compare2" onchange="karsilastir()">
+        <select id="compare2" aria-label="Karşılaştırılacak 2. araç" onchange="karsilastir()">
           <option value="">2. Araç Seçin</option>
         </select>
       </div>
@@ -3023,7 +3023,7 @@
         <div class="form-step active" id="step1">
           <div class="form-group" style="grid-column:1/-1;">
             <label>Hangi aracı test etmek istersiniz? *</label>
-            <select id="formArac" required>
+            <select id="formArac" aria-label="Test sürüşü yapılacak araç" required>
               <option value="">Araç Seçin</option>
             </select>
           </div>
@@ -3038,7 +3038,7 @@
           <div class="form-grid">
             <div class="form-group">
               <label>Şehir *</label>
-              <select id="sehir" required>
+              <select id="sehir" aria-label="Şehir" required>
                 <option value="">Şehir Seçin</option>
                 <option>İstanbul</option>
                 <option>Ankara</option>

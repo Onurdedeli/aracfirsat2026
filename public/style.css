@@ -1,7 +1,7 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --primary: #1a73e8;
+  --primary: #1967d2;
   --primary-dark: #1557b0;
   --dark: #1a1a2e;
   --gray: #f4f6f8;
@@ -119,7 +119,7 @@ body { font-family: 'Segoe UI', system-ui, sans-serif; color: var(--text); }
   flex: 1; padding: 0.6rem; border: none; border-radius: 8px;
   font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: background 0.2s;
 }
-.btn-compare { background: #e8eaf6; color: var(--primary); }
+.btn-compare { background: #e8eaf6; color: var(--primary-dark); }
 .btn-compare:hover { background: #c5cae9; }
 .btn-test { background: var(--primary); color: #fff; }
 .btn-test:hover { background: var(--primary-dark); }
