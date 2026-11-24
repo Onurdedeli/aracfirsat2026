@@ -183,17 +183,26 @@ function tipSec(tip) {
   history.replaceState(null, '', window.location.pathname + (sorgu ? '?' + sorgu : '') + window.location.hash);
 }
 
+// Araç fiyat sayfasının adresi (docs/fiyat/<slug>.html); kreatif/seo-uret.js'teki slugYap() ile aynı kural
+function aracSlug(arac) {
+  const harita = { ç: 'c', ğ: 'g', ı: 'i', i: 'i', ö: 'o', ş: 's', ü: 'u', é: 'e' };
+  return `${arac.marka} ${arac.model}`.toLocaleLowerCase('tr')
+    .replace(/[çğıiöşüé]/g, h => harita[h])
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
 // ─── ARAC KARTI ──────────────────────────────────────────
 function aracKarti(arac) {
   return `
     <div class="car-card" data-id="${arac.id}">
       <div class="car-img">
-        <img src="${arac.gorsel}" alt="${arac.marka} ${arac.model}"
+        <img src="${arac.gorsel}" alt="${arac.marka} ${arac.model}" width="720" height="480" loading="lazy" decoding="async"
              onerror="this.parentElement.innerHTML='${TIPLER[aracTipi(arac)].ikon}'; this.remove();">
       </div>
       <div class="car-info">
         <div class="car-brand">${arac.marka}</div>
-        <div class="car-name">${arac.model}</div>
+        <a class="car-name" href="fiyat/${aracSlug(arac)}.html">${arac.model}</a>
         <div class="car-specs">
           <span class="car-spec">${arac.motor}</span>
           <span class="car-spec">${arac.vites}</span>
@@ -579,16 +588,15 @@ async function sonGuncellemeGoster() {
 // ─── GSAP ANIMASYONLARI ──────────────────────────────────
 function gsapInit() {
   gsap.registerPlugin(ScrollTrigger);
+  // Başlıklar CSS'te yalnızca bu sınıf varken gizlenir; GSAP CDN'den yüklenmezse içerik görünür kalır
+  document.documentElement.classList.add('gsap-aktif');
 
-  // 1. Hero açılış animasyonu
+  // 1. Hero açılış animasyonu — hero metni LCP öğesi olduğundan gizlenmez, yalnızca kayar
   const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
   heroTl
-    .to('.hero h1', { opacity: 1, y: 0, duration: 0.8 }, 0)
-    .fromTo('.hero h1', { y: -30 }, { y: 0 }, 0)
-    .to('.hero p', { opacity: 1, y: 0, duration: 0.7 }, 0.2)
-    .fromTo('.hero p', { y: 20 }, { y: 0 }, 0.2)
-    .to('.hero-search', { opacity: 1, y: 0, duration: 0.7 }, 0.4)
-    .fromTo('.hero-search', { y: 30 }, { y: 0 }, 0.4);
+    .from('.hero h1', { y: -30, duration: 0.8 }, 0)
+    .from('.hero p', { y: 20, duration: 0.7 }, 0.2)
+    .from('.hero-search', { y: 30, duration: 0.7 }, 0.4);
 
   // 8. Scroll-triggered section başlıkları
   gsap.utils.toArray('.section-title').forEach(title => {
@@ -906,6 +914,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   sonGuncellemeGoster();
   document.querySelectorAll('input[type=tel]').forEach(i => i.addEventListener('input', () => i.setCustomValidity('')));
   window.addEventListener('resize', mobilKontrol);
+
+  // Fiyat sayfalarındaki "Test Sürüşü Talep Et" linki (/?arac=ID#test-surusu) aracı seçili getirir
+  const gelenArac = Number(new URLSearchParams(window.location.search).get('arac'));
+  if (tumAraclar.some(a => a.id === gelenArac)) testSurusuGit(gelenArac);
 
   // GSAP başlat
   if (typeof gsap !== 'undefined') {

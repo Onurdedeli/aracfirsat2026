@@ -312,12 +312,56 @@ body { font-family: 'Segoe UI', system-ui, sans-serif; color: var(--text); }
   .exit-form { flex-direction: column; }
   .step-labels { font-size: 0.75rem; }
   body { padding-bottom: 70px; } /* click-to-call space */
+  /* iOS 16px altındaki form alanlarına odaklanınca sayfayı yakınlaştırır */
+  select, input, textarea { font-size: 16px !important; }
+  /* Mobil dokunma hedefi en az 44px */
+  .btn-compare, .btn-test, .tip-sekme { min-height: 44px; }
+  .logo { min-height: 44px; display: flex; align-items: center; }
 }
 
-/* GSAP INITIAL STATES */
-.hero h1, .hero p, .hero-search { opacity: 0; }
-.section-title, .section-desc { opacity: 0; }
+/* GSAP INITIAL STATES (gsap-aktif sınıfını gsapInit ekler; GSAP yüklenmezse içerik görünür kalır) */
+.gsap-aktif .section-title, .gsap-aktif .section-desc { opacity: 0; }
 .navbar { box-shadow: none; }
+
+/* ARAÇ KARTI BAŞLIK LİNKİ */
+a.car-name { display: block; color: inherit; text-decoration: none; }
+a.car-name:hover { color: var(--primary); }
+.liste-link { text-align: center; margin-top: 1.5rem; }
+.liste-link a { color: var(--primary); font-weight: 600; }
+
+/* SSS */
+.sss { max-width: 800px; }
+.sss details { background: #fff; border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 0.75rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+.sss summary { font-weight: 700; cursor: pointer; min-height: 28px; }
+.sss details p { margin-top: 0.75rem; color: var(--text-light); line-height: 1.6; }
+.sss a { color: var(--primary); }
+
+/* STATİK FİYAT SAYFALARI (kreatif/seo-uret.js) */
+.statik-sayfa .section { padding-top: 6rem; }
+.kirinti { font-size: 0.85rem; color: var(--text-light); margin-bottom: 1.5rem; }
+.kirinti a { color: var(--primary); }
+.arac-detay { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+.arac-detay img { width: 100%; height: auto; border-radius: 12px; }
+.arac-detay h1, .statik-sayfa h1 { font-size: 2rem; font-weight: 800; line-height: 1.2; margin: 0.25rem 0 0.5rem; }
+.statik-sayfa h2 { font-size: 1.4rem; margin: 2rem 0 1rem; }
+.detay-ozet, .detay-not { color: var(--text-light); line-height: 1.6; margin: 1rem 0; }
+.detay-not { font-size: 0.85rem; }
+.detay-tablo { width: 100%; border-collapse: collapse; background: #fff; }
+.detay-tablo th, .detay-tablo td { text-align: left; padding: 0.6rem 0.75rem; border-bottom: 1px solid #eee; }
+.detay-tablo th { color: var(--text-light); font-weight: 600; }
+.detay-tablo a { color: var(--primary); }
+.detay-cta { display: inline-flex; align-items: center; justify-content: center; text-decoration: none; min-height: 48px; padding: 0 2rem; }
+.detay-benzer ul { list-style: none; padding: 0; }
+.detay-benzer li { padding: 0.6rem 0; border-bottom: 1px solid #eee; }
+.detay-benzer a { color: var(--primary); }
+.liste-sarmal { overflow-x: auto; }
+.fiyat-listesi td:last-child, .fiyat-listesi th:last-child { text-align: right; white-space: nowrap; }
+@media (max-width: 768px) {
+  .arac-detay { grid-template-columns: 1fr; }
+  .arac-detay h1, .statik-sayfa h1 { font-size: 1.6rem; }
+  .fiyat-listesi th:nth-child(2), .fiyat-listesi td:nth-child(2),
+  .fiyat-listesi th:nth-child(4), .fiyat-listesi td:nth-child(4) { display: none; }
+}
 
 /* KVKK ONAY KUTULARI */
 .cta-form, .exit-form { flex-wrap: wrap; }

@@ -1,0 +1,89 @@
+# AraçFırsat
+
+> Türkiye'deki sıfır otomobil ve motosiklet liste fiyatlarını karşılaştıran ve test sürüşü talebi alan site. Fiyatlar Türk lirası (TRY) cinsinden liste fiyatlarıdır, ayda bir güncellenir. Son güncelleme: 2026-11-17.
+
+Fiyatlar marka liste fiyatlarıdır; bayi kampanyası, kredi ve takas koşullarına göre ödenecek tutar değişebilir. Site Smatch Bilişim Teknolojileri A.Ş.'ye aittir.
+
+## Ana sayfalar
+
+- [Ana sayfa](https://aracfirsat.com/): araç listesi, filtreler, iki aracı yan yana karşılaştırma ve test sürüşü formu
+- [Fiyat listesi](https://aracfirsat.com/fiyat-listesi.html): tüm aktif modellerin tek tablo halinde fiyatları
+
+## Sıfır otomobil fiyatları (17 Kasım 2026)
+
+- [Audi A3 Sedan 1.5 TFSI Advanced](https://aracfirsat.com/fiyat/audi-a3-sedan-1-5-tfsi-advanced.html): 4.297.896 ₺ — Sedan, 1.5L TFSI, 150 HP, S-Tronic 7
+- [BMW 320i M Sport](https://aracfirsat.com/fiyat/bmw-320i-m-sport.html): 6.378.000 ₺ — Sedan, 1.6L Turbo, 170 HP, Otomatik 8
+- [BYD Seal AWD Excellence](https://aracfirsat.com/fiyat/byd-seal-awd-excellence.html): 4.077.000 ₺ — Sedan, Elektrik, 523 HP, Otonom
+- [Chery Tiggo 7 1.6 TGDI Comfort](https://aracfirsat.com/fiyat/chery-tiggo-7-1-6-tgdi-comfort.html): 2.180.000 ₺ — SUV, 1.6L Turbo, 145 HP, DCT 7
+- [Citroen ë-C3 Elektrik 113 Max](https://aracfirsat.com/fiyat/citroen-c3-elektrik-113-max.html): 1.725.000 ₺ — Hatchback, Elektrik, 113 HP, Otomatik
+- [Citroen C3 Aircross 1.2 Hybrid 145 Max](https://aracfirsat.com/fiyat/citroen-c3-aircross-1-2-hybrid-145-max.html): 2.320.000 ₺ — SUV, 1.2L Hybrid, 145 HP, eDCS6
+- [Citroen C4 X 1.2 Hybrid 145 Max](https://aracfirsat.com/fiyat/citroen-c4-x-1-2-hybrid-145-max.html): 2.345.000 ₺ — Sedan, 1.2L Hybrid, 145 HP, eDCS6
+- [Citroen C5 Aircross 1.2 Hybrid 145 Plus](https://aracfirsat.com/fiyat/citroen-c5-aircross-1-2-hybrid-145-plus.html): 2.865.000 ₺ — SUV, 1.2L Hybrid, 145 HP, eDCS6
+- [Cupra Formentor 1.5 eTSI Impulse](https://aracfirsat.com/fiyat/cupra-formentor-1-5-etsi-impulse.html): 2.860.100 ₺ — Crossover, 1.5L eTSI Mild Hybrid, 150 HP, DSG 7
+- [Dacia Sandero 1.0 TCe 100 Expression](https://aracfirsat.com/fiyat/dacia-sandero-1-0-tce-100-expression.html): 1.460.000 ₺ — Hatchback, 1.0L Turbo, 100 HP, Manuel
+- [Dacia Duster 1.3 TCe Evolution](https://aracfirsat.com/fiyat/dacia-duster-1-3-tce-evolution.html): 2.050.000 ₺ — SUV, 1.3L Turbo, 145 HP, EDC
+- [Fiat Egea Sedan 1.6 Multijet Urban](https://aracfirsat.com/fiyat/fiat-egea-sedan-1-6-multijet-urban.html): 1.599.900 ₺ — Sedan, 1.6L Multijet Dizel, 130 HP, Manuel 6
+- [Fiat Egea Cross 1.6 Multijet Street](https://aracfirsat.com/fiyat/fiat-egea-cross-1-6-multijet-street.html): 1.990.900 ₺ — Crossover, 1.6L Multijet Dizel, 130 HP, DCT 6
+- [Ford Puma 1.0 EcoBoost mHEV Titanium](https://aracfirsat.com/fiyat/ford-puma-1-0-ecoboost-mhev-titanium.html): 2.171.100 ₺ — Crossover, 1.0L EcoBoost mHEV, 125 HP, Otomatik 7
+- [Ford Kuga 1.5 EcoBoost Titanium](https://aracfirsat.com/fiyat/ford-kuga-1-5-ecoboost-titanium.html): 2.727.200 ₺ — SUV, 1.5L EcoBoost, 186 HP, Otomatik 8
+- [Honda HR-V 1.5 e:HEV Advance](https://aracfirsat.com/fiyat/honda-hr-v-1-5-e-hev-advance.html): 2.965.000 ₺ — SUV, 1.5L Hybrid, 131 HP, e-CVT
+- [Hyundai i20 1.0 T-GDI Elite](https://aracfirsat.com/fiyat/hyundai-i20-1-0-t-gdi-elite.html): 2.091.000 ₺ — Hatchback, 1.0L Turbo, 90 HP, DCT 7
+- [Hyundai Bayon 1.0 T-GDI Elite](https://aracfirsat.com/fiyat/hyundai-bayon-1-0-t-gdi-elite.html): 2.212.000 ₺ — Crossover, 1.0L Turbo, 90 HP, DCT 7
+- [Hyundai Tucson 1.6 T-GDI Elite](https://aracfirsat.com/fiyat/hyundai-tucson-1-6-t-gdi-elite.html): 3.520.000 ₺ — SUV, 1.6L Turbo, 180 HP, DCT 7
+- [Kia Sportage 1.6 T-GDI GT-Line 4x4](https://aracfirsat.com/fiyat/kia-sportage-1-6-t-gdi-gt-line-4x4.html): 3.500.000 ₺ — SUV, 1.6L Turbo, 180 HP, DCT 7
+- [Nissan Juke 1.0 DIG-T Platinum](https://aracfirsat.com/fiyat/nissan-juke-1-0-dig-t-platinum.html): 2.628.500 ₺ — Crossover, 1.0L Turbo, 115 HP, DCT 7
+- [Nissan Qashqai 1.3 DIG-T Mild Hybrid Skypack](https://aracfirsat.com/fiyat/nissan-qashqai-1-3-dig-t-mild-hybrid-skypack.html): 3.308.200 ₺ — SUV, 1.3L Turbo Mild Hybrid, 158 HP, CVT
+- [Nissan Qashqai e-POWER Skypack](https://aracfirsat.com/fiyat/nissan-qashqai-e-power-skypack.html): 3.993.600 ₺ — SUV, 1.5L e-POWER Hybrid, 190 HP, Otomatik
+- [Nissan X-Trail 1.5 VC-T Mild Hybrid Platinum](https://aracfirsat.com/fiyat/nissan-x-trail-1-5-vc-t-mild-hybrid-platinum.html): 5.098.300 ₺ — SUV, 1.5L VC-T Mild Hybrid, 163 HP, CVT
+- [Opel Corsa 1.2 Hybrid GS](https://aracfirsat.com/fiyat/opel-corsa-1-2-hybrid-gs.html): 1.955.000 ₺ — Hatchback, 1.2L Hybrid, 136 HP, e-DCT6
+- [Opel Frontera 1.2 Hybrid Edition](https://aracfirsat.com/fiyat/opel-frontera-1-2-hybrid-edition.html): 2.190.000 ₺ — SUV, 1.2L Hybrid, 136 HP, e-DCT6
+- [Opel Astra 1.5 Dizel 130 Edition](https://aracfirsat.com/fiyat/opel-astra-1-5-dizel-130-edition.html): 2.330.000 ₺ — Hatchback, 1.5L Dizel, 130 HP, Otomatik 8
+- [Opel Mokka 1.2 Hybrid GS](https://aracfirsat.com/fiyat/opel-mokka-1-2-hybrid-gs.html): 2.350.000 ₺ — Crossover, 1.2L Hybrid, 136 HP, e-DCT6
+- [Opel Grandland 1.2 Hybrid Edition](https://aracfirsat.com/fiyat/opel-grandland-1-2-hybrid-edition.html): 2.850.000 ₺ — SUV, 1.2L Hybrid, 136 HP, e-DCT6
+- [Peugeot E-208 Elektrik 136 GT](https://aracfirsat.com/fiyat/peugeot-e-208-elektrik-136-gt.html): 2.080.000 ₺ — Hatchback, Elektrik, 136 HP, Otomatik
+- [Peugeot 2008 1.2 Hybrid 145 GT](https://aracfirsat.com/fiyat/peugeot-2008-1-2-hybrid-145-gt.html): 2.632.000 ₺ — Crossover, 1.2L Hybrid, 145 HP, eDCS6
+- [Peugeot 408 1.2 Hybrid 145 Allure](https://aracfirsat.com/fiyat/peugeot-408-1-2-hybrid-145-allure.html): 2.685.000 ₺ — Crossover, 1.2L Hybrid, 145 HP, eDCS6
+- [Peugeot 3008 1.2 Hybrid 145 Allure](https://aracfirsat.com/fiyat/peugeot-3008-1-2-hybrid-145-allure.html): 2.967.000 ₺ — SUV, 1.2L Hybrid, 145 HP, eDCS6
+- [Peugeot 5008 1.2 Hybrid 145 Allure](https://aracfirsat.com/fiyat/peugeot-5008-1-2-hybrid-145-allure.html): 3.426.000 ₺ — SUV, 1.2L Hybrid, 145 HP, eDCS6
+- [Renault Clio 1.2 TCe Evolution Plus](https://aracfirsat.com/fiyat/renault-clio-1-2-tce-evolution-plus.html): 1.830.000 ₺ — Hatchback, TCe Benzin, 115 HP, EDC
+- [Renault Captur 1.3 Mild Hybrid Techno](https://aracfirsat.com/fiyat/renault-captur-1-3-mild-hybrid-techno.html): 2.325.000 ₺ — Crossover, 1.3L Mild Hybrid, 140 HP, EDC
+- [Seat Arona 1.0 TSI Style Plus](https://aracfirsat.com/fiyat/seat-arona-1-0-tsi-style-plus.html): 2.050.100 ₺ — Crossover, 1.0L TSI, 116 HP, DSG 7
+- [Seat Leon 1.5 eTSI Style](https://aracfirsat.com/fiyat/seat-leon-1-5-etsi-style.html): 2.560.100 ₺ — Hatchback, 1.5L eTSI Mild Hybrid, 116 HP, DSG 7
+- [Skoda Kamiq 1.0 TSI Elite](https://aracfirsat.com/fiyat/skoda-kamiq-1-0-tsi-elite.html): 2.150.000 ₺ — Crossover, 1.0L TSI, 115 HP, DSG 7
+- [Skoda Octavia 1.5 TSI mHEV Elite](https://aracfirsat.com/fiyat/skoda-octavia-1-5-tsi-mhev-elite.html): 2.780.000 ₺ — Sedan, 1.5L TSI Mild Hybrid, 150 HP, DSG 7
+- [Suzuki Vitara 1.4 Boosterjet GLX Black Edition](https://aracfirsat.com/fiyat/suzuki-vitara-1-4-boosterjet-glx-black-edition.html): 2.665.000 ₺ — SUV, 1.4L Mild Hybrid, 129 HP, Otomatik 6
+- [Tesla Model Y Performance AWD](https://aracfirsat.com/fiyat/tesla-model-y-performance-awd.html): 4.966.500 ₺ — SUV, Elektrik, 462 HP, Otonom
+- [Togg T10X V1 RWD Uzun Menzil](https://aracfirsat.com/fiyat/togg-t10x-v1-rwd-uzun-menzil.html): 2.219.668 ₺ — SUV, Elektrik, 218 HP, Otonom
+- [Toyota Corolla 1.5 Vision Plus](https://aracfirsat.com/fiyat/toyota-corolla-1-5-vision-plus.html): 2.545.500 ₺ — Sedan, 1.5L Benzin, 125 HP, CVT
+- [Toyota Yaris 1.5 Hybrid Flame](https://aracfirsat.com/fiyat/toyota-yaris-1-5-hybrid-flame.html): 2.546.500 ₺ — Hatchback, 1.5L Hybrid, 116 HP, e-CVT
+- [Toyota C-HR 1.8 Hybrid Flame](https://aracfirsat.com/fiyat/toyota-c-hr-1-8-hybrid-flame.html): 2.859.000 ₺ — Crossover, 1.8L Hybrid, 140 HP, e-CVT
+- [Toyota Corolla Cross 1.8 Hybrid Flame](https://aracfirsat.com/fiyat/toyota-corolla-cross-1-8-hybrid-flame.html): 3.413.000 ₺ — SUV, 1.8L Hybrid, 140 HP, e-CVT
+- [Volkswagen T-Roc 1.5 eTSI Style](https://aracfirsat.com/fiyat/volkswagen-t-roc-1-5-etsi-style.html): 3.505.100 ₺ — Crossover, 1.5L eTSI Mild Hybrid, 150 HP, DSG 7
+- [Volkswagen Golf 1.5 eTSI Style](https://aracfirsat.com/fiyat/volkswagen-golf-1-5-etsi-style.html): 3.591.100 ₺ — Hatchback, 1.5L eTSI Mild Hybrid, 150 HP, DSG 7
+- [Volkswagen Tiguan 1.5 eTSI Life](https://aracfirsat.com/fiyat/volkswagen-tiguan-1-5-etsi-life.html): 3.600.100 ₺ — SUV, 1.5L eTSI Mild Hybrid, 150 HP, DSG 7
+- [Volkswagen Passat 1.5 eTSI Elegance](https://aracfirsat.com/fiyat/volkswagen-passat-1-5-etsi-elegance.html): 5.053.100 ₺ — Sedan, 1.5L eTSI Mild Hybrid, 150 HP, DSG 7
+
+## Sıfır motosiklet fiyatları (17 Kasım 2026)
+
+- [Bajaj Pulsar NS 200 UG2](https://aracfirsat.com/fiyat/bajaj-pulsar-ns-200-ug2.html): 231.700 ₺ — Naked, 199 cc, 25 PS, Manuel 6
+- [BMW R 1300 GS](https://aracfirsat.com/fiyat/bmw-r-1300-gs.html): 2.049.823 ₺ — Adventure, 1300 cc Boxer, 145 PS, Manuel 6
+- [CFMoto 675 SR-R](https://aracfirsat.com/fiyat/cfmoto-675-sr-r.html): 611.800 ₺ — Sport, 674 cc, 95 PS, Manuel 6
+- [Honda PCX125](https://aracfirsat.com/fiyat/honda-pcx125.html): 207.000 ₺ — Scooter, 125 cc, 13 PS, CVT
+- [Honda Forza 250](https://aracfirsat.com/fiyat/honda-forza-250.html): 385.750 ₺ — Scooter, 249 cc, 23 PS, CVT
+- [Honda NX500](https://aracfirsat.com/fiyat/honda-nx500.html): 620.000 ₺ — Adventure, 471 cc, 48 PS, Manuel 6
+- [Honda CB650R](https://aracfirsat.com/fiyat/honda-cb650r.html): 869.250 ₺ — Naked, 649 cc, 95 PS, Manuel 6
+- [Honda CBR650R](https://aracfirsat.com/fiyat/honda-cbr650r.html): 885.750 ₺ — Sport, 649 cc, 95 PS, Manuel 6
+- [Honda CRF1100L Africa Twin ES-DCT](https://aracfirsat.com/fiyat/honda-crf1100l-africa-twin-es-dct.html): 1.405.000 ₺ — Adventure, 1084 cc, 102 PS, DCT
+- [Honda GL1800 Gold Wing](https://aracfirsat.com/fiyat/honda-gl1800-gold-wing.html): 2.857.500 ₺ — Touring, 1833 cc Boxer, 126 PS, DCT
+- [KTM 390 Duke](https://aracfirsat.com/fiyat/ktm-390-duke.html): 587.000 ₺ — Naked, 399 cc, 45 PS, Manuel 6
+- [Yamaha NEO's Çift Bataryalı](https://aracfirsat.com/fiyat/yamaha-neo-s-cift-bataryali.html): 149.500 ₺ — Scooter, Elektrik, 3 PS, Otomatik
+- [Yamaha NMAX 125](https://aracfirsat.com/fiyat/yamaha-nmax-125.html): 307.000 ₺ — Scooter, 125 cc, 12 PS, CVT
+- [Yamaha XMAX 250](https://aracfirsat.com/fiyat/yamaha-xmax-250.html): 401.000 ₺ — Scooter, 250 cc, 23 PS, CVT
+- [Yamaha YZF-R3](https://aracfirsat.com/fiyat/yamaha-yzf-r3.html): 641.500 ₺ — Sport, 321 cc, 42 PS, Manuel 6
+- [Yamaha MT-07](https://aracfirsat.com/fiyat/yamaha-mt-07.html): 812.500 ₺ — Naked, 689 cc, 73 PS, Manuel 6
+- [Yamaha Ténéré 700](https://aracfirsat.com/fiyat/yamaha-tenere-700.html): 966.500 ₺ — Adventure, 689 cc, 73 PS, Manuel 6
+
+## Optional
+
+- [Gizlilik Politikası ve KVKK](https://aracfirsat.com/gizlilik-politikasi.html)
+- [Fotoğraf kaynakları](https://aracfirsat.com/fotograf-kaynaklari.html)

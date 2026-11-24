@@ -73,6 +73,12 @@ Admin (require `x-admin-key` header):
 
 - `node kreatif/fiyat-radari.js kaydet [YYYY-MM-DD]` snapshots active prices from `docs/app.js` into `veri/fiyat-gecmisi.json`. Run it after every monthly price update.
 - `node kreatif/fiyat-radari.js uret [--tip otomobil|motosiklet|hepsi] [--adet 5]` diffs the last two snapshots and renders feed (1080x1350) and story (1080x1920) PNGs into `kreatif/cikti/` (gitignored) via headless Chrome, using `kreatif/fiyat-radari.html`.
-- `node kreatif/fiyat-guncelle.js guncellemeler.json [YYYY-MM-DD]` writes researched prices (`[{id, fiyat, yeni_model?, aktif?}]`, `fiyat: null` = skip) into `public/app.js`, copies it to `docs/app.js` and sets `FIYAT_GUNCELLEME_TARIHI`. Monthly order: research → fiyat-guncelle → fiyat-radari kaydet → fiyat-radari uret.
+- `node kreatif/fiyat-guncelle.js guncellemeler.json [YYYY-MM-DD]` writes researched prices (`[{id, fiyat, yeni_model?, aktif?}]`, `fiyat: null` = skip) into `public/app.js`, copies it to `docs/app.js` and sets `FIYAT_GUNCELLEME_TARIHI`. Monthly order: research → fiyat-guncelle → seo-uret → fiyat-radari kaydet → fiyat-radari uret.
+
+## SEO pages (`kreatif/seo-uret.js`)
+
+- The homepage renders vehicles with JS, which AI crawlers (GPTBot, ClaudeBot, PerplexityBot) don't run. `node kreatif/seo-uret.js` reads `docs/app.js` and writes static HTML: `docs/fiyat/<slug>.html` per active vehicle, `docs/fiyat-listesi.html`, `docs/sitemap.xml`, `docs/llms.txt`, and the `<!-- SEO:KARTLAR -->` / `<!-- SEO:ITEMLIST -->` blocks in `docs/index.html` and `public/index.html`. Never hand-edit those outputs; rerun the script after any vehicle or price change.
+- `aracSlug()` in `app.js` and `slugYap()` in the script must stay identical, or card links break.
+- The FAQ text exists twice in `index.html` (visible `#sss` section and `FAQPage` JSON-LD); keep them in sync.
 - `uret` ignores changes below `--esik` percent (default 0.5) so 100 TL roundings don't appear.
 - A vehicle is only compared when its marka+model string is identical in both snapshots (trim changes are skipped). `--ornek` renders with made-up prices and an "ÖRNEK" watermark — never post those.
