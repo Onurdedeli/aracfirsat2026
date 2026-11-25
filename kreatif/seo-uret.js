@@ -78,6 +78,36 @@ function jsonLd(nesne) {
 }
 
 const tamAd = a => `${a.marka} ${a.model}`;
+
+// Bing 70, Google ~60 karakterden uzun başlıkları keser/uyarır. Sırayla kısalan adaylardan sığan ilkini seçer;
+// hiçbiri sığmazsa donanım adının sonundan kelime atar. H1 her zaman tam adı gösterir.
+const BASLIK_SINIRI = 60;
+function aracBasligi(a) {
+  const fiyat = fiyatFormat(a.fiyat);
+  const adaylar = [
+    `${tamAd(a)} ${yil} Fiyatı: ${fiyat} | AraçFırsat`,
+    `${tamAd(a)} ${yil} Fiyatı: ${fiyat}`,
+    `${tamAd(a)} Fiyatı: ${fiyat}`
+  ];
+  const sigan = adaylar.find(b => b.length <= BASLIK_SINIRI);
+  if (sigan) return sigan;
+  const kelimeler = a.model.split(' ');
+  while (kelimeler.length > 1) {
+    kelimeler.pop();
+    const b = `${a.marka} ${kelimeler.join(' ')} Fiyatı: ${fiyat}`;
+    if (b.length <= BASLIK_SINIRI) return b;
+  }
+  return `${a.marka} ${kelimeler[0]} Fiyatı: ${fiyat}`;
+}
+
+// Bing 160 karakterden uzun meta açıklamaları uyarır; çağrı cümlesi sığmıyorsa kısaltılır ya da atılır
+const ACIKLAMA_SINIRI = 160;
+function aracAciklamasi(a) {
+  const govde = `${tamAd(a)} sıfır fiyatı ${fiyatFormat(a.fiyat)} (${tarihYaz(TARIH)}). ${a.motor}, ${a.hp} ${gucBirimi(a)}, ${a.vites}.`;
+  return [' Benzer modellerle karşılaştırın, test sürüşü talep edin.', ' Test sürüşü talep edin.', '']
+    .map(son => govde + son)
+    .find(d => d.length <= ACIKLAMA_SINIRI) || govde;
+}
 const sayfaYolu = a => `fiyat/${a.slug}.html`;
 const gucBirimi = a => (a.tip === 'motosiklet' ? 'PS' : 'HP');
 const yil = TARIH.slice(0, 4);
@@ -218,8 +248,8 @@ ${benzer.map(b => `          <li><a href="/${sayfaYolu(b)}">${kacis(tamAd(b))}</
       </section>` : ''}`;
 
   return sayfa({
-    baslik: `${ad} ${yil} Fiyatı: ${fiyatFormat(a.fiyat)} | AraçFırsat`,
-    aciklama: `${ad} sıfır fiyatı ${fiyatFormat(a.fiyat)} (${tarihYaz(TARIH)}). ${a.motor}, ${a.hp} ${gucBirimi(a)}, ${a.vites}. Benzer modellerle karşılaştırın, test sürüşü talep edin.`,
+    baslik: aracBasligi(a),
+    aciklama: aracAciklamasi(a),
     yol: sayfaYolu(a),
     ogGorsel: a.gorsel,
     govde,
@@ -326,8 +356,8 @@ ${[
     url('', '1.0', 'weekly'),
     url('fiyat-listesi.html', '0.9', 'monthly'),
     ...araclar.map(a => url(sayfaYolu(a), '0.8', 'monthly')),
-    url('gizlilik-politikasi.html', '0.3', 'yearly', '2026-10-23'),
-    url('fotograf-kaynaklari.html', '0.2', 'yearly')
+    url('gizlilik-politikasi.html', '0.3', 'yearly', '2026-10-23')
+    // fotograf-kaynaklari.html noindex olduğu için sitemap'e girmez
   ].join('\n')}
 </urlset>
 `;

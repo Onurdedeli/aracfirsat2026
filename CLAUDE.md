@@ -81,6 +81,7 @@ Admin (require `x-admin-key` header):
 
 - The homepage renders vehicles with JS, which AI crawlers (GPTBot, ClaudeBot, PerplexityBot) don't run. `node kreatif/seo-uret.js` reads `docs/app.js` and writes static HTML: `docs/fiyat/<slug>.html` per active vehicle, `docs/fiyat-listesi.html`, `docs/sitemap.xml`, `docs/llms.txt`, and the `<!-- SEO:KARTLAR -->` / `<!-- SEO:ITEMLIST -->` blocks in `docs/index.html` and `public/index.html`. Never hand-edit those outputs; rerun the script after any vehicle or price change.
 - `aracSlug()` in `app.js` and `slugYap()` in the script must stay identical, or card links break.
+- Titles stay ≤60 characters and meta descriptions ≤160 (Bing Site Scan flags longer ones); `aracBasligi()` / `aracAciklamasi()` shorten automatically. Keep the hand-written homepage title and description within the same limits. Never list a `noindex` page in the sitemap.
 - The FAQ text exists twice in `index.html` (visible `#sss` section and `FAQPage` JSON-LD); keep them in sync.
 
 ## IndexNow (`kreatif/indexnow.js`)
